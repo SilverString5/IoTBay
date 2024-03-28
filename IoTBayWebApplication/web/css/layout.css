@@ -18,7 +18,8 @@
     
 }*/
 
-body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left; margin: 0%;
+body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left;
+    margin: 0%; /*important for navi bar, prevent white space above navi bar*/
     width:200px;
     height:600px;
     background-size:contain;

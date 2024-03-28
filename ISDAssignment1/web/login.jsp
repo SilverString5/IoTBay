@@ -14,17 +14,21 @@
             String email1 = request.getParameter("email1");
             String password1 = request.getParameter("password1");
             String submitted1 = request.getParameter("submit");
-            
-            if (submitted1 != null){
+        %>
+            <%if (submitted1 != null){ %>
                 //<!-- IF email and password1 != email and password from user in register-->
+                <%>if(email1 != user.getEmail() && password1 = used.getPassword()) {%>
+                    <h1>Your username or password is wrong.</h1>
+                <%}%>
                 //<!-- Show another label that explains password or username is wrong; try again -->
-            }//
-            else {
+            <%}%>
+            <%else {%>
                 //<!-- go to account page (logged in) -->
-            }
+                <a href="welcome.jsp"></a>
+            <%}%>
             
 
-        %>
+        
         <form method="post">
             <label for="email1">Email: </label><br>
             <input type="text" id = "email1" name = "email1"><br>

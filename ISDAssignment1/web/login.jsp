@@ -18,7 +18,7 @@
             <%if (submitted1 != null){ %>
                 //<!-- IF email and password1 != email and password from user in register-->
                 <%>if(email1 != user.getEmail() && password1 = used.getPassword()) {%>
-                    <h1>Your username or password is wrong.</h1>
+                    <h1>Your username or password is wrong. Please try again.</h1>
                 <%}%>
                 //<!-- Show another label that explains password or username is wrong; try again -->
             <%}%>

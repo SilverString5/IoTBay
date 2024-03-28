@@ -18,13 +18,16 @@
     
 }*/
 
-body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left; margin: 0%;
+body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left; 
+    margin: 0;
     width:200px;
     height:600px;
     background-size:contain;
     border-radius:50%;
     letter-spacing: 4px;
-    background-color:#f7f7f7;}
+    background-color:#f7f7f7;
+
+}
 
 
 #bar{
@@ -40,14 +43,14 @@ body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left; margi
     opacity: 0.7;
 }
 
-#links{
+/*#links{
     font-size: 18px;
     padding: 5px;
     word-spacing: 2px;
     float: right;    
-}
+}*/
 
-a:link, a:visited{
+/*a:link, a:visited{
     color:#3ffb09;
     padding: 10px 20px;
     text-decoration: none;
@@ -56,7 +59,7 @@ a:link, a:visited{
 a:hover, a:active{
     background-color: green;
     color: white;
-}
+}*/
 
 .footer{
     position: fixed;
@@ -111,10 +114,11 @@ a:hover, a:active{
     color: #329c67;
 }
 
-
-#active {
+.menu #active {
     background-color: #10608f;
     color: white;
 }
+
+
 /*css for index page*/
 

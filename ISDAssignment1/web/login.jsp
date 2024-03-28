@@ -13,14 +13,14 @@
         <%
             String email1 = request.getParameter("email1");
             String password1 = request.getParameter("password1");
-            String submitted1 = request.getParameter("submitted1");
+            String submitted1 = request.getParameter("submit");
             
-            if (submitted != null){
-                <!-- IF email1 and password1 != email and password from user in register-->
-                <!-- Show another label that explains password or username is wrong; try again -->
-            }
+            if (submitted1 != null){
+                //<!-- IF email and password1 != email and password from user in register-->
+                //<!-- Show another label that explains password or username is wrong; try again -->
+            }//
             else {
-                <!-- go to account page (logged in) -->
+                //<!-- go to account page (logged in) -->
             }
             
 

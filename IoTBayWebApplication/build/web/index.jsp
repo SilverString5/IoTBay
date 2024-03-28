@@ -17,7 +17,6 @@
             <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Register</a></li>
         </ul>
         </div>
-
         <br>
     </body>
 </html>

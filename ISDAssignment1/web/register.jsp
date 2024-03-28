@@ -28,11 +28,12 @@
     <body>
         <h1>IotBay - Register Here!</h1>
       
+     
 
                
         <% if (isRegistered==null){%>
         
-        <form>
+        <form target="/index.jsp">
             <table>
             <tr>
                 <td><label for="email">Email:</label>

@@ -14,10 +14,20 @@
     </head>
     <body>
         
-     
-        
-        <% User u =(User)session.getAttribute("user"); %>
-        
-        Welcome, <%=u.getName()%>
+      <%User user = (User)session.getAttribute("user");
+      String submitted="nothing";
+      submitted = request.getParameter("submitted") ;%>
+      
+        <% if (session.getAttribute("user")!=null && (submitted).equals("true") ){
+                user.setName(request.getParameter("name"));
+                user.setEmail(request.getParameter("email"));
+                user.setPhone(request.getParameter("phonenumber"));
+                user.setAddress(request.getAddress("address"));
+        }%>
+                
+               User's name is <%=user.getName()%>
+               User's email is <%=user.getEmail()%>
+               User's phone number is <%=user.getPhone()%>
+               User's address is <%=user.getAddress()%>
     </body>
 </html>

@@ -13,26 +13,19 @@
         <link rel="stylesheet" href="css/reglayout.css">
         <title>Registration</title>
     </head>
-            <% String isRegistered = request.getParameter("isRegistered") ;
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
-        String address = request.getParameter("address");
-        
-        
-        if (isRegistered!=null){
-            User user = new User(email, name, phone, password, address);
-            session.setAttribute("user",user);
-        }
-        %>
+            
+
     <body>
         <h1>IotBay - Register Here!</h1>
       
      
 
                
-        <% if (isRegistered==null){%>
+        <% if (session.getAttribute("user")==null) {
+                User user = new User();
+                session.setAttribute("user", user);%>
+                
+                Creating New User
         
         <form action="/ISDAssignment1/welcome.jsp" method="post">
             <table>
@@ -48,7 +41,7 @@
             </tr>
             <tr>
                 <td><label for="phone">Phone Number:</label></td>
-                <td><input type="number" name="phone number" id="phone number" placeholder="phone number" required></td>              
+                <td><input type="number" name="phonenumber" id="phonenumber" placeholder="phone number" required></td>              
             </tr>
             <tr>
                 <td><label for="password">Password:</label></td>
@@ -64,13 +57,15 @@
             </tr>
             
                </table>
-              <input type="hidden" name="isRegistered" id="isRegistered" value="true" />
+              <input type="hidden" name="submitted" id="submitted" value="true" />
             <button type="submit">Register Account</button>
         </form>
-        
-        <%} else { %>
-        <h1>You have already registered. Hello, <%=name %></h1>
-        
-        <% } %>
+            <% } else {  %>
+            You have already registered.
+            
+           <form action="/ISDAssignment1/welcome.jsp">
+               <input type="hidden" name="submitted" value="false"/>
+         <button type="submit">Proceed</button>
+            <% } %>
     </body>
 </html>

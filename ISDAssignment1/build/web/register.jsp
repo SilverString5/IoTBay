@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/reglayout.css">
         <title>Registration</title>
     </head>
             <% String isRegistered = request.getParameter("isRegistered") ;
@@ -43,14 +44,14 @@
             </tr>  
             <tr>
                 <td><label for="name">Name:</label></td>
-                <td><input type="text" name="name" id="name" required/></td>
+                <td><input type="text" name="name" id="name" placeholder="name" required/></td>
             </tr>
             <tr>
                 <td><label for="phone">Phone Number:</label></td>
-                <td><input type="number" name="number" id="number" placeholder="number" required></td>              
+                <td><input type="number" name="phone number" id="phone number" placeholder="phone number" required></td>              
             </tr>
             <tr>
-                <td><label for="password"></label></td>
+                <td><label for="password">Password:</label></td>
                 <td>
                     <input type="password" name="password" id="password" placeholder="password" required>
                 </td>

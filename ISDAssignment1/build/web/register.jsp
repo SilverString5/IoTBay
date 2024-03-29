@@ -34,7 +34,7 @@
                
         <% if (isRegistered==null){%>
         
-        <form target="/index.jsp">
+        <form action="/ISDAssignment1/welcome.jsp" method="post">
             <table>
             <tr>
                 <td><label for="email">Email:</label>

@@ -25,7 +25,7 @@
     <body>
         <% if (submitted1 == null){%>
         <h1>Login Here!</h1>
-        <form method="post">
+        <form target="/welcome.jsp">
             <label for="email1">Email: </label><br>
             <input type="text" id = "email1" name = "email1"><br><br>
 

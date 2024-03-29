@@ -1,6 +1,2 @@
-README
-ISD Group #2
-
-Team Members:
-Carol Alonso Diaz
+Alonso Diaz
 Katherine Lee

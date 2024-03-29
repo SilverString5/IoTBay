@@ -63,7 +63,7 @@
             <% } else {  %>
             You have already registered.
             
-           <form action="/ISDAssignment1/welcome.jsp">
+           <form action="/ISDAssignment1/welcome.jsp" method="post">
                <input type="hidden" name="submitted" value="false"/>
          <button type="submit">Proceed</button>
             <% } %>

@@ -20,7 +20,7 @@
         <div class="window">
             <h1>You have successfully logged out</h1>
             <p>Please delete the browser window or click on the button below to transfer to IoTBay home page</p>
-            <form action="/AssignmentOneOwn/index.jsp">
+            <form action="http://localhost:8080/ISDAssignment1/">
                 <button type="submit">Back to Home</button>
             </form>
         </div>

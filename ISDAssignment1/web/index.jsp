@@ -1,18 +1,23 @@
-<%-- 
-    Document   : index
-    Created on : 28/03/2024, 4:58:30 PM
-    Author     : notba
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Random"%> 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" href="css/layout.css">
+        <script type="text/javascript" src="js/index.js"></script>
+        <title>IoTbay Home Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <
+        <div class="menu">
+        <ul>
+            <li><a id="active" href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+            <li><a href="http://localhost:8080/ISDAssignment1/main.jsp" > You</a></li>
+            <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+            <li><a href="register.jsp" > Register</a></li>
+        </ul>
+        </div>
+
+        <br>
     </body>
 </html>

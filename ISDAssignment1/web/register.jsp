@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="User.*"%>
+<%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,7 +33,7 @@
                
         <% if (isRegistered==null){%>
         
-        <form target="/index.jsp">
+        <form action="main.jsp" method="post">
             <table>
             <tr>
                 <td><label for="email">Email:</label>

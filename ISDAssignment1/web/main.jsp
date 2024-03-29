@@ -18,10 +18,10 @@
            String name = request.getParameter("name");
            String phone = request.getParameter("phone");
            String password = request.getParameter("password");
-           String address = request.getParameter("address");
-           
+           String address = request.getParameter("address");          
            User user = new User(email, name, phone, password, address);
            session.setAttribute("user", user);
+//             User user = (User) session.getAttribute("user");
         %>
         
         <h1>Hello <%=user.getName()%> 

@@ -1,64 +1,73 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package uts.isd.model;
 import java.io.Serializable;
+
 /**
  *
- * @author jijianlan
+ * @author notba
  */
 public class User implements Serializable {
     private String email;
     private String name;
     private String phone;
-    private String password;
+    private String password;   
     private String address;
+
+
+
+
     
-    public User(){
-    }
+    public User(){}
     
-    public User(String email, String name, String phone,String password, String address){
+    public User(String email, String name, String phone, String password, String address){
         this.email = email;
         this.name = name;
-        this.password = password;
         this.phone = phone;
+        this.password = password;
         this.address=address;
+
     }
     
     public void setEmail(String email){
         this.email = email;
     }
-    public void setName(String name){
+    
+    public String getEmail(){
+        return this.email;
+    }
+    
+        public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setPassword(String password){
-        this.password = password;
+
+    public String getPhone() {
+        return this.phone;
     }
-    public void setPhone(String phone){
+
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public void setAddress(String address){
-        this.address= address;
+    public String getPassword() {
+        return this.password;
     }
-    public String getEmail(){
-        return email;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAddress(){
-        return address;
+    return this.address;
     }
-   
-    public String getName(){
-        return name;
-    }
-    public String getPassword(){
-        return password;
-    }
-    public String getPhone(){
-        return phone;
-    }
-    
+
+    public void setAddress(String address){
+    this.address=address;
+    }   
 }

@@ -1,4 +1,4 @@
-package User;
+package uts.isd.model;
 import java.io.Serializable;
 
 

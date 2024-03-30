@@ -18,14 +18,20 @@
             String submitted1 = request.getParameter("submitted1");
     %>
         <%if (submitted1 != null){
-            if (email1 != user.getEmail() && password1 != user.getPassword()) {%>
+            if (!(email1.equals(user.getEmail())) || !(password1.equals(user.getPassword()))) {%>
              <h1>Your username or password is wrong. Please try again.</h1>
-            <%}
-        }%>
+             <a href="login.jsp">Try again.</a>
+            <% } else { %>
+                <h1>Welcome, <%=user.getName()%> .</h1>
+                <p>Here is a link to your homepage.</p>
+                <a href="index.jsp">HOME</a>
+            <%}%>
+        <%}%>
+        
     <body>
         <% if (submitted1 == null){%>
         <h1>Login Here!</h1>
-        <form target="/welcome.jsp">
+        <form method="post">
             <label for="email1">Email: </label><br>
             <input type="text" id = "email1" name = "email1"><br><br>
 
@@ -41,10 +47,6 @@
                 <a href="register.jsp">Register</a>
             </div>  
         
-        <% } else {%>
-        <h1>Welcome, <%=user.getName()%> .</h1>
-        <p>Here is a link to your homepage.</p>
-        <a href="index.jsp">HOME</a>
         <% } %>
     </body>
     

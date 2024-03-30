@@ -32,40 +32,36 @@
             </div>
             <br>
             <br>
-         <h1>IotBay - Register Here!</h1>
-        <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
-            <table class="centre">
-            <tr>
-                <td><label for="email">Email:</label>
-                </td>
-                
-                <td><input type ="email" name ="email" id="email" placeholder="email" required/></td>
-            </tr>  
-            <tr>
-                <td><label for="name">Name:</label></td>
-                <td><input type="text" name="name" id="name" placeholder="name" required/></td>
-            </tr>
-            <tr>
-                <td><label for="phone">Phone Number:</label></td>
-                <td><input type="number" name="phonenumber" id="phonenumber" placeholder="phone number" required></td>              
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td>
-                    <input type="password" name="password" id="password" placeholder="password" required>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="address">Address:</label></td>
-                <td>
-                    <input type="text" name="address" id="address" placeholder="address" required>
-                </td>
-            </tr>
+         <h1 class="myheader">Register Here!</h1>
+         <div class="myFormdiv">
+        <form class="myForm" action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
+            <label for="email">Email:</label><br>
+           
+            <input type ="email" name ="email" id="email" placeholder="Email" required/><br>
             
-               </table>
-              <input type="hidden" name="submitted" id="submitted" value="true" />
+                <label for="name">Name:</label><br>
+                <input type="text" name="name" id="name" placeholder="Name" required/><br>
+           
+           <label for="phone">Phone Number:</label><br>
+                <input type="number" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
+            
+               <label for="password">Password:</label><br>
+                
+                    <input type="password" name="password" id="password" placeholder="Password" required><br>
+               
+            
+            
+                <label for="address">Address:</label><br>
+                
+                    <input type="text" name="address" id="address" placeholder="Adddress" required><br>
+                
+            
+  
+              <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
         </form>
+         </div>
+             
                     
             
 

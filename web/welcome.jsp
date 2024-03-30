@@ -10,21 +10,25 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/reglayout.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Welcome Page</title>
     </head>
     <body>
         
         <div class="menu">
             <ul>
-                <li><a id="active" href="http://localhost:8080/IoTBayWebApplication/index.jsp">Home</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/logout.jsp">Logout</a></li>
+                <li><a href="http://localhost:8080/IoTBayWebApplication/">Home</a></li>
+                <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/IoTBayWebApplication/welcome.jsp" > You</a></li>
             </ul>
         </div>
         <br>  
         <br>
-        <div>
-            <%if(request.getParameter("submitted") != null){%>
+        
+        <%if(request.getParameter("submitted") != null){%>
             <%  
             
                 String name = request.getParameter("name");
@@ -44,13 +48,13 @@
                 <br> 
                 Welcome to IoTBay Web Application
             </h1>
-
-            </div>
+            <button><a href="http://localhost:8080/IoTBayWebApplication/logout.jsp">Log out</a></button>
+         </div>
             
         <%}  else {%>
-        <h1> Hello Anonymous User, </h1>
-        <h2> Do you want to register? </h2>
-        <button><a href="register.jsp">Register</a></button>
+            <h1> Hello Anonymous User, </h1>
+            <h2> Do you want to register? </h2>
+            <button><a href="http://localhost:8080/IoTBayWebApplication/register.jsp">Register</a></button>
         
         <% } %>
     </body>

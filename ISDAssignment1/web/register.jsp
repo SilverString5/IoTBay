@@ -1,7 +1,7 @@
 <%-- 
     Document   : register
     Created on : 28/03/2024, 4:57:52 PM
-    Author     : notba
+    Author     : Katherine
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,24 +11,30 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/reglayout.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Registration</title>
     </head>
             
 
     <body>
-        <h1>IotBay - Register Here!</h1>
-      
-     
-
-               
-        <% if (session.getAttribute("user")==null) {
-                User user = new User();
+ 
+               <% User user = new User();
                 session.setAttribute("user", user);%>
                 
-                Creating New User
-        
-        <form action="/ISDAssignment1/welcome.jsp" method="post">
-            <table>
+                
+          <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+         <h1>IotBay - Register Here!</h1>
+        <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
+            <table class="centre">
             <tr>
                 <td><label for="email">Email:</label>
                 </td>
@@ -60,12 +66,9 @@
               <input type="hidden" name="submitted" id="submitted" value="true" />
             <button type="submit">Register Account</button>
         </form>
-            <% } else {  %>
-            You have already registered.
+                    
             
-           <form action="/ISDAssignment1/welcome.jsp" method="post">
-               <input type="hidden" name="submitted" value="false"/>
-         <button type="submit">Proceed</button>
-            <% } %>
+
+            
     </body>
 </html>

@@ -14,30 +14,40 @@
         <title>Welcome Page</title>
     </head>
     <body>
-        <%           
-          User user = (User) session.getAttribute("user");
-        %>
+      <%User user = (User)session.getAttribute("user");
+      String submitted = "nothing";
+      if (request.getParameter("submitted")!=null){
+      submitted = request.getParameter("submitted");
+      }%>
         
         <div class="menu">
             <ul>
-                <li><a id="active" href="index.jsp">Home</a></li>
-                <li><a href="logout.jsp">Logout</a></li>
+                <li><a id="active" href="http://localhost:8080/ISDAssignment1/index.jsp">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp">Logout</a></li>
             </ul>
         </div>
         <br>  
         <br>
         <div>
-        <%if(user != null) {%>
+        <%if((user != null) && (submitted.equals("true"))) {
+            
+                user.setName(request.getParameter("name"));
+                user.setEmail(request.getParameter("email"));
+                user.setPhone(request.getParameter("phonenumber"));
+                user.setAddress(request.getParameter("address"));
+            %>
         <h1>Hello <%=user.getName()%>,
             <br> 
             Welcome to IoTBay Web Application
         </h1>
-        <% } else {%>
+      
+        </div>
+            
+            <%}  else {%>
         <h1> Hello Anonymous User, </h1>
         <h2> Do you want to register? </h2>
         <button><a href="register.jsp">Register</a></button>
         
         <% } %>
-        </div>
     </body>
 </html>

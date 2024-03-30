@@ -29,24 +29,25 @@
         <br>  
         <br>
         <div>
-        <%if(user != null) {%>
-            <% if ((submitted).equals("true")){
+        <%if((user != null) && (submitted.equals("true"))) {
+            
                 user.setName(request.getParameter("name"));
                 user.setEmail(request.getParameter("email"));
                 user.setPhone(request.getParameter("phonenumber"));
                 user.setAddress(request.getParameter("address"));
-            } %>
+            %>
         <h1>Hello <%=user.getName()%>,
             <br> 
             Welcome to IoTBay Web Application
         </h1>
       
-        <% } else {%>
+        </div>
+            
+            <%}  else {%>
         <h1> Hello Anonymous User, </h1>
         <h2> Do you want to register? </h2>
         <button><a href="register.jsp">Register</a></button>
         
         <% } %>
-        </div>
     </body>
 </html>

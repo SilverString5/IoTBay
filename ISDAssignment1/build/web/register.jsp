@@ -11,19 +11,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/reglayout.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Registration</title>
     </head>
             
 
     <body>
  
-      
-    
-               
-        <% if (session.getAttribute("user")==null) {
-                User user = new User();
+               <% User user = new User();
                 session.setAttribute("user", user);%>
-                
+                %>
                 
           <div class="menu">
             <ul>
@@ -36,7 +34,7 @@
             <br>
          <h1>IotBay - Register Here!</h1>
         <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
-            <table>
+            <table class="centre">
             <tr>
                 <td><label for="email">Email:</label>
                 </td>
@@ -68,25 +66,9 @@
               <input type="hidden" name="submitted" id="submitted" value="true" />
             <button type="submit">Register Account</button>
         </form>
-            <% } else {  %>
-        
+                    
             
 
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" > Logout</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-            <h1>You have already registered!</h1>
-
-           <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
-               <input type="hidden" name="submitted" value="false"/>
-         <button type="submit">Proceed</button>
-            <% } %>
+            
     </body>
 </html>

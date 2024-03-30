@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.*"%>
+<%@page import="User.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,16 +18,10 @@
             String submitted1 = request.getParameter("submitted1");
     %>
         <%if (submitted1 != null){
-            if (!(email1.equals(user.getEmail())) || !(password1.equals(user.getPassword()))) {%>
+            if (email1 != user.getEmail() && password1 != user.getPassword()) {%>
              <h1>Your username or password is wrong. Please try again.</h1>
-             <a href="login.jsp">Try again.</a>
-            <% } else { %>
-                <h1>Welcome, <%=user.getName()%> .</h1>
-                <p>Here is a link to your homepage.</p>
-                <a href="index.jsp">HOME</a>
-            <%}%>
-        <%}%>
-        
+            <%}
+        }%>
     <body>
         <% if (submitted1 == null){%>
         <h1>Login Here!</h1>
@@ -47,6 +41,10 @@
                 <a href="register.jsp">Register</a>
             </div>  
         
+        <% } else {%>
+        <h1>Welcome, <%=user.getName()%> .</h1>
+        <p>Here is a link to your homepage.</p>
+        <a href="index.jsp">HOME</a>
         <% } %>
     </body>
     

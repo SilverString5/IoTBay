@@ -1,70 +1,76 @@
 <%-- 
     Document   : register
     Created on : 28/03/2024, 4:57:52 PM
-    Author     : Katherine
+    Author     : notba
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.*"%>
+<%@page import="User.*"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/reglayout.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Registration</title>
     </head>
-            
-
+            <% String isRegistered = request.getParameter("isRegistered") ;
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
+        String address = request.getParameter("address");
+        
+        
+        if (isRegistered!=null){
+            User user = new User(email, name, phone, password, address);
+            session.setAttribute("user",user);
+        }
+        %>
     <body>
- 
-               <% User user = new User();
-                session.setAttribute("user", user);%>
-                
-                
-          <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-         <h1 class="myheader">Register Here!</h1>
-         <div class="myFormdiv">
-        <form class="myForm" action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
-            <label for="email">Email:</label><br>
-           
-            <input type ="email" name ="email" id="email" placeholder="Email" required/><br>
-            
-                <label for="name">Name:</label><br>
-                <input type="text" name="name" id="name" placeholder="Name" required/><br>
-           
-           <label for="phone">Phone Number:</label><br>
-                <input type="number" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
-            
-               <label for="password">Password:</label><br>
-                
-                    <input type="password" name="password" id="password" placeholder="Password" required><br>
+        <h1>IotBay - Register Here!</h1>
+      
+     
+
                
-            
-            
-                <label for="address">Address:</label><br>
+        <% if (isRegistered==null){%>
+        
+        <form target="/index.jsp">
+            <table>
+            <tr>
+                <td><label for="email">Email:</label>
+                </td>
                 
-                    <input type="text" name="address" id="address" placeholder="Adddress" required><br>
-                
+                <td><input type ="email" name ="email" id="email" placeholder="email" required/></td>
+            </tr>  
+            <tr>
+                <td><label for="name">Name:</label></td>
+                <td><input type="text" name="name" id="name" placeholder="name" required/></td>
+            </tr>
+            <tr>
+                <td><label for="phone">Phone Number:</label></td>
+                <td><input type="number" name="phone number" id="phone number" placeholder="phone number" required></td>              
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td>
+                    <input type="password" name="password" id="password" placeholder="password" required>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="address">Address:</label></td>
+                <td>
+                    <input type="text" name="address" id="address" placeholder="address" required>
+                </td>
+            </tr>
             
-  
-              <input type="hidden" name="submitted" id="submitted" value="true" /><br>
+               </table>
+              <input type="hidden" name="isRegistered" id="isRegistered" value="true" />
             <button type="submit">Register Account</button>
         </form>
-         </div>
-             
-                    
-            
-
-            
+        
+        <%} else { %>
+        <h1>You have already registered. Hello, <%=name %></h1>
+        
+        <% } %>
     </body>
 </html>

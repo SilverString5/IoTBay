@@ -10,18 +10,6 @@
     </head>
     
     <body>
-        <%if (session.getAttribute("user") != null){%>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/">Home</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-            
-        <%}else {%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/IoTBayWebApplication/">Home</a></li>
@@ -32,8 +20,7 @@
             </div>
             <br>
             <br>
-        
-        <%}%>
+
 
     </body>
 </html>

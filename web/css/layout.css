@@ -49,7 +49,10 @@ body {font:12px/20px verdana,arial,helvetica,sans-serif; text-align: left;
     word-spacing: 2px;
     float: right;    
 }
-
+currentLink {
+    background-color: #10608f;
+    color: white;
+}
 a:link, a:visited{
     color:#3ffb09;
     padding: 10px 20px;
@@ -111,10 +114,7 @@ a:hover, a:active{
     color: #329c67;
 }
 
-.menu a:active {
-    background-color: #10608f;
-    color: white;
-}
+
 
 
 

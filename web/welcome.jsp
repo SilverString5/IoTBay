@@ -1,7 +1,7 @@
 <%-- 
-    Document   : welcome
-    Created on : 28/03/2024, 4:40:32 PM
-    Author     : jijianlan
+    Document   : main
+    Created on : Mar 28, 2024, 3:29:37 PM
+    Author     : pyaephyozaw
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,51 +10,48 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>You</title>
         <link rel="stylesheet" href="css/layout.css">
+        <title>Welcome Page</title>
     </head>
     <body>
-        <%  User user = (User) session.getAttribute("user");
+        
+        <div class="menu">
+            <ul>
+                <li><a id="active" href="http://localhost:8080/IoTBayWebApplication/index.jsp">Home</a></li>
+                <li><a href="http://localhost:8080/IoTBayWebApplication/logout.jsp">Logout</a></li>
+            </ul>
+        </div>
+        <br>  
+        <br>
+        <div>
+            <%if(request.getParameter("submitted") != null){%>
+            <%  
             
-        %>
-        <%if(user == null){%> <!-- a new session will be automatically created once
-                                                        page is refreshed after log out, so session exist, 
-                                                      request.getSession(false) == null won't work for this case-->
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/">Home</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-
-            <h2>Hi anonymous user</h2>
-            <h2>Creating an Account?</h2>
-            <button><a href="http://localhost:8080/IoTBayWebApplication/register.jsp">Register</a></button>
-
-        <%} else{%>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/">Home</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/IoTBayWebApplication/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-
-            <%
-                String email = user.getEmail();
-                String name = user.getName();
-
+                String name = request.getParameter("name");
+                String email = request.getParameter("email");
+                String phoneNumber = request.getParameter("phonenumber");
+                String address = request.getParameter("address");
+                String password = request.getParameter("password");
+                User user = new User(email, name, phoneNumber, password, address);
+                session.setAttribute("user", user);
+               
             %>
-            <h1>Welcome</h1>
-            <h2>Email: <%= email%></h2>
-            <h2>Name: <%= name%></h2>
-            
         <%}%>
+        <% User user = (User)session.getAttribute("user");%>
+        
+        <%if(user != null){%>
+            <h1>Hello <%=user.getName()%>,
+                <br> 
+                Welcome to IoTBay Web Application
+            </h1>
+
+            </div>
+            
+        <%}  else {%>
+        <h1> Hello Anonymous User, </h1>
+        <h2> Do you want to register? </h2>
+        <button><a href="register.jsp">Register</a></button>
+        
+        <% } %>
     </body>
 </html>

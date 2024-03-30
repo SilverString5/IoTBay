@@ -23,7 +23,7 @@
         <div class="menu">
             <ul>
                 <li><a id="active" href="http://localhost:8080/ISDAssignment1/index.jsp">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp">Logout</a></li>
+                
             </ul>
         </div>
         <br>  
@@ -41,6 +41,7 @@
             <br> 
             Welcome to IoTBay Web Application
         </h1>
+            <button><a href="logout.jsp">Logout</button>
       
         </div>
             

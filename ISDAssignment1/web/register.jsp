@@ -1,7 +1,7 @@
 <%-- 
     Document   : register
     Created on : 28/03/2024, 4:57:52 PM
-    Author     : notba
+    Author     : Katherine
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,7 +27,7 @@
                 
                 Creating New User
         
-        <form action="/ISDAssignment1/welcome.jsp" method="post">
+        <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
             <table>
             <tr>
                 <td><label for="email">Email:</label>
@@ -63,7 +63,7 @@
             <% } else {  %>
             You have already registered.
             
-           <form action="/ISDAssignment1/welcome.jsp" method="post">
+           <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
                <input type="hidden" name="submitted" value="false"/>
          <button type="submit">Proceed</button>
             <% } %>

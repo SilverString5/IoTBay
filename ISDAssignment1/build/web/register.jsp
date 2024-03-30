@@ -16,17 +16,25 @@
             
 
     <body>
-        <h1>IotBay - Register Here!</h1>
+ 
       
-     
-
+    
                
         <% if (session.getAttribute("user")==null) {
                 User user = new User();
                 session.setAttribute("user", user);%>
                 
-                Creating New User
-        
+                
+          <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+         <h1>IotBay - Register Here!</h1>
         <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
             <table>
             <tr>
@@ -61,8 +69,21 @@
             <button type="submit">Register Account</button>
         </form>
             <% } else {  %>
-            You have already registered.
-            
+        
+      
+
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+
+
            <form action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
                <input type="hidden" name="submitted" value="false"/>
          <button type="submit">Proceed</button>

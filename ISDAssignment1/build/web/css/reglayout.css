@@ -7,3 +7,53 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     Author     : notba
 */
 
+h1, p {
+    font-family: Barlow;
+    
+}
+
+
+body {
+    margin: 0;
+    width:200px;
+    height:600px;
+    background-size:contain;
+    border-radius:50%;
+    letter-spacing: 4px;
+    background-color:#f7f7f7;
+}
+
+.menu { font:15px/20px verdana,arial,helvetica,sans-serif; 
+        text-align: center;
+        }
+.menu li { display: inline;
+            float: left;
+            }
+.menu li a { display: block;
+                padding: 12px;
+                text-decoration: none;
+                color:#074f92;
+                border-right:1px solid #ffffff;
+                }
+.menu ul{ list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            borader: 0px;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            background-color: #fafafa;
+            border-bottom:1px solid #000000;
+            } 
+            
+
+.menu a:hover:not(.active) {
+    background-color: #e5f0f7;
+    color: #329c67;
+}
+
+.menu a:active {
+    background-color: #10608f;
+    color: white;
+}
+

@@ -23,8 +23,8 @@
              <a href="login.jsp">Try again.</a>
             <% } else { %>
                 <h1>Welcome, <%=user.getName()%> .</h1>
-                <p>Here is a link to your homepage.</p><br><br>
-                <a href="welcome.jsp">Welcome Page</a>
+                <p>Here is a link to your homepage.</p>
+                <a href="index.jsp">HOME</a>
             <%}%>
         <%}%>
         

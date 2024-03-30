@@ -22,9 +22,10 @@
              <h1>Your username or password is wrong. Please try again.</h1>
              <a href="login.jsp">Try again.</a>
             <% } else { %>
-                <h1>Welcome, <%=user.getName()%> .</h1>
-                <p>Here is a link to your homepage.</p><br><br>
-                <a href="welcome.jsp">Welcome Page</a>
+                <!--<h1>Welcome, <//%=user.getName()%> .</h1>-->
+                <!--<p>Here is a link to your homepage.</p><br><br>-->
+                <!--<a href="welcome.jsp">Welcome Page</a>-->
+                <%response.sendRedirect("welcome.jsp");%>
             <%}%>
         <%}%>
         

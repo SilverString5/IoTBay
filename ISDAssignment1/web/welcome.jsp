@@ -10,45 +10,51 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/reglayout.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Welcome Page</title>
     </head>
     <body>
-      <%User user = (User)session.getAttribute("user");
-      String submitted = "nothing";
-      if (request.getParameter("submitted")!=null){
-      submitted = request.getParameter("submitted");
-      }%>
         
         <div class="menu">
             <ul>
-                <li><a id="active" href="http://localhost:8080/ISDAssignment1/index.jsp">Home</a></li>
-                
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <!--<li><a href="register.jsp" > Login</a></li>-->
+                <!--<li><a href="register.jsp" > Register</a></li>-->
+                <li><a href="welcome.jsp" > You</a></li>
             </ul>
         </div>
         <br>  
         <br>
-        <div>
-        <%if((user != null) && (submitted.equals("true"))) {
+        
+        <%if(request.getParameter("submitted") != null){%>
+            <%  
             
-                user.setName(request.getParameter("name"));
-                user.setEmail(request.getParameter("email"));
-                user.setPhone(request.getParameter("phonenumber"));
-                user.setAddress(request.getParameter("address"));
-                user.setPassword(request.getParameter("password"));
+                String name = request.getParameter("name");
+                String email = request.getParameter("email");
+                String phoneNumber = request.getParameter("phonenumber");
+                String address = request.getParameter("address");
+                String password = request.getParameter("password");
+                User user = new User(email, name, phoneNumber, password, address);
+                session.setAttribute("user", user);
+               
             %>
-        <h1>Hello <%=user.getName()%>,
-            <br> 
-            Welcome to IoTBay Web Application
-        </h1>
-            <button><a href="logout.jsp">Logout</button>
-      
-        </div>
+        <%}%>
+        <% User user = (User)session.getAttribute("user");%>
+        
+        <%if(user != null){%>
+            <h1>Hello <%=user.getName()%>,
+                <br> 
+                Welcome to IoTBay Web Application
+            </h1>
+            <button><a href="logout.jsp">Log out</a></button>
+         </div>
             
-            <%}  else {%>
-        <h1> Hello Anonymous User, </h1>
-        <h2> Do you want to register? </h2>
-        <button><a href="register.jsp">Register</a></button>
+        <%}  else {%>
+            <h1> Hello Anonymous User, </h1>
+            <h2> Do you want to register? </h2>
+            <button><a href="register.jsp">Register</a></button>
         
         <% } %>
     </body>

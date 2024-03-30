@@ -1,12 +1,13 @@
 <%-- 
     Document   : register
     Created on : 28/03/2024, 4:57:52 PM
-    Author     : Katherine
+    Author     : notba
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,23 +19,23 @@
             
 
     <body>
- 
-               <% User user = new User();
-                session.setAttribute("user", user);%>
+
                 
-                
-          <div class="menu">
+        <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="login.jsp" > Login</a></li>
+                <li><a href="register.jsp" > Register</a></li>
+                <li><a href="welcome.jsp" > You</a></li>
             </ul>
-            </div>
-            <br>
-            <br>
+        </div>
+        <br>  
+        <br>
+        
+        <div>
          <h1 class="myheader">Register Here!</h1>
          <div class="myFormdiv">
-        <form class="myForm" action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
+        <form class="myForm" action="welcome.jsp" method="post">
             <label for="email">Email:</label><br>
            
             <input type ="email" name ="email" id="email" placeholder="Email" required/><br>
@@ -59,6 +60,7 @@
   
               <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
+         
         </form>
          </div>
              

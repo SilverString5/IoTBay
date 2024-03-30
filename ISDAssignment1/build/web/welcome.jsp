@@ -35,6 +35,7 @@
                 user.setEmail(request.getParameter("email"));
                 user.setPhone(request.getParameter("phonenumber"));
                 user.setAddress(request.getParameter("address"));
+                user.setPassword(request.getParameter("password"));
             %>
         <h1>Hello <%=user.getName()%>,
             <br> 

@@ -21,7 +21,7 @@
  
                <% User user = new User();
                 session.setAttribute("user", user);%>
-                %>
+                
                 
           <div class="menu">
             <ul>

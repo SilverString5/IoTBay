@@ -44,7 +44,7 @@
                 <input type="text" name="name" id="name" placeholder="Name" required/><br>
            
            <label for="phone">Phone Number:</label><br>
-                <input type="number" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
+                <input type="text" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
             
                <label for="password">Password:</label><br>
                 

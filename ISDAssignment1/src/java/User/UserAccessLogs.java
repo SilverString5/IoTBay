@@ -10,16 +10,15 @@ import java.util.*;
  *
  * @author lorinchanel
  */
-public class ApplicationAccessLogs implements Serializable {
-
+public class UserAccessLogs implements Serializable {
+    
     private int accessLogId;
     private String browserType;
     private String eventType;
     private Date timeStamp;
     private int sessionNum;
-
     
-    public ApplicationAccessLogs(int accessLogId, String browserType, String eventType, Date timeStamp, int sessionNum){
+    public UserAccessLogs(int accessLogId, String browserType, String eventType, Date timeStamp, int sessionNum){
         this.accessLogId = accessLogId;
         this.browserType = browserType;
         this.eventType = eventType;
@@ -66,6 +65,5 @@ public class ApplicationAccessLogs implements Serializable {
     public void setSessionNum(int sessionNum) {
         this.sessionNum = sessionNum;
     }
-   
     
 }

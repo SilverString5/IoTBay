@@ -4,21 +4,24 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  *
  * @author notba
  */
-public class User implements Serializable {
+
+//Attempt to implement as superclass since it is a super type in ERD
+public abstract class User implements Serializable {
+
+    private int userID;
     private String email;
     private String name;
     private String phone;
     private String password;   
     private String address;
-
-
-
-
+    private Date DOB;
+    private boolean gender;
     
     public User(){}
     
@@ -29,6 +32,14 @@ public class User implements Serializable {
         this.password = password;
         this.address=address;
 
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
     
     public void setEmail(String email){
@@ -70,4 +81,21 @@ public class User implements Serializable {
     public void setAddress(String address){
     this.address=address;
     }   
+
+    public Date getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(Date DOB) {
+        this.DOB = DOB;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+    
 }

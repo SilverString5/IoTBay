@@ -10,10 +10,6 @@ public class Product implements Serializable{
     private String productDetail;
     private int productInStock;
     
-    public Product(){
-        
-    }
-    
     public Product(int productID, String productName, double productUnitPrice, String productDetail, int productInStock){
       this.productID = productID;
       this.productName = productName;

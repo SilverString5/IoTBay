@@ -7,10 +7,6 @@ public class Order implements Serializable {
     private Date orderDate;
     private String orderStatus;
     
-    public Order(){
-        
-    }
-    
     public Order(int orderID, Date orderDate, String orderStatus){
         this.orderID = orderID;
         this.orderDate = orderDate;

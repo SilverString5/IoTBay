@@ -8,10 +8,6 @@ public class Invoice implements Serializable {
     private Date invoiceDate;
     private boolean paymentStatus;
     
-    public Invoice() {
-    
-    }
-    
     public Invoice(int invoiceID, Date invoiceDate, boolean paymentStatus){
         this.invoiceID = invoiceID;
         this.invoiceDate = invoiceDate;

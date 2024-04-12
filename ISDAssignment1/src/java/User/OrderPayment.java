@@ -11,10 +11,36 @@ import java.util.*;
  * @author lorinchanel
  */
 public class OrderPayment implements Serializable {
+
     
+    private int paymentID;
+    private int orderID;
     private Date paymentDate;
     private long paymentTime;
+    
+    private OrderPayment(int paymentID, int orderID, Date paymentDate, long paymentTime){
+        this.paymentID = paymentID;
+        this.orderID = orderID;
+        this.paymentDate = paymentDate;
+        this.paymentTime = paymentTime;
+    }
 
+    public int getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(int paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+    
     public Date getPaymentDate() {
         return paymentDate;
     }

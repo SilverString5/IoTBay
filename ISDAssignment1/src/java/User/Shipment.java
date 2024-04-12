@@ -11,7 +11,32 @@ import java.io.Serializable;
  */
 public class Shipment implements Serializable {
 
+    private int shipmentID;
+    private int customerID;
     private String shipmentAddress;
+
+    
+    public Shipment(int shipmentID, int customerID, String shipmentAddress){
+        this.shipmentID = shipmentID;
+        this.customerID = customerID;
+        this.shipmentAddress = shipmentAddress;
+    }
+    
+    public int getShipmentID() {
+        return shipmentID;
+    }
+
+    public void setShipmentID(int shipmentID) {
+        this.shipmentID = shipmentID;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
 
     public String getShipmentAddress() {
         return shipmentAddress;

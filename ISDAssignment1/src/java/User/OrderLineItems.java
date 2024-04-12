@@ -10,9 +10,34 @@ import java.io.Serializable;
  * @author lorinchanel
  */
 public class OrderLineItems {
-    
+
+    private int orderID;
+    private int productID;
     private int productQuantity;
     private int subTotal;
+    
+    public OrderLineItems(int orderID, int productID, int productQuantity, int subTotal){
+        this.orderID = orderID;
+        this.productID = productID;
+        this.productQuantity = productQuantity;
+        this.subTotal = subTotal;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
 
     public int getProductQuantity() {
         return productQuantity;

@@ -9,10 +9,6 @@ public class Payment implements Serializable{
     private int paymentCardNumber;
     private int paymentCVC;
     
-    public Payment(){
-        
-    }
-    
     public Payment(int paymentID, String paymentMethod, Date paymentDate, int paymentCardNumber, int paymentCVC){
         this.paymentID = paymentID;
         this.paymentMethod = paymentMethod;

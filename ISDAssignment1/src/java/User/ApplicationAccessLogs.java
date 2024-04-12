@@ -12,10 +12,28 @@ import java.util.*;
  */
 public class ApplicationAccessLogs implements Serializable {
 
+    private int accessLogId;
     private String browserType;
     private String eventType;
     private Date timeStamp;
     private int sessionNum;
+
+    
+    public ApplicationAccessLogs(int accessLogId, String browserType, String eventType, Date timeStamp, int sessionNum){
+        this.accessLogId = accessLogId;
+        this.browserType = browserType;
+        this.eventType = eventType;
+        this.timeStamp = timeStamp;
+        this.sessionNum = sessionNum;
+    }
+    
+    public int getAccessLogId() {
+        return accessLogId;
+    }
+
+    public void setAccessLogId(int AccessLogId) {
+        this.accessLogId = AccessLogId;
+    }
     
     public String getBrowserType() {
         return browserType;

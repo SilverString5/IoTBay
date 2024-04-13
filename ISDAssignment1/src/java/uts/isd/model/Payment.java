@@ -1,4 +1,4 @@
-package User;
+package uts.isd.model;
 import java.util.*;
 import java.io.Serializable;
 
@@ -8,10 +8,6 @@ public class Payment implements Serializable{
     private Date paymentDate;
     private int paymentCardNumber;
     private int paymentCVC;
-    
-    public Payment(){
-        
-    }
     
     public Payment(int paymentID, String paymentMethod, Date paymentDate, int paymentCardNumber, int paymentCVC){
         this.paymentID = paymentID;

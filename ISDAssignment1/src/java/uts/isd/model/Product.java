@@ -1,4 +1,4 @@
-package User;
+package uts.isd.model;
 import java.io.Serializable;
 
 
@@ -9,10 +9,6 @@ public class Product implements Serializable{
     private double productUnitPrice;
     private String productDetail;
     private int productInStock;
-    
-    public Product(){
-        
-    }
     
     public Product(int productID, String productName, double productUnitPrice, String productDetail, int productInStock){
       this.productID = productID;

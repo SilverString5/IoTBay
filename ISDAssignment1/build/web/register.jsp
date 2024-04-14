@@ -21,16 +21,30 @@
     <body>
 
                 
-        <div class="menu">
+        <%if (session.getAttribute("user") != null){%>
+            <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="login.jsp" > Login</a></li>
-                <li><a href="register.jsp" > Register</a></li>
-                <li><a href="welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
             </ul>
-        </div>
-        <br>  
-        <br>
+            </div>
+            <br>
+            <br>
+            
+        <%}else {%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+        
+        <%}%>
         
         <div>
          <h1 class="myheader">Register Here!</h1>

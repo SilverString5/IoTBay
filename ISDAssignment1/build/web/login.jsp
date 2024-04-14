@@ -31,6 +31,18 @@
         <%}%>
         
     <body>
+ 
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+        
         <% if (submitted1 == null){%>
         <h1>Login Here!</h1>
         <form method="post">

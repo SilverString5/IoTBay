@@ -1,23 +1,39 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Random"%> 
+<%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/layout.css">
-        <script type="text/javascript" src="js/index.js"></script>
-        <title>IoTbay Home Page</title>
+        <title>IoTBay WebStore</title>
     </head>
+    
     <body>
-        <div class="menu">
-        <ul>
-            <li><a id="active" href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-            <li><a href="http://localhost:8080/ISDAssignment1/main.jsp" > You</a></li>
-            <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-            <li><a href="register.jsp" > Register</a></li>
-        </ul>
-        </div>
+        <%if (session.getAttribute("user") != null){%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+            
+        <%}else {%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+        
+        <%}%>
 
-        <br>
     </body>
 </html>

@@ -10,24 +10,24 @@ import java.io.Serializable;
  * @author notba
  */
 public class User implements Serializable {
+    private int userID;
     private String email;
     private String name;
     private String phone;
     private String password;   
     private String address;
-<<<<<<< Updated upstream
-
-
-=======
     private String DOB;
     private String gender;
->>>>>>> Stashed changes
+    private String type;
+
+
 
 
     
     public User(){}
     
-    public User(int userID, String email, String name, String phone, String password, String address, String DOB, String gender){
+    public User(int userID, String email, String name, String phone, String password, String address, String DOB, String gender, String type){
+        this.userID=userID;
         this.email = email;
         this.name = name;
         this.phone = phone;
@@ -35,8 +35,17 @@ public class User implements Serializable {
         this.address=address;
         this.DOB=DOB;
         this.gender=gender;
+        this.type=type;
+      
 
 
+    }
+
+    public void setUserID(int userID){
+        this.userID=userID;
+    }
+    public int getUserID(){
+        return this.userID;
     }
     
     public void setEmail(String email){
@@ -78,8 +87,6 @@ public class User implements Serializable {
     public void setAddress(String address){
     this.address=address;
     }   
-<<<<<<< Updated upstream
-=======
 
     public String getDOB() {
         return DOB;
@@ -97,5 +104,4 @@ public class User implements Serializable {
         this.gender = gender;
     }
     
->>>>>>> Stashed changes
 }

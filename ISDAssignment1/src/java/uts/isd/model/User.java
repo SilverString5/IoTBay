@@ -15,19 +15,27 @@ public class User implements Serializable {
     private String phone;
     private String password;   
     private String address;
+<<<<<<< Updated upstream
 
 
+=======
+    private String DOB;
+    private String gender;
+>>>>>>> Stashed changes
 
 
     
     public User(){}
     
-    public User(String email, String name, String phone, String password, String address){
+    public User(int userID, String email, String name, String phone, String password, String address, String DOB, String gender){
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.password = password;
         this.address=address;
+        this.DOB=DOB;
+        this.gender=gender;
+
 
     }
     
@@ -70,4 +78,24 @@ public class User implements Serializable {
     public void setAddress(String address){
     this.address=address;
     }   
+<<<<<<< Updated upstream
+=======
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    
+>>>>>>> Stashed changes
 }

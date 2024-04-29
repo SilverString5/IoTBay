@@ -1,15 +1,16 @@
 package uts.isd.model;
 import java.util.*;
+import java.time.*;
 import java.io.Serializable;
 
 public class Payment implements Serializable{
     private int paymentID;
     private String paymentMethod;
-    private Date paymentDate;
+    private LocalDate paymentDate;
     private int paymentCardNumber;
     private int paymentCVC;
     
-    public Payment(int paymentID, String paymentMethod, Date paymentDate, int paymentCardNumber, int paymentCVC){
+    public Payment(int paymentID, String paymentMethod, LocalDate paymentDate, int paymentCardNumber, int paymentCVC){
         this.paymentID = paymentID;
         this.paymentMethod = paymentMethod;
         this.paymentDate = paymentDate;
@@ -26,7 +27,7 @@ public class Payment implements Serializable{
         this.paymentMethod = paymentMethod;
     }
     
-    public void setPaymentDate(Date paymentDate){
+    public void setPaymentDate(LocalDate paymentDate){
         this.paymentDate = paymentDate;
     }
     
@@ -46,7 +47,7 @@ public class Payment implements Serializable{
         return this.paymentMethod;
     }
     
-    public Date getPaymentDate(){
+    public LocalDate getPaymentDate(){
         return this.paymentDate;
     }
     

@@ -12,7 +12,7 @@ import java.util.*;
  */
 
 //Attempt to implement as superclass since it is a super type in ERD
-public abstract class User implements Serializable {
+public class User implements Serializable {
 
     private int userID;
     private String email;

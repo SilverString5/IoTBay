@@ -6,8 +6,8 @@ import org.junit.runner.notification.Failure;
 
 public class TestRunner {
     public static void main(String[] args) {
-        System.out.println("- Testing Calculator: ");
-        Result result = JUnitCore.runClasses(DAOTest.class);
+        System.out.println("- Testing UserDAO: ");
+        Result result = JUnitCore.runClasses(UserDAOTest.class);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }

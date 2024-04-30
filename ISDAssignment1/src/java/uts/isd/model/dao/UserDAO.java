@@ -24,9 +24,9 @@ public class UserDAO {
     private PreparedStatement readSt;
     private PreparedStatement updateSt;
     private PreparedStatement deleteSt;
-    private String readQuery = "SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?";
-    private String updateQuery = "UPDATE USERS SET EMAIL=?, PASSWORD=?, \"NAME\"=?, PHONE=?, ADDRESS=?, DOB=?, GENDER=? WHERE UserID=?";
-    private String deleteQuery = "DELETE FROM USERS WHERE UserID= ?";
+    private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
+    private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
+    private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
 
 	public UserDAO(Connection connection) throws SQLException {
 		connection.setAutoCommit(true);
@@ -37,72 +37,85 @@ public class UserDAO {
 	}
 
 // Create Operation: create a user
-	public void createUser(String email, String name, String password, int phone, String address, String DOB, String gender, String type) throws SQLException {
-		String columns = "INSERT INTO USERS(EMAIL,\"NAME\",PASSWORD,PHONE, ADDRESS, DOB, GENDER, TYPE)";
-		String values = "VALUES('" + email + "','" + name + "','" + password + "','" 
-                + phone + "'," + address + "," + DOB + "','"+ gender + "','" + type +"')";
+	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, String userDOB, String userGender, String userType) throws SQLException {
+		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender, userType)";
+		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
+                + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "','" + userType +"')";
 		st.executeUpdate(columns + values);
 	}
 
 	// Read Operation: user login
-	public User login(String email, String password) throws SQLException {
-		readSt.setString(1, email);
-		readSt.setString(2, password);
+	public User login(String userEmail, String userPassword) throws SQLException {
+		readSt.setString(1, userEmail);
+		readSt.setString(2, userPassword);
 		ResultSet rs = readSt.executeQuery();
 
 		while (rs.next()) {
-			String useremail = rs.getString(2);
-			String userpass = rs.getString(3);
-			if (email.equals(useremail) && password.equals(userpass)) {
-				int ID = Integer.parseInt(rs.getString(1));
-				String name = rs.getString(4);
-				String phone = rs.getString(5);
-                                String address = rs.getString(6);
-                                String DOB = rs.getString(7);
-                                String type = rs.getString(8);
-				// return new User(ID, email, name, password, phone);
-				return null;
-			}
-		}
-		return null;
-	}
+			String dataUserEmail = rs.getString(2);
+			String dataUserPass = rs.getString(3);
+			if (userEmail.equals(dataUserEmail) && userPassword.equals(dataUserPass)) {
+				int userID = Integer.parseInt(rs.getString(1));
+				String userFullName = rs.getString(4);
+				String userPhone = rs.getString(5);
+                                String userAddress = rs.getString(6);
+                                String userDOB = rs.getString(7);
+                                String userGender = rs.getString(8);
+                                String userType = rs.getString(9);
+				return new User(userID, userEmail, userPassword, userFullName, userPhone, userAddress, userDOB, userGender, userType);
+				
+                            }
+		
+                          }
+                return null;
+                        }
 
 	// Update Operation: update user
-	public void update(int userID, String email, String password, String name, 
-        String phone, String address, String DOB, String gender) throws SQLException {
-		updateSt.setString(1, Integer.toString(userID));
-                updateSt.setString(2, email);
-		updateSt.setString(3, password);
-		updateSt.setString(4, name);
-                updateSt.setString(5, phone);
-                updateSt.setString(6, address);
-                updateSt.setString(7, DOB);
-                updateSt.setString(8, gender);
+	public void update(String userEmail, String userPassword, String userFullName, 
+        String userPhone, String userAddress, String userDOB, String userGender, int userID) throws SQLException {
+                updateSt.setString(1, userEmail);
+		updateSt.setString(2, userPassword);
+		updateSt.setString(3, userFullName);
+                updateSt.setString(4, userPhone);
+                updateSt.setString(5, userAddress);
+                updateSt.setString(6, userDOB);
+                updateSt.setString(7, userGender);
+                updateSt.setString(8, Integer.toString(userID));
 
 
 		int row = updateSt.executeUpdate();
 		System.out.println("row " + row + " updated successfuly");
 	}
 
-	// Delete Operation: delete a user by email & password
-	public void delete(String email, String password, int ID) throws SQLException {
-		deleteSt.setString(1, Integer.toString(ID));
+	// Delete Operation: delete a user by userEmail & userPassword
+	public void delete(String userEmail, String userPassword) throws SQLException {
+		deleteSt.setString(1, userEmail);
+                deleteSt.setString(2, userPassword);
 		int row = deleteSt.executeUpdate();
 		System.out.println("row " + row + " deleted successfuly");
 	}
 
 	// Fetch All: List all users
 	public ArrayList<User> fetchUsers() throws SQLException {
-		String fetch = "SELECT * FROM user";
+		String fetch = "SELECT * FROM users";
 		ResultSet rs = st.executeQuery(fetch);
-		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<User> allUsers = new ArrayList<>();
 
 		while (rs.next()) {
-			String name = rs.getString(4);
+                        int userID =rs.getInt(1);
+                        String userEmail = rs.getString(2);
+                        String userPassword = rs.getString(3);
+			String userFullName = rs.getString(4);
+                        String userPhone = rs.getString(5);
+                        String userAddress = rs.getString(6);
+                        String userDOB = rs.getString(7);
+                        String userGender = rs.getString(8);
+                        String userType=rs.getString(9);
+                        User user = new User(userID, userEmail, userPassword, userFullName, 
+                        userPhone, userAddress, userDOB, userGender, userType);
+                        allUsers.add(user);
 
-			System.out.println(name);
 		}
-		return users;
+		return allUsers;
 	}
 }
 

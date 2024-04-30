@@ -32,43 +32,38 @@ public class AccessLogDAO {
 	}
 
 // Create Operation: create a user access log
-	public void createUserAccessLog(String email, String name, String password, int phone, String address, String DOB, String gender, String type) throws SQLException {
-		String columns = "INSERT INTO USERS(EMAIL,\"NAME\",PASSWORD,PHONE, ADDRESS, DOB, GENDER, TYPE)";
-		String values = "VALUES('" + email + "','" + name + "','" + password + "','" 
-                + phone + "'," + address + "," + DOB + "','"+ gender + "','" + type +"')";
+	public void createUserAccessLog(int userID, String eventType, String sessionCreationTime, String sessionEndTime, String browserType) throws SQLException {
+		String columns = "INSERT INTO accesslogs(userID, eventType, sessionCreationTime, sessionEndTime, browserType)";
+		String values = "VALUES('" + userID + "','" + eventType + "','" + sessionCreationTime + "','" 
+                + sessionEndTime + "','" + browserType + "')";
 		st.executeUpdate(columns + values);
 	}
 
-	// Read Operation: user login
-	public UserAccessLog read(String email, String password) throws SQLException {
-		readSt.setString(1, email);
-		readSt.setString(2, password);
-		ResultSet rs = readSt.executeQuery();
-
-		while (rs.next()) {
-			String useremail = rs.getString(2);
-			String userpass = rs.getString(3);
-			if (email.equals(useremail) && password.equals(userpass)) {
-				int ID = Integer.parseInt(rs.getString(1));
-				String name = rs.getString(4);
-				String phone = rs.getString(5);
-                                String address = rs.getString(6);
-                                String DOB = rs.getString(7);
-                                String type = rs.getString(8);
-				// return new User(ID, email, name, password, phone);
-				return null;
-			}
-		}
-		return null;
-	}
+	// Read Operation: allow user to view all their access logs
+	public ArrayList<UserAccessLog> viewAccessLogs(int userID) throws SQLException {
+		readSt.setString(1, Integer.toString(userID));
+                ResultSet rs = readSt.executeQuery();
+                ArrayList<UserAccessLog> myAccessLogs = new ArrayList<>();
+                while (rs.next()){
+                int accessLogID = rs.getInt(1);
+                String eventType = rs.getString(3);
+                String sessionCreationTime = rs.getString(4);
+                String sessionEndTime = rs.getString(5);
+                String browserType = rs.getString(6);
+                UserAccessLog accessLog = new UserAccessLog(userID, accessLogID, 
+                eventType, sessionCreationTime, sessionEndTime, browserType);
+                myAccessLogs.add(accessLog);
+                             }
+          return myAccessLogs;
+		
+}
 
 
-
-	// Fetch All: List all user access logs
+	/*// Fetch All: List all user access logs
 	public ArrayList<UserAccessLog> fetchUserAccessLogs() throws SQLException {
-		String fetch = "SELECT * FROM userAccessLogs";
+		String fetch = "SELECT * FROM accesslogs";
 		ResultSet rs = st.executeQuery(fetch);
-		ArrayList<UserAccessLog> accessLogs = new ArrayList<UserAccessLog>();
+		ArrayList<UserAccessLog> allAccessLogs = new ArrayList<>();
 
 		while (rs.next()) {
 			String name = rs.getString(4);
@@ -76,6 +71,6 @@ public class AccessLogDAO {
 			System.out.println(name);
 		}
 		return accessLogs;
-	}
+	}*/
     
 }

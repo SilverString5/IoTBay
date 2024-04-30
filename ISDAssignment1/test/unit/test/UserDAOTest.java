@@ -21,16 +21,16 @@ import uts.isd.model.User;
  */
 
 
-public class DAOTest {
+public class UserDAOTest {
 
 	private DBConnector connector;
 	private Connection conn;
-	private UserDAO userDAO;
+	private UserDAO manager;
 
-	public DAOTest() throws ClassNotFoundException, SQLException {
+	public UserDAOTest() throws ClassNotFoundException, SQLException {
 		connector = new DBConnector();
 		conn = connector.openConnection();
-		userDAO = new UserDAO(conn);
+		manager = new UserDAO(conn);
 	}
 
 	@Test
@@ -40,8 +40,8 @@ public class DAOTest {
 
 	@Test
 	public void testSelectUsers() throws SQLException {
-		ArrayList<User> users = userDAO.fetchUsers();
-		assertEquals(users.size(), 2);
+		ArrayList<User> users = manager.fetchUsers();
+		assertEquals(users.size(), 4);
 	}
 }
 

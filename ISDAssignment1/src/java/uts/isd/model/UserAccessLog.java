@@ -6,21 +6,22 @@ package uts.isd.model;
 import java.io.Serializable;
 import java.util.*;
 
+
 /**
  *
  * @author lorinchanel
  */
 public class UserAccessLog implements Serializable {
     
-    private int accessLogId;
+    private int accessLogID;
     private int userID;
     private String browserType;
     private String eventType;
     private String sessionCreationTime;
     private String sessionEndTime;
     
-    public UserAccessLog(int accessLogId, int userID, String browserType, String eventType, String sessionCreationTime, String sessionEndTime){
-        this.accessLogId = accessLogId;
+    public UserAccessLog(int accessLogID, int userID, String browserType, String eventType, String sessionCreationTime, String sessionEndTime){
+        this.accessLogID = accessLogID;
         this.userID = userID;
         this.browserType = browserType;
         this.eventType = eventType;
@@ -29,12 +30,12 @@ public class UserAccessLog implements Serializable {
 
     }
     
-    public int getAccessLogId() {
-        return accessLogId;
+    public int getAccessLogID() {
+        return accessLogID;
     }
 
-    public void setAccessLogId(int AccessLogId) {
-        this.accessLogId = AccessLogId;
+    public void setAccessLogID(int AccessLogId) {
+        this.accessLogID = AccessLogId;
     }
 
     public int getUserID() {

@@ -11,14 +11,14 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
     private int userID;
-    private String email;
-    private String name;
-    private String phone;
-    private String password;   
-    private String address;
-    private String DOB;
-    private String gender;
-    private String type;
+    private String userEmail;
+    private String userFullName;
+    private String userPhone;
+    private String userPassword;   
+    private String userAddress;
+    private String userDOB;
+    private String userGender;
+    private String userType;
 
 
 
@@ -26,16 +26,16 @@ public class User implements Serializable {
     
     public User(){}
     
-    public User(int userID, String email, String name, String phone, String password, String address, String DOB, String gender, String type){
+    public User(int userID, String userEmail, String userFullName, String userPhone, String userPassword, String userAddress, String userDOB, String userGender, String userType){
         this.userID=userID;
-        this.email = email;
-        this.name = name;
-        this.phone = phone;
-        this.password = password;
-        this.address=address;
-        this.DOB=DOB;
-        this.gender=gender;
-        this.type=type;
+        this.userEmail = userEmail;
+        this.userFullName = userFullName;
+        this.userPhone = userPhone;
+        this.userPassword = userPassword;
+        this.userAddress=userAddress;
+        this.userDOB=userDOB;
+        this.userGender=userGender;
+        this.userType=userType;
       
 
 
@@ -48,60 +48,60 @@ public class User implements Serializable {
         return this.userID;
     }
     
-    public void setEmail(String email){
-        this.email = email;
+    public void setEmail(String userEmail){
+        this.userEmail = userEmail;
     }
     
     public String getEmail(){
-        return this.email;
+        return this.userEmail;
     }
     
         public String getName() {
-        return this.name;
+        return this.userFullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String userFullName) {
+        this.userFullName = userFullName;
     }
 
     public String getPhone() {
-        return this.phone;
+        return this.userPhone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     public String getPassword() {
-        return this.password;
+        return this.userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getAddress(){
-    return this.address;
+    return this.userAddress;
     }
 
-    public void setAddress(String address){
-    this.address=address;
+    public void setAddress(String userAddress){
+    this.userAddress=userAddress;
     }   
 
-    public String getDOB() {
-        return DOB;
+    public String getuserDOB() {
+        return userDOB;
     }
 
-    public void setDOB(String DOB) {
-        this.DOB = DOB;
+    public void setuserDOB(String userDOB) {
+        this.userDOB = userDOB;
     }
 
     public String getGender() {
-        return gender;
+        return userGender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGender(String userGender) {
+        this.userGender = userGender;
     }
     
 }

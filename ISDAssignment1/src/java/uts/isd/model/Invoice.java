@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class Invoice implements Serializable {
     
     private int invoiceID;
-    private LocalDate invoiceDate;
+    private Date invoiceDate;
     private boolean paymentStatus;
     
-    public Invoice(int invoiceID, LocalDate invoiceDate, boolean paymentStatus){
+    public Invoice(int invoiceID, Date invoiceDate, boolean paymentStatus){
         this.invoiceID = invoiceID;
         this.invoiceDate = invoiceDate;
         this.paymentStatus = paymentStatus;
@@ -19,7 +19,7 @@ public class Invoice implements Serializable {
         this.invoiceID = invoiceID;
     }
     
-    public void setInvoiceDate(LocalDate invoiceDate){
+    public void setInvoiceDate(Date invoiceDate){
         this.invoiceDate = invoiceDate;
     }
     
@@ -31,7 +31,7 @@ public class Invoice implements Serializable {
         return this.invoiceID;
     }
     
-    public LocalDate getInvoiceDate(){
+    public Date getInvoiceDate(){
         return this.invoiceDate;
     }
     

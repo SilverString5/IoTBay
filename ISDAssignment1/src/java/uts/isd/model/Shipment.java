@@ -5,6 +5,7 @@
 package uts.isd.model;
 import java.time.*;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  *
@@ -19,10 +20,10 @@ public class Shipment implements Serializable {
     private String shipmentMethod;
     
     private String shipmentStatus;
-    private LocalDate shipmentEstTime;
+    private Date shipmentEstTime;
 
     
-    public Shipment(int shipmentID, int customerID, int orderID, String shipmentAddress, String shipmentMethod, String shipmentStatus, LocalDate shipmentEstTime){
+    public Shipment(int shipmentID, int customerID, int orderID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentEstTime){
         
         this.shipmentID = shipmentID;
         this.customerID = customerID;
@@ -92,11 +93,11 @@ public class Shipment implements Serializable {
         this.shipmentStatus = shipmentStatus;
     }
 
-    public LocalDate getShipmentEstTime() {
+    public Date getShipmentEstTime() {
         return shipmentEstTime;
     }
 
-    public void setShipmentEstTime(LocalDate shipmentEstTime) {
+    public void setShipmentEstTime(Date shipmentEstTime) {
         this.shipmentEstTime = shipmentEstTime;
     }
     

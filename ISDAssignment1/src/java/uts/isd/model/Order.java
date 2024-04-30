@@ -1,13 +1,14 @@
 package uts.isd.model;
+import java.util.*;
 import java.time.*;
 import java.io.Serializable;
 
 public class Order implements Serializable {
     private int orderID;
-    private LocalDate orderDate;
+    private Date orderDate;
     private String orderStatus;
     
-    public Order(int orderID, LocalDate orderDate, String orderStatus){
+    public Order(int orderID, Date orderDate, String orderStatus){
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
@@ -17,7 +18,7 @@ public class Order implements Serializable {
         this.orderID = orderID;
     }
     
-    public void setOrderDate (LocalDate orderDate){
+    public void setOrderDate (Date orderDate){
         this.orderDate = orderDate;
     }
     
@@ -29,7 +30,7 @@ public class Order implements Serializable {
         return this.orderID;
     }
     
-    public LocalDate getOrderDate (){
+    public Date getOrderDate (){
         return this.orderDate;
     }
     

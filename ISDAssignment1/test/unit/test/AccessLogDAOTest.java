@@ -18,19 +18,35 @@ import uts.isd.model.UserAccessLog;
 public class AccessLogDAOTest {
     private DBConnector connector;
     private Connection conn;
-    private UserDAO manager;
+    private AccessLogDAO manager;
 
 	public AccessLogDAOTest() throws ClassNotFoundException, SQLException {
 		connector = new DBConnector();
 		conn = connector.openConnection();
-		manager = new UserDAO(conn);
+		manager = new AccessLogDAO(conn);
 	}
 
 	@Test
 	public void testConnection() throws SQLException {
 		assertNotNull(conn);
 	}
+        @Test
+        public void testCreateUserAccessLog() throws SQLException{
+                manager.createUserAccessLog(3);
+        }
+
+        @Test
+        public void testFilterAccessLog() throws SQLException {
+                ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2024-05-03");
+                assertEquals(filLogs.size(),1);
+}
+
+
+
+
+
+}
 
 
     
-}
+

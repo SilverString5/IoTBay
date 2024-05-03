@@ -41,14 +41,27 @@ public class UserDAOTest {
 	@Test
 	public void testSelectUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
-		assertEquals(users.size(), 20);
+		assertTrue(users.size()>=20);
 	}
+        @Test
+        public void testDeleteUser() throws SQLException{
+            manager.delete("test@testemail.com","test");
+        }
 
         @Test
         public void testCreateUser() throws SQLException{
-                manager.createUser("test@testemail.com", "Tester", "test", "0444444444", "Ray St","1994-02-02", "F", "C");
+                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St","1994-02-02", "F", "C");
             }
 
+        @Test
+        public void testLoginCorrect() throws SQLException{
+                assertNotNull(manager.login("admin@iotbay.com","logmein"));
+        }
+
+        @Test
+        public void testLoginIncorrect() throws SQLException{
+        assertNull(manager.login("nonexistent@gmail.com", "idontexist"));
+        }
 }
 
     

@@ -34,7 +34,7 @@ public class DBConnector extends DB {
             return this.conn;
                                            }
 
-public void closeConnection() throws SQLException {
-    this.conn.close();
-}
+        public void closeConnection() throws SQLException {
+            this.conn.close();
+           }
 }

@@ -38,9 +38,9 @@ public class AccessLogDAO {
 	}
 
         // Create Operation: create a user access log
-	public void createUserAccessLog(int userID, String accessLogDate, String loginTime, String logoutTime) throws SQLException {
-		String columns = "INSERT INTO accesslogs(userID, accessLogDate, loginTime, logoutTime)";
-		String values = "VALUES('" + userID + "','" + Date.valueOf(accessLogDate) + "','" + Time.valueOf(loginTime) + "','" + Time.valueOf(logoutTime) + "')";
+	public void createUserAccessLog(int userID) throws SQLException {
+		String columns = "INSERT INTO accesslogs(userID)";
+		String values = "VALUES('" + userID+ "')";
 		st.executeUpdate(columns + values);
 	}
 

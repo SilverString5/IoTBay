@@ -22,27 +22,13 @@
              <h1>Your username or password is wrong. Please try again.</h1>
              <a href="login.jsp">Try again.</a>
             <% } else { %>
-                <!--<h1>Welcome, <//%=user.getName()%> .</h1>-->
-                <!--<p>Here is a link to your homepage.</p><br><br>-->
-                <!--<a href="welcome.jsp">Welcome Page</a>-->
-                <%response.sendRedirect("welcome.jsp");%>
-
+                <h1>Welcome, <%=user.getName()%> .</h1>
+                <p>Here is a link to your homepage.</p>
+                <a href="index.jsp">HOME</a>
             <%}%>
         <%}%>
         
     <body>
- 
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-        
         <% if (submitted1 == null){%>
         <h1>Login Here!</h1>
         <form method="post">

@@ -1,13 +1,12 @@
 <%-- 
     Document   : register
     Created on : 28/03/2024, 4:57:52 PM
-    Author     : notba
+    Author     : Katherine
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,37 +18,23 @@
             
 
     <body>
-
+ 
+               <% User user = new User();
+                session.setAttribute("user", user);%>
                 
-        <%if (session.getAttribute("user") != null){%>
-            <div class="menu">
+                
+          <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
             </ul>
             </div>
             <br>
             <br>
-            
-        <%}else {%>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-        
-        <%}%>
-        
-        <div>
          <h1 class="myheader">Register Here!</h1>
          <div class="myFormdiv">
-        <form class="myForm" action="welcome.jsp" method="post">
+        <form class="myForm" action="http://localhost:8080/ISDAssignment1/welcome.jsp" method="post">
             <label for="email">Email:</label><br>
            
             <input type ="email" name ="email" id="email" placeholder="Email" required/><br>
@@ -58,7 +43,7 @@
                 <input type="text" name="name" id="name" placeholder="Name" required/><br>
            
            <label for="phone">Phone Number:</label><br>
-                <input type="text" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
+                <input type="number" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
             
                <label for="password">Password:</label><br>
                 
@@ -74,7 +59,6 @@
   
               <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
-         
         </form>
          </div>
              

@@ -1,12 +1,15 @@
 package uts.isd.model;
 import java.util.*;
-import java.time.*;
 import java.io.Serializable;
 
 public class Order implements Serializable {
     private int orderID;
     private Date orderDate;
     private String orderStatus;
+    
+    public Order(){
+        
+    }
     
     public Order(int orderID, Date orderDate, String orderStatus){
         this.orderID = orderID;

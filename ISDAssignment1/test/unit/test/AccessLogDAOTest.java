@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-IOTBay
  */
 package unit.test;
 import java.sql.Connection;
@@ -10,24 +9,18 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import uts.isd.model.dao.*;
 import java.util.ArrayList;
-import uts.isd.model.User;
-
-
-
+import uts.isd.model.UserAccessLog;
 
 /**
  *
  * @author notba
  */
+public class AccessLogDAOTest {
+    private DBConnector connector;
+    private Connection conn;
+    private UserDAO manager;
 
-
-public class UserDAOTest {
-
-	private DBConnector connector;
-	private Connection conn;
-	private UserDAO manager;
-
-	public UserDAOTest() throws ClassNotFoundException, SQLException {
+	public AccessLogDAOTest() throws ClassNotFoundException, SQLException {
 		connector = new DBConnector();
 		conn = connector.openConnection();
 		manager = new UserDAO(conn);
@@ -38,18 +31,6 @@ public class UserDAOTest {
 		assertNotNull(conn);
 	}
 
-	@Test
-	public void testSelectUsers() throws SQLException {
-		ArrayList<User> users = manager.fetchUsers();
-		assertEquals(users.size(), 20);
-	}
-
-        @Test
-        public void testCreateUser() throws SQLException{
-                manager.createUser("test@testemail.com", "Tester", "test", "0444444444", "Ray St","1994-02-02", "F", "C");
-            }
-
-}
 
     
-
+}

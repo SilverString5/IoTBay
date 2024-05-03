@@ -4,6 +4,7 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  *
@@ -16,17 +17,15 @@ public class User implements Serializable {
     private String userPhone;
     private String userPassword;   
     private String userAddress;
-    private String userDOB;
+    private Date userDOB;
     private String userGender;
     private String userType;
-
-
 
 
     
     public User(){}
     
-    public User(int userID, String userEmail, String userFullName, String userPhone, String userPassword, String userAddress, String userDOB, String userGender, String userType){
+    public User(int userID, String userEmail, String userPassword, String userFullName, String userPhone,  String userAddress, Date userDOB, String userGender, String userType){
         this.userID=userID;
         this.userEmail = userEmail;
         this.userFullName = userFullName;
@@ -88,11 +87,11 @@ public class User implements Serializable {
     this.userAddress=userAddress;
     }   
 
-    public String getuserDOB() {
+    public Date getuserDOB() {
         return userDOB;
     }
 
-    public void setuserDOB(String userDOB) {
+    public void setuserDOB(Date userDOB) {
         this.userDOB = userDOB;
     }
 
@@ -103,5 +102,13 @@ public class User implements Serializable {
     public void setGender(String userGender) {
         this.userGender = userGender;
     }
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     
 }

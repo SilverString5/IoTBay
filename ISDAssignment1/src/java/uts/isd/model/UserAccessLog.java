@@ -4,30 +4,54 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
-import java.util.*;
-
+import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
- * @author lorinchanel
+ * @author notba
  */
 public class UserAccessLog implements Serializable {
     
     private int accessLogID;
     private int userID;
-    private String browserType;
-    private String eventType;
-    private String sessionCreationTime;
-    private String sessionEndTime;
+    private Date accessLogDate;
+    private Time loginTime;
+    private Time logoutTime;
+
     
-    public UserAccessLog(int accessLogID, int userID, String browserType, String eventType, String sessionCreationTime, String sessionEndTime){
+    public UserAccessLog(int accessLogID, int userID, Date accessLogDate, Time loginTime, Time logoutTime){
         this.accessLogID = accessLogID;
         this.userID = userID;
-        this.browserType = browserType;
-        this.eventType = eventType;
-        this.sessionCreationTime = sessionCreationTime;
-        this.sessionEndTime = sessionEndTime;
+        this.accessLogDate = accessLogDate;
+        this.loginTime = loginTime;
+        this.logoutTime = logoutTime;
 
+
+    }
+
+    public Date getAccessLogDate() {
+        return accessLogDate;
+    }
+
+    public void setAccessLogDate(Date accessLogDate) {
+        this.accessLogDate = accessLogDate;
+    }
+
+    public Time getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Time loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Time getLogoutTime() {
+        return logoutTime;
+    }
+
+    public void setLogoutTime(Time logoutTime) {
+        this.logoutTime = logoutTime;
     }
     
     public int getAccessLogID() {
@@ -45,38 +69,10 @@ public class UserAccessLog implements Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
+
     
-    public String getBrowserType() {
-        return browserType;
-    }
 
-    public void setBrowserType(String browserType) {
-        this.browserType = browserType;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getSessionCreationTime() {
-        return sessionCreationTime;
-    }
-
-    public void setSessionCreationTime(String sessionCreationTime) {
-        this.sessionCreationTime = sessionCreationTime;
-    }
-    
-    public String getSessionEndTime() {
-        return sessionEndTime;
-    }
-
-    public void setSessionEndTime(String sessionEndTime) {
-        this.sessionEndTime = sessionEndTime;
-    }
 
     
 }

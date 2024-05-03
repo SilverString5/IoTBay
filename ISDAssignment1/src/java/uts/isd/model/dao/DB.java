@@ -16,7 +16,7 @@ public abstract class DB {
     protected String dbuser = "root";
     protected String dbpass = "password";
     protected String params = "?useSSL=false&allowPublicKeyRetrieval=true";
-    protected String driver = "com.mysql.cj.dbc.Driver";
+    protected String driver = "com.mysql.cj.jdbc.Driver";
     protected Connection conn;
 
     

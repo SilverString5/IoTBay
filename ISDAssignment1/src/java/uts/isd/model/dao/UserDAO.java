@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import uts.isd.model.User;
+import java.sql.Date;
 
 
 
@@ -20,6 +21,7 @@ import uts.isd.model.User;
  * @author notba
  */
 public class UserDAO {
+    private Connection con; 
     private Statement st;
     private PreparedStatement readSt;
     private PreparedStatement updateSt;
@@ -40,7 +42,7 @@ public class UserDAO {
 	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, String userDOB, String userGender, String userType) throws SQLException {
 		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender, userType)";
 		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
-                + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "','" + userType +"')";
+                + userPhone + "','" + userAddress + "','" + Date.valueOf(userDOB) + "','"+ userGender + "','" + userType +"')";
 		st.executeUpdate(columns + values);
 	}
 
@@ -58,7 +60,7 @@ public class UserDAO {
 				String userFullName = rs.getString(4);
 				String userPhone = rs.getString(5);
                                 String userAddress = rs.getString(6);
-                                String userDOB = rs.getString(7);
+                                Date userDOB = rs.getDate(7);
                                 String userGender = rs.getString(8);
                                 String userType = rs.getString(9);
 				return new User(userID, userEmail, userPassword, userFullName, userPhone, userAddress, userDOB, userGender, userType);
@@ -77,7 +79,7 @@ public class UserDAO {
 		updateSt.setString(3, userFullName);
                 updateSt.setString(4, userPhone);
                 updateSt.setString(5, userAddress);
-                updateSt.setString(6, userDOB);
+                updateSt.setDate(6, Date.valueOf(userDOB));
                 updateSt.setString(7, userGender);
                 updateSt.setString(8, Integer.toString(userID));
 
@@ -101,13 +103,13 @@ public class UserDAO {
 		ArrayList<User> allUsers = new ArrayList<>();
 
 		while (rs.next()) {
-                        int userID =rs.getInt(1);
+                        int userID=rs.getInt(1);
                         String userEmail = rs.getString(2);
                         String userPassword = rs.getString(3);
 			String userFullName = rs.getString(4);
                         String userPhone = rs.getString(5);
                         String userAddress = rs.getString(6);
-                        String userDOB = rs.getString(7);
+                        Date userDOB = rs.getDate(7);
                         String userGender = rs.getString(8);
                         String userType=rs.getString(9);
                         User user = new User(userID, userEmail, userPassword, userFullName, 

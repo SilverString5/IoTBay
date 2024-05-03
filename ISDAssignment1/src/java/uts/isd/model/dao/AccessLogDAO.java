@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
+import java.sql.Date;
+import java.sql.Time;
 
 
 /**
@@ -22,20 +24,23 @@ public class AccessLogDAO {
     private PreparedStatement readSt;
     private PreparedStatement updateSt;
     private PreparedStatement deleteSt;
+    private PreparedStatement filterSt;
     private String readQuery = "SELECT * FROM accesslogs WHERE userID=?";
+    private String filterQuery = "SELECT * from accesslogs WHERE userID=? AND accessLogDate=?";
+
 
 
 	public AccessLogDAO (Connection connection) throws SQLException {
 		connection.setAutoCommit(true);
 		st = connection.createStatement();
 		readSt = connection.prepareStatement(readQuery);
+                filterSt = connection.prepareStatement(filterQuery);
 	}
 
-// Create Operation: create a user access log
-	public void createUserAccessLog(int userID, String eventType, String sessionCreationTime, String sessionEndTime, String browserType) throws SQLException {
-		String columns = "INSERT INTO accesslogs(userID, eventType, sessionCreationTime, sessionEndTime, browserType)";
-		String values = "VALUES('" + userID + "','" + eventType + "','" + sessionCreationTime + "','" 
-                + sessionEndTime + "','" + browserType + "')";
+        // Create Operation: create a user access log
+	public void createUserAccessLog(int userID, String accessLogDate, String loginTime, String logoutTime) throws SQLException {
+		String columns = "INSERT INTO accesslogs(userID, accessLogDate, loginTime, logoutTime)";
+		String values = "VALUES('" + userID + "','" + Date.valueOf(accessLogDate) + "','" + Time.valueOf(loginTime) + "','" + Time.valueOf(logoutTime) + "')";
 		st.executeUpdate(columns + values);
 	}
 
@@ -46,31 +51,36 @@ public class AccessLogDAO {
                 ArrayList<UserAccessLog> myAccessLogs = new ArrayList<>();
                 while (rs.next()){
                 int accessLogID = rs.getInt(1);
-                String eventType = rs.getString(3);
-                String sessionCreationTime = rs.getString(4);
-                String sessionEndTime = rs.getString(5);
-                String browserType = rs.getString(6);
+                Date accessLogDate = rs.getDate(3);
+                Time loginTime = rs.getTime(4);
+                Time logoutTime = rs.getTime(5);
                 UserAccessLog accessLog = new UserAccessLog(userID, accessLogID, 
-                eventType, sessionCreationTime, sessionEndTime, browserType);
+                accessLogDate, loginTime, logoutTime);
                 myAccessLogs.add(accessLog);
                              }
           return myAccessLogs;
 		
 }
 
+        public ArrayList<UserAccessLog> filterAccessLogDate(int userID, String filterDate) throws SQLException {
+                filterSt.setInt(1, userID);
+                filterSt.setDate(2, Date.valueOf(filterDate));
+                ArrayList<UserAccessLog> fltrAccessLogs = new ArrayList<>();
+                ResultSet rs = filterSt.executeQuery();
+                while (rs.next()){
+                int accessLogID=rs.getInt(1);
+                Time loginTime = rs.getTime(4);
+                Time logoutTime = rs.getTime(5);
+                UserAccessLog accessLog = new UserAccessLog (userID, accessLogID, Date.valueOf(filterDate),
+                loginTime, logoutTime);
+                fltrAccessLogs.add(accessLog);
 
-	/*// Fetch All: List all user access logs
-	public ArrayList<UserAccessLog> fetchUserAccessLogs() throws SQLException {
-		String fetch = "SELECT * FROM accesslogs";
-		ResultSet rs = st.executeQuery(fetch);
-		ArrayList<UserAccessLog> allAccessLogs = new ArrayList<>();
+                }   
+                return fltrAccessLogs;
 
-		while (rs.next()) {
-			String name = rs.getString(4);
-
-			System.out.println(name);
-		}
-		return accessLogs;
-	}*/
-    
 }
+
+}
+
+
+

@@ -41,6 +41,9 @@ public class AccessLogDAOTest {
                 assertEquals(filLogs.size(),1);
 }
 
+@Test public void testAddLogoutTime() throws SQLException {
+manager.addLogoutTime(1);
+}
 
 
 

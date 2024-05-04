@@ -27,6 +27,7 @@ public class AccessLogDAO {
     private PreparedStatement filterSt;
     private String readQuery = "SELECT * FROM accesslogs WHERE userID=?";
     private String filterQuery = "SELECT * from accesslogs WHERE userID=? AND accessLogDate=?";
+    private String updateQuery = "UPDATE accesslogs SET logoutTime=? WHERE accessLogID=?";
 
 
 
@@ -35,6 +36,7 @@ public class AccessLogDAO {
 		st = connection.createStatement();
 		readSt = connection.prepareStatement(readQuery);
                 filterSt = connection.prepareStatement(filterQuery);
+                updateSt = connection.prepareStatement(updateQuery);
 	}
 
         // Create Operation: create a user access log
@@ -60,6 +62,15 @@ public class AccessLogDAO {
                              }
           return myAccessLogs;
 		
+}
+
+public void addLogoutTime(int accessLogID) throws SQLException{
+Time logoutTime = new Time(System.currentTimeMillis());
+
+updateSt.setTime(1, logoutTime);
+updateSt.setInt(2, accessLogID);
+int row = updateSt.executeUpdate();
+System.out.println("row" + row + " updated successfuly");
 }
 
         public ArrayList<UserAccessLog> filterAccessLogDate(int userID, String filterDate) throws SQLException {

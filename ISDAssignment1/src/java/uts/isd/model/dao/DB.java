@@ -12,9 +12,9 @@ IotBay
  */
 public abstract class DB {
     protected String URL = "jdbc:mysql://localhost:3306/";
-    protected String db = "IoTbay";
+    protected String db = "iotbay";
     protected String dbuser = "root";
-    protected String dbpass = "mysql117@";
+    protected String dbpass = "password";
     protected String params = "?useSSL=false&allowPublicKeyRetrieval=true";
     protected String driver = "com.mysql.cj.jdbc.Driver";
     protected Connection conn;

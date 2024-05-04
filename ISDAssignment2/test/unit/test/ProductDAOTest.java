@@ -37,7 +37,7 @@ public class ProductDAOTest {
     
     //User Story: 
     @Test
-    public void testAllProducts() throws SQLException {
+    public void testFetchAllProducts() throws SQLException {
         ArrayList<Product> allProducts = manager.fetchAllProducts();
         assertEquals(allProducts.size(), 21);
     }
@@ -89,7 +89,7 @@ public class ProductDAOTest {
     
     //User Story:        
     @Test
-    public void testCreatingAProduct() throws SQLException {
+    public void testCreateAProduct() throws SQLException {
         //Create and save records into database
         manager.createProduct("Raspberry Pi Compute Module 4 - 16GB eMMC, 2GB RAM", "Raspberry Pi", 65, "Raspberry Pi Compute Module 4 incorporates a quad-core ARM Cortex-A72 processor, dual video output, and a wide selection of other interfaces.", 50);
         

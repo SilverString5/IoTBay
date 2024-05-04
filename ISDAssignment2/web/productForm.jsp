@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="java.util.ArrayList" %>
 <%@page import="java.util.Random"%> 
 <%@page import="uts.isd.model.*"%>
 <%@page import="uts.isd.model.dao.*"%>
@@ -17,18 +19,49 @@
     <link rel="stylesheet" href="css/reglayout.css">
     <title>IoTBay WebStore</title>
 </head>
-
+    <% User user = (User)session.getAttribute("user"); 
+    %>
 <body>
-    <center>
-        <h1>Device Collection Management</h1>
-        <h2>
-            <a href="/create">Add New Device</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/list">List All Device</a>
-             
-        </h2>
-    </center>
+        <%if(user != null){%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment2/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment2/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment2/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+        <%}else{%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment2/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment2/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment2/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment2/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+        <%} %>
+    <div>
+        <center>
+            <h1>Device Collection Management</h1>
+            <h2>
+                <form action="http://localhost:8080/ISDAssignment2/addDeviceFormServlet" method="POST">
+                    <button type="submit">Add new device</button>
+                </form>
+
+                &nbsp;&nbsp;&nbsp;
+                <form action="http://localhost:8080/ISDAssignment2/ConnServlet" method="POST">
+                    <button type="submit">List all devices</button>
+                </form>
+
+            </h2>
+        </center>
+    </div>
     <div align="center">
+        
         <c:if test="${device != null}">
             <form action="update" method="post">
         </c:if>
@@ -76,7 +109,7 @@
             <tr>
                 <th>Details: </th>
                 <td>
-                    <input type="text" name="productDetails" size="5"
+                    <input type="text" name="productDetails" size="100"
                             value="<c:out value='${device.productDetails}' />"
                     />
                 </td>

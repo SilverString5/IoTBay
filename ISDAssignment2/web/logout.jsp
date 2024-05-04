@@ -25,7 +25,6 @@
             <p>Please delete the browser window or click on the button below to transfer to IoTBay home page</p>
 
             <form action="http://localhost:8080/ISDAssignment2/ConnServlet" method="POST">
-              
                 <button type="submit">Back to Home</button>
             </form>
         </div>

@@ -4,8 +4,8 @@
  */
 package uts.isd.model;
 import java.time.*;
-import java.io.Serializable;
 import java.util.*;
+import java.io.Serializable;
 
 /**
  *
@@ -23,11 +23,10 @@ public class Shipment implements Serializable {
     private Date shipmentEstTime;
 
     
-    public Shipment(int shipmentID, int customerID, int orderID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentEstTime){
+    public Shipment(int shipmentID, int customerID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentEstTime){
         
         this.shipmentID = shipmentID;
         this.customerID = customerID;
-        this.orderID = orderID;
         
         this.shipmentAddress = shipmentAddress;
         this.shipmentMethod = shipmentMethod;

@@ -32,6 +32,19 @@ public class TestRunner {
         System.out.println(" Number of Tests Failed = " + accessLogResult.getFailureCount());
         System.out.println(" Time = " + accessLogResult.getRunTime() / 1000.0 + "s");
 
+        System.out.println("- Testing ProductDAO ");
+        Result productResult = JUnitCore.runClasses(ProductDAOTest.class);
+        for (Failure failure : productResult.getFailures()) {
+            System.out.println(failure.toString());
+        }
 
+        String productStatus = productResult.wasSuccessful() ? "Passed" : "Failed";
+        System.out.println(" Test status = " + productStatus);
+        System.out.println(" Number of Tests Passed = " + productResult.getRunCount());
+        System.out.println(" Number of Tests Ignored = " +productResult.getIgnoreCount());
+        System.out.println(" Number of Tests Failed = " + productResult.getFailureCount());
+        System.out.println(" Time = " + productResult.getRunTime() / 1000.0 + "s");
     }
+
+
 }

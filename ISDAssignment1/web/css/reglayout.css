@@ -13,10 +13,7 @@ h1, p {
     
 }
 
-.myheader
-{
-    text-align: center;
-}
+
 body {
 
     background-color:#f7f7f7;
@@ -125,21 +122,17 @@ button:hover{
 }
 
 .myForm {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
     text-align: left;
     font-family: Barlow;
     color: #3f9642;
     font-weight: bold;
 }
 
-.myFormdiv{
+.myFormdiv {
 
-    display: block;
-    text-align: center;
-    border-radius: 5px;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+
 
 
 }

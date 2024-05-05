@@ -16,7 +16,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Registration</title>
     </head>
-            
+      <%
+        String nameErr = (String) session.getAttribute("nameErr");
+    %>      
 
     <body>
 
@@ -45,17 +47,20 @@
             <br>
         
         <%}%>
+            
         
-        <div>
-         <h1 class="myheader">Register Here!</h1>
+         <h1 class="myheader">Registration</h1>
          <div class="myFormdiv">
-        <form class="myForm" action="welcome.jsp" method="post">
+        <form class="myForm" action="<%= request.getContextPath()%>/RegisterServlet" method="POST">
             <label for="email">Email:</label><br>
            
             <input type ="email" name ="email" id="email" placeholder="Email" required/><br>
             
                 <label for="name">Name:</label><br>
                 <input type="text" name="name" id="name" placeholder="Name" required/><br>
+                            <% if(nameErr != null) { %>
+                <p><%=nameErr%></p>
+            <% } %>
            
            <label for="phone">Phone Number:</label><br>
                 <input type="text" name="phonenumber" id="phonenumber" placeholder="Phone Number" required><br>           
@@ -70,8 +75,20 @@
                 
                     <input type="text" name="address" id="address" placeholder="Adddress" required><br>
                 
-            
-  
+              
+                    Gender <br>
+                    <input type="radio" id="female" name="gender" value="F">
+                    <label for="female"> Female </label>
+                    <input type="radio" id="male" name="gender" value="M">
+                    <label for="male"> Male </label>
+                    <input type="radio" id="other" name="gender" value="O"
+                    <label for="other"> Other </label>
+                    <input type="radio" id="private" name="gender" value="P"
+                           <label for="private">Prefer not to say</label><br>
+                    
+                    <br>
+                    <label for="DOB">Date of Birth</label><br>
+                    <input type="date" name="DOB" id="DOB" required><br>
               <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
          

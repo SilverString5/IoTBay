@@ -16,12 +16,14 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.UserDAO;
+import uts.isd.model.dao.AccessLogDAO;
 
 public class ConnServlet extends HttpServlet {
 
 	private DBConnector db;
 	private UserDAO userDAO;
 	private Connection conn;
+        private AccessLogDAO accessLogDAO;
 
 	@Override
 	public void init() {
@@ -40,11 +42,13 @@ public class ConnServlet extends HttpServlet {
 
 		try {
 			userDAO = new UserDAO(conn);
+                        accessLogDAO = new AccessLogDAO(conn);
 		} catch (SQLException e) {
 			System.out.print(e);
 		}
 
 		session.setAttribute("userDAO", userDAO);
+                session.setAttribute("accessLogDAO",accessLogDAO);
 		request.getRequestDispatcher("index.jsp").include(request, response);
 	}
 

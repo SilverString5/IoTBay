@@ -30,6 +30,9 @@ public class UserAccessLog implements Serializable {
 
     }
 
+     public UserAccessLog(){
+     }
+
     public Date getAccessLogDate() {
         return accessLogDate;
     }

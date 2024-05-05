@@ -39,6 +39,13 @@ public class AccessLogDAOTest {
         public void testFilterAccessLog() throws SQLException {
                 ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2024-05-03");
                 assertEquals(filLogs.size(),1);
+        }
+
+
+        @Test
+        public void testFindMostRecent() throws SQLException {
+                UserAccessLog testLog = manager.findMostRecent(3);
+                assertEquals(testLog.getAccessLogID(),32);
 }
 
 

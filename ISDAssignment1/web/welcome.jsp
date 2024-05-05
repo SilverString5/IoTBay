@@ -28,6 +28,7 @@
             </div>
             <br>
             <br>
+            Welcome, <%=user.getName()%>
 
             <%}  else {%>
         <h1> Hello Anonymous User, </h1>

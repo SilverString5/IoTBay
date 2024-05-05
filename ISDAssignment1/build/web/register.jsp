@@ -77,11 +77,12 @@
               <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
         </form>
-           <% if(errorMsgs != null) { %>
-           <br>
-                <p><%=errorMsgs%></p>
-            <% } %>
          </div>
+            
+                <% if(errorMsgs != null) { %>
+           <br>
+                <p id="errors"><%=errorMsgs%></p>
+            <% } %>
              
                     
             

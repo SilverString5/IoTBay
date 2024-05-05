@@ -26,9 +26,14 @@ public class UserDAO {
     private PreparedStatement readSt;
     private PreparedStatement updateSt;
     private PreparedStatement deleteSt;
+    private PreparedStatement checkSt;
+    private PreparedStatement retrieveSt;
     private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
     private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
     private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
+    private String checkQuery = "SELECT * FROM users WHERE userEmail=?";
+    private String retrieveQuery = "SELECT userID FROM users WHERE userEmail=?";
+
 
 	public UserDAO(Connection connection) throws SQLException {
 		connection.setAutoCommit(true);
@@ -36,15 +41,44 @@ public class UserDAO {
 		readSt = connection.prepareStatement(readQuery);
 		updateSt = connection.prepareStatement(updateQuery);
 		deleteSt = connection.prepareStatement(deleteQuery);
+                checkSt = connection.prepareStatement(checkQuery);
+                retrieveSt = connection.prepareStatement(retrieveQuery);
 	}
 
 // Create Operation: create a user
 	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
-		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender, userType)";
+		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender)";
 		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
                 + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "')";
 		st.executeUpdate(columns + values);
 	}
+//Check if user already exists to prevent re-registration
+        public boolean checkExists(String userEmail) throws SQLException{
+            boolean exists = false;
+            checkSt.setString(1, userEmail);
+            ResultSet rs = checkSt.executeQuery();
+            ArrayList<User> results = new ArrayList<>();
+            while (rs.next()){
+                String email = rs.getString(2);
+                if (userEmail.equals(email)){
+                        exists = true;
+                }
+            }
+
+                return exists;
+            }
+
+ //Retrieve userID based on email
+        public int retrieveUserID(String userEmail) throws SQLException{
+            retrieveSt.setString(1, userEmail);
+            ResultSet rs = retrieveSt.executeQuery();
+            rs.next();
+            int ID = rs.getInt(1);
+            return ID;
+}
+
+
+
 
 	// Read Operation: user login
 	public User login(String userEmail, String userPassword) throws SQLException {

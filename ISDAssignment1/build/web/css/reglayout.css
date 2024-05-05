@@ -13,6 +13,9 @@ h1, p {
     
 }
 
+errors {
+    text-align: center;
+}
 .myheader
 {
     text-align: center;

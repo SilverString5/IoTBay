@@ -63,6 +63,15 @@ public class UserDAOTest {
         public void testLoginIncorrect() throws SQLException{
         assertNull(manager.login("nonexistent@gmail.com", "idontexist"));
         }
+
+        @Test
+        public void testCheckExists() throws SQLException{
+        assertTrue(manager.checkExists("JKirk@enterprise.com"));
+        }
+
+
+
+
 }
 
     

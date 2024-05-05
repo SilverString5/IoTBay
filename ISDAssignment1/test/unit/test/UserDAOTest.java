@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import uts.isd.model.dao.*;
 import java.util.ArrayList;
 import uts.isd.model.User;
+import java.sql.Date;
 
 
 
@@ -50,7 +51,7 @@ public class UserDAOTest {
 
         @Test
         public void testCreateUser() throws SQLException{
-                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St","1994-02-02", "F", "C");
+                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St",Date.valueOf("1994-02-02"), "F");
             }
 
         @Test

@@ -39,10 +39,10 @@ public class UserDAO {
 	}
 
 // Create Operation: create a user
-	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, String userDOB, String userGender, String userType) throws SQLException {
+	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
 		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender, userType)";
 		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
-                + userPhone + "','" + userAddress + "','" + Date.valueOf(userDOB) + "','"+ userGender + "','" + userType +"')";
+                + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "')";
 		st.executeUpdate(columns + values);
 	}
 

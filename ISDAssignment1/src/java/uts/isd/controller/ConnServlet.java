@@ -17,11 +17,13 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.UserDAO;
+import uts.isd.model.dao.ShipmentDAO;
 
 public class ConnServlet extends HttpServlet {
 
 	private DBConnector db;
 	private UserDAO userDAO;
+        private ShipmentDAO shipmentDAO;
 	private Connection conn;
 
 	@Override
@@ -41,11 +43,13 @@ public class ConnServlet extends HttpServlet {
 
 		try {
 			userDAO = new UserDAO(conn);
+                        shipmentDAO = new ShipmentDAO(conn);
 		} catch (SQLException e) {
 			System.out.print(e);
 		}
 
 		session.setAttribute("userDAO", userDAO);
+                session.setAttribute("shipmentDAO", shipmentDAO);
 		request.getRequestDispatcher("index.jsp").include(request, response);
 	}
 

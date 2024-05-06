@@ -37,71 +37,6 @@ public class ShipmentDAO {
         readStatement = connection.prepareStatement(readQuery);
         
     }
-    /*
-    //creates a new record in the database
-    public void createShipment(String shipmentAddress, String shipmentMethod) throws SQLException{
-    
-        String createQuery = "INSERT INTO shipment(ShipmentAddress, ShipmentMethod)" + " VALUES ('" + shipmentAddress + "' , '" + shipmentMethod + "')";
-        System.out.println(createQuery);
-        statement.executeUpdate(createQuery);
-        
-    }
-    
-    //Read Pattern - Finds All Orders from a Single Customer
-    public ArrayList<Shipment> fetchShipments(int customerID) throws SQLException {
-        
-        readStatement.setInt(1, customerID);
-        ResultSet resultSet = readStatement.executeQuery();
-        
-        ArrayList<Shipment> shipmentRecords = new ArrayList<>();
-        
-        while (resultSet.next()){
-            
-            String shipmentID = resultSet.getString(1);
-            String shipmentAddress = resultSet.getString(2);
-            String shipmentMethod = resultSet.getString(3);
-            
-            Shipment shipment = new Shipment(Integer.parseInt(shipmentID), shipmentAddress, shipmentMethod);
-            
-            shipmentRecords.add(shipment);
-            
-        }
-        
-        return shipmentRecords;
-        
-    }
-          
-    //update shipment records
-    public void updateShipment(int shipmentID, String shipmentAddress, String shipmentMethod) throws SQLException {
-        
-        String updateQuery = "UPDATE shipment SET SHIPMENTADDRESS='" + shipmentAddress + "', SHIPMENTMETHOD='" + shipmentMethod + "' WHERE SHIPMENTID=" + Integer.toString(shipmentID);
-        System.out.println(updateQuery);
-        statement.executeUpdate(updateQuery);
-        
-    }
-   
-    //delete
-    public void deleteShipment(int shipmentID, String shipmentAddress, String shipmentMethod) throws SQLException {
-        
-        String deleteQuery = "DELETE FROM shipment WHERE SHIPMENTID=" + shipmentID;
-        statement.executeUpdate(deleteQuery);
-        
-        
-        
-    }
-    
-    public int findShipmentID(String shipmentAddress, String shipmentMethod) throws SQLException{
-        ArrayList<Shipment> shipmentRecords = fetchShipments();
-        
-        for(Shipment shipment : shipmentRecords) {
-            if(shipment.getShipmentAddress().equals(shipmentAddress) && shipment.getShipmentMethod().equals(shipmentMethod)){
-                return shipment.getShipmentID();
-            }
-        }
-        
-        return 0;
-    }*/
-    
     
     //Create - Create Shipment Detail
     public void createShipment(int customerID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
@@ -169,6 +104,33 @@ public class ShipmentDAO {
         return shipmentRecords;
     }
     
+    public ArrayList<Shipment> fetchShipmentByFilter(int customerID, int shipmentID, String shipmentDate) throws SQLException {
+        
+        ArrayList<Shipment> shipmentRecords = new ArrayList<> ();
+        for(Shipment shipment : fetchShipmentFromACustomer(customerID)){
+            if(shipment.getShipmentID() == shipmentID && shipment.getShipmentEstTime().toString().equals(shipmentDate)){
+               
+                shipmentRecords.add(shipment);
+            }
+        }
+        
+        return shipmentRecords;
+    }
+    
+    public Shipment fetchShipmentByFilter(int customerID, int shipmentID) throws SQLException {
+        
+        Shipment shipment = new Shipment(); 
+        for(Shipment shipmentInRecord : fetchShipmentFromACustomer(customerID)){
+            if(shipmentInRecord.getShipmentID() == shipmentID){
+               
+                shipment = shipmentInRecord;
+            }
+        }
+        
+        return shipment;
+    }
+    
+    //&& shipment.getShipmentEstTime().getTime() == shipmentDate.getTime()
     
     
     //update shipment - general 
@@ -197,9 +159,9 @@ public class ShipmentDAO {
     }
     
     //Update - update the status of the estimated date date
-    public void updateShipmentMethod(int shipmentID, Date shipmentMethod) throws SQLException {
+    public void updateShipmentMethod(int shipmentID, String shipmentMethod) throws SQLException {
         
-            String updateQuery = "UPDATE shipment SET SHIPMENTMETHOD='" + shipmentMethod + "' WHERE ORDERID=" + shipmentID;
+            String updateQuery = "UPDATE shipment SET SHIPMENTMETHOD='" + shipmentMethod + "' WHERE SHIPMENTID=" + shipmentID;
             statement.executeUpdate(updateQuery);
         
         

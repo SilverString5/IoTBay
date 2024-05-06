@@ -1,4 +1,4 @@
-/*
+  /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
 IOTBay
@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import uts.isd.model.dao.*;
 import java.util.ArrayList;
 import uts.isd.model.User;
+import java.sql.Date;
 
 
 
@@ -38,11 +39,6 @@ public class UserDAOTest {
 		assertNotNull(conn);
 	}
 
-@Test public void testUpdate() throws SQLException {
-manager.update("updatetest@gmail.com","none","Update test", "1", "R street","1994-05-05", "M", 30);
-
-}
-
 	@Test
 	public void testSelectUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
@@ -55,9 +51,14 @@ manager.update("updatetest@gmail.com","none","Update test", "1", "R street","199
 
         @Test
         public void testCreateUser() throws SQLException{
-                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St","1994-02-02", "F", "C");
+                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St",Date.valueOf("1994-02-02"), "F");
             }
-
+        
+        @Test
+        public void testUpdate() throws SQLException{
+        User user = manager.update("sahasl@l.com", "bunnyNEW", "Bunny Hi", "123", "Sasha St", "2020-09-09","F", 45);
+        assertEquals("bunnyNEW", user.getPassword());
+}
         @Test
         public void testLoginCorrect() throws SQLException{
                 assertNotNull(manager.login("admin@iotbay.com","logmein"));
@@ -67,7 +68,15 @@ manager.update("updatetest@gmail.com","none","Update test", "1", "R street","199
         public void testLoginIncorrect() throws SQLException{
         assertNull(manager.login("nonexistent@gmail.com", "idontexist"));
         }
+
+        @Test
+        public void testCheckExists() throws SQLException{
+        assertTrue(manager.checkExists("JKirk@enterprise.com"));
+        }
+
+
+
+
 }
 
     
-

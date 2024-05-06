@@ -12,7 +12,7 @@ import org.junit.runner.notification.Failure;
 public class TestRunner {
     public static void main(String[] args) {
         System.out.println("- Testing Calculator: ");
-        Result result = JUnitCore.runClasses(OrderDAOTest.class);
+        Result result = JUnitCore.runClasses(ProductDAOTest.class);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }

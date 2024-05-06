@@ -6,15 +6,20 @@ public class Product implements Serializable{
     
     private int productID;
     private String productName;
+    private String productType;
     private double productUnitPrice;
-    private String productDetail;
+    private String productDetails;
     private int productInStock;
     
-    public Product(int productID, String productName, double productUnitPrice, String productDetail, int productInStock){
+    public Product(){
+    }
+    
+    public Product(int productID, String productName, String productType, double productUnitPrice, String productDetails, int productInStock){
       this.productID = productID;
       this.productName = productName;
+      this.productType = productType;
       this.productUnitPrice = productUnitPrice;
-      this.productDetail = productDetail;
+      this.productDetails = productDetails;
       this.productInStock = productInStock;
       
     }
@@ -27,12 +32,16 @@ public class Product implements Serializable{
         this.productName = productName;
     }
     
-    public void setUnitPrice(double productUnitPrice){
+    public void setProductType(String productType){
+        this.productType = productType;
+    }
+    
+    public void setProductUnitPrice(double productUnitPrice){
         this.productUnitPrice = productUnitPrice;
     }
     
-    public void setProductDetail(String productDetail){
-        this.productDetail = productDetail;
+    public void setProductDetails(String productDetails){
+        this.productDetails = productDetails;
     }
     
     public void setProductInStock(int productInStock) {
@@ -43,21 +52,24 @@ public class Product implements Serializable{
         return this.productID;
     }
     
-    public String setProductName(){
+    public String getProductName(){
         return this.productName;
     }
     
-    public double setUnitPrice(){
+    public String getProductType(){
+        return this.productType;
+    }
+    
+    public double getProductUnitPrice(){
         return this.productUnitPrice;
     }
     
-    public String setProductDetail(){
-        return this.productDetail;
+    public String getProductDetails(){
+        return this.productDetails;
     }
     
-    public int setProductInStock() {
+    public int getProductInStock() {
         return this.productInStock;
     }
-    
-    
+       
 }

@@ -11,11 +11,11 @@ public class Order implements Serializable {
     private int totalAmount;
     private String shipmentStatus;
     
-    public Order(int orderID, String orderDate, String orderStatus, String shipmentStatus, int totalAmount, int customerID, int shipmentID){
+    public Order(int orderID, String orderDate, String orderStatus, int totalAmount, int customerID, int shipmentID){
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
-        this.shipmentStatus = shipmentStatus;
+//        this.shipmentStatus = shipmentStatus;
         this.totalAmount = totalAmount;
         this.customerID = customerID;
         this.shipmentID = shipmentID;

@@ -80,7 +80,7 @@ body {
 }
 
 a:link, a:visited{
-    color:#3ffb09;
+    color:#7A9E05;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 12px;    
@@ -142,10 +142,12 @@ button:hover{
 
     display: flex;
     justify-content: center;
-    text-align: center;
+    
 
 
 }
+
+
 
 .myForm input{
   padding: 12px 20px;
@@ -157,3 +159,4 @@ button:hover{
 .myForm input:focus {
       background-color: lightblue;
 }
+

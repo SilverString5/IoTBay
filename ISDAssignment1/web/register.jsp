@@ -36,9 +36,10 @@
             </div>
             <br>
             <br>
-         <h1 class="myheader">Register Here!</h1>
+         
          <div class="myFormdiv">
         <form class="myForm" action="<%= request.getContextPath()%>/RegisterServlet" method="post">
+            <h1 class="myHeader">Register Here!</h1>
             <label for="email">Email:</label><br>
            
             <input type ="email" name ="email" id="email" placeholder="Email" required/><br>

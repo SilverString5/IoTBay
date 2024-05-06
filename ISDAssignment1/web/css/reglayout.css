@@ -135,6 +135,7 @@ button:hover{
     font-family: Barlow;
     color: #3f9642;
     font-weight: bold;
+
 }
 
 
@@ -142,6 +143,7 @@ button:hover{
 
     display: flex;
     justify-content: center;
+    align-items: center;
     
 
 

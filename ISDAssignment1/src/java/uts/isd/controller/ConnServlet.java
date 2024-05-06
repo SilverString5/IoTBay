@@ -17,6 +17,13 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.UserDAO;
 import uts.isd.model.dao.AccessLogDAO;
+<<<<<<< Updated upstream
+=======
+import uts.isd.model.Product;
+import uts.isd.model.User;
+import uts.isd.model.UserAccessLog;
+import uts.isd.model.dao.ProductDAO;
+>>>>>>> Stashed changes
 
 public class ConnServlet extends HttpServlet {
 
@@ -43,7 +50,19 @@ public class ConnServlet extends HttpServlet {
 		try {
 			userDAO = new UserDAO(conn);
                         accessLogDAO = new AccessLogDAO(conn);
+<<<<<<< Updated upstream
 		} catch (SQLException e) {
+=======
+			productDAO = new ProductDAO(conn);
+                        ArrayList<Product> products = productDAO.fetchAllProducts();
+                        session.setAttribute("listDevice", products);
+                        if (session.getAttribute("user")!=null){
+                            User user = (User)session.getAttribute("user");
+                            ArrayList<UserAccessLog> allMyLogs = accessLogDAO.viewAccessLogs(user.getUserID());
+                            session.setAttribute("allMyLogs", allMyLogs);
+                                                        }
+                       } catch (SQLException e) {
+>>>>>>> Stashed changes
 			System.out.print(e);
 		}
 

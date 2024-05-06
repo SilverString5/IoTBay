@@ -28,15 +28,34 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
             </ul>
             </div>
+         
             <br>
             <br>
-            Welcome, <%=user.getName()%>
+            <p>Welcome, <%=user.getName()%></p>
+            <a href="manageRegistration.jsp">Manage Your Account Details</a>
+            <a href="viewAccessLogs.jsp">View Your Access Logs</a>
+            
+           
 
             <%}  else {%>
+                        <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+                            <br><br><br>
+            </div>
+            <div class="myFormdiv">
+            <form class="myForm">
+                
         <h1> Hello Anonymous User, </h1>
+        <br>
         <h2> Do you want to register? </h2>
-        <button><a href="register.jsp">Register</a></button>
-        
+        <br>
+        <a href="register.jsp">Register</a>
+            </form>
+            </div>
         <% } %>
     </body>
 </html>

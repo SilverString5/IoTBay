@@ -37,7 +37,7 @@ public class ProductDAOTest {
     
     //User Story: 
     @Test
-    public void testAllProducts() throws SQLException {
+    public void testFetchAllProducts() throws SQLException {
         ArrayList<Product> allProducts = manager.fetchAllProducts();
         assertEquals(allProducts.size(), 21);
     }
@@ -61,11 +61,11 @@ public class ProductDAOTest {
         Product raspberrySensor = filteredProducts.get(1);
         
         //check its value match to the database
-        assertEquals(raspberrySensor.getProductID(), 1);
-        assertEquals(raspberrySensor.getProductName() , "DS18B20");
+        assertEquals(raspberrySensor.getProductID(), 2);
+        assertEquals(raspberrySensor.getProductName() , "DHT22");
         assertEquals(raspberrySensor.getProductType(), "Temperature / Humidity / Air Pressure / Gas");
         assertEquals(raspberrySensor.getProductUnitPrice(),4,0.001);
-        assertEquals(raspberrySensor.getProductDetails(), "DS18B20 measures temperature range of -55°C to +125°C.");
+        assertEquals(raspberrySensor.getProductDetails(), "DHT22 measure all humidity ranges from 0-100% with an accuracy of 2%.");
         assertEquals(raspberrySensor.getProductInStock(), 50);
        
     }
@@ -89,7 +89,7 @@ public class ProductDAOTest {
     
     //User Story:        
     @Test
-    public void testCreatingAProduct() throws SQLException {
+    public void testCreateAProduct() throws SQLException {
         //Create and save records into database
         manager.createProduct("Raspberry Pi Compute Module 4 - 16GB eMMC, 2GB RAM", "Raspberry Pi", 65, "Raspberry Pi Compute Module 4 incorporates a quad-core ARM Cortex-A72 processor, dual video output, and a wide selection of other interfaces.", 50);
         

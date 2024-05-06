@@ -8,6 +8,7 @@ package uts.isd.controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.UserDAO;
 import uts.isd.model.dao.AccessLogDAO;
+import uts.isd.model.Product;
+import uts.isd.model.dao.ProductDAO;
 
 public class ConnServlet extends HttpServlet {
 
@@ -25,6 +28,8 @@ public class ConnServlet extends HttpServlet {
 	private UserDAO userDAO;
 	private Connection conn;
         private AccessLogDAO accessLogDAO;
+        private ProductDAO productDAO;
+
 
 	@Override
 	public void init() {
@@ -44,13 +49,23 @@ public class ConnServlet extends HttpServlet {
 		try {
 			userDAO = new UserDAO(conn);
                         accessLogDAO = new AccessLogDAO(conn);
+			productDAO = new ProductDAO(conn);
+                        ArrayList<Product> products = productDAO.fetchAllProducts();
+                        session.setAttribute("listDevice", products);
 		} catch (SQLException e) {
 			System.out.print(e);
 		}
-
+                session.setAttribute("productDAO", productDAO);
 		session.setAttribute("userDAO", userDAO);
                 session.setAttribute("accessLogDAO",accessLogDAO);
 		request.getRequestDispatcher("index.jsp").include(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html;charset=UTF-8");
+                doGet(request, response);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	@Override

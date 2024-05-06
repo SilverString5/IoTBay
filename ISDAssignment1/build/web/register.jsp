@@ -18,7 +18,7 @@
 
       <%
         String errorMsgs = (String) session.getAttribute("errorMsgs");
-        
+        User user = (User) session.getAttribute("user");
     %>      
 
 
@@ -36,7 +36,7 @@
             </div>
             <br>
             <br>
-         
+         <% if (user==null) { %>
          <div class="myFormdiv">
         <form class="myForm" action="<%= request.getContextPath()%>/RegisterServlet" method="post">
             <h1 class="myHeader">Register Here!</h1>
@@ -77,16 +77,19 @@
   
               <input type="hidden" name="submitted" id="submitted" value="true" /><br>
             <button type="submit">Register Account</button>
+             <% if(errorMsgs != null) { %>
+           <br>
+                <p class="errors"><%=errorMsgs%></p>
+            <% } %>
         </form>
          </div>
             
-                <% if(errorMsgs != null) { %>
-           <br>
-                <p id="errors"><%=errorMsgs%></p>
-            <% } %>
+               
              
                     
-            
+            <% } else { %>
+            <p>You have already logged in</p>
+            <% } %>
 
             
     </body>

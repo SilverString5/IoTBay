@@ -12,6 +12,7 @@
     </head>
     <%
            String invalidLogin = (String) session.getAttribute("invalidLogin");
+           User user = (User) session.getAttribute("user");
     %>
              <div class="menu">
             <ul>
@@ -25,6 +26,7 @@
             <br>
    
     <body>
+        <% if (user==null) { %>
         <div class="myFormdiv">
         
         <form class="myForm" method="post" action="<%= request.getContextPath()%>/LoginServlet">
@@ -37,18 +39,23 @@
 
             <input type="hidden" name="submitted" id="submitted" value="true" />
             <button type="submit">Login</button><br>
+                <% if(invalidLogin != null) { %>
+           <br>
+                <p><%=invalidLogin%></p>
+            <% } %>
                     <p>Don't have an account?</p>
         <a href="register.jsp">Register</a>
+<% } else { %>
+<p>You have already logged in</p>
+<% } %>
+        
         </form>
+                    
             <br>
 
                     </div>
            
-                <% if(invalidLogin != null) { %>
-           <br>
-                <p id="errors"><%=invalidLogin%></p>
-            <% } %>
-        
+
    
     </body>
     

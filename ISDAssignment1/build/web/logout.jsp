@@ -12,17 +12,35 @@
         
         <title>IoTBay Log Out</title>
     </head>
+    
+   <% String logoutTimeUpdated;
+       logoutTimeUpdated = (String)session.getAttribute("logoutTimeUpdated");%>
     <body>
+
         <% 
-            session.invalidate();
-        %>
-        
-        <div class="window">
+            if (logoutTimeUpdated!=null){
+            session.invalidate(); %>
+             <div class="window">
             <h1>You have successfully logged out</h1>
             <p>Please delete the browser window or click on the button below to transfer to IoTBay home page</p>
             <form action="http://localhost:8080/ISDAssignment1/">
                 <button type="submit">Back to Home</button>
             </form>
         </div>
+          <%  }  else { %>
+        <div class="window">
+            <h1>You have not logged out.</h1>
+            <p>Please click the button to try again</p>
+        <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
+            <button type="submit">Confirm Logout</button>
+        </form>
+        </div>
+          
+          
+          
+          <% } %>
+        
+        
+       
     </body>
 </html>

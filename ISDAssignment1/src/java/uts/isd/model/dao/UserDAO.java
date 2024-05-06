@@ -106,7 +106,7 @@ public class UserDAO {
                         }
 
 	// Update Operation: update user
-	public void update(String userEmail, String userPassword, String userFullName, 
+	public User update(String userEmail, String userPassword, String userFullName, 
         String userPhone, String userAddress, String userDOB, String userGender, int userID) throws SQLException {
                 updateSt.setString(1, userEmail);
 		updateSt.setString(2, userPassword);
@@ -120,6 +120,16 @@ public class UserDAO {
 
 		int row = updateSt.executeUpdate();
 		System.out.println("row " + row + " updated successfuly");
+                checkSt.setString(1, userEmail);
+                ResultSet rs = checkSt.executeQuery();
+                rs.next();
+                String userType = rs.getString(9);
+                User user = new User (userID, userEmail, userPassword, 
+                userFullName, userPhone, userAddress, Date.valueOf(userDOB), userGender, userType);
+                return user;  
+
+
+
 	}
 
 	// Delete Operation: delete a user by userEmail & userPassword

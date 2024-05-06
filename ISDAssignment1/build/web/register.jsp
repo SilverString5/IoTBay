@@ -18,13 +18,13 @@
 
       <%
         String errorMsgs = (String) session.getAttribute("errorMsgs");
+        
     %>      
 
 
     <body>
  
-               <% User user = new User();
-                session.setAttribute("user", user);%>
+      
                 
                 
           <div class="menu">

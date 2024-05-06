@@ -1,4 +1,4 @@
-/*
+  /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
 IOTBay
@@ -53,7 +53,12 @@ public class UserDAOTest {
         public void testCreateUser() throws SQLException{
                 manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St",Date.valueOf("1994-02-02"), "F");
             }
-
+        
+        @Test
+        public void testUpdate() throws SQLException{
+        User user = manager.update("sahasl@l.com", "bunnyNEW", "Bunny Hi", "123", "Sasha St", "2020-09-09","F", 45);
+        assertEquals("bunnyNEW", user.getPassword());
+}
         @Test
         public void testLoginCorrect() throws SQLException{
                 assertNotNull(manager.login("admin@iotbay.com","logmein"));

@@ -18,14 +18,19 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.UserDAO;
+
+import uts.isd.model.dao.ShipmentDAO;
+
 import uts.isd.model.dao.AccessLogDAO;
 import uts.isd.model.Product;
 import uts.isd.model.dao.ProductDAO;
+
 
 public class ConnServlet extends HttpServlet {
 
 	private DBConnector db;
 	private UserDAO userDAO;
+        private ShipmentDAO shipmentDAO;
 	private Connection conn;
         private AccessLogDAO accessLogDAO;
         private ProductDAO productDAO;
@@ -48,16 +53,24 @@ public class ConnServlet extends HttpServlet {
 
 		try {
 			userDAO = new UserDAO(conn);
+
+                        shipmentDAO = new ShipmentDAO(conn);
+
                         accessLogDAO = new AccessLogDAO(conn);
 			productDAO = new ProductDAO(conn);
                         ArrayList<Product> products = productDAO.fetchAllProducts();
                         session.setAttribute("listDevice", products);
+
 		} catch (SQLException e) {
 			System.out.print(e);
 		}
                 session.setAttribute("productDAO", productDAO);
 		session.setAttribute("userDAO", userDAO);
+
+                session.setAttribute("shipmentDAO", shipmentDAO);
+
                 session.setAttribute("accessLogDAO",accessLogDAO);
+
 		request.getRequestDispatcher("index.jsp").include(request, response);
 	}
 

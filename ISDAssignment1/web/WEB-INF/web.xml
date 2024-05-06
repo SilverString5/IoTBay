@@ -14,6 +14,30 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-class>uts.isd.controller.ConnServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
+  
+  <servlet>
+    <servlet-name>ShipmentHistoryServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ShipmentHistoryServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>ViewShipmentDetailServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewShipmentDetailServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DeleteShipmentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DeleteShipmentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>UpdateShipmentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateShipmentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
    <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
@@ -52,10 +76,33 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>updateExistingDeviceServlet</servlet-name>
         <servlet-class>uts.isd.controller.updateExistingDeviceServlet</servlet-class>
     </servlet>
+
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
+
+  
+  <servlet-mapping>
+    <servlet-name>ShipmentHistoryServlet</servlet-name>
+    <url-pattern>/shipmentHistory</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ViewShipmentDetailServlet</servlet-name>
+    <url-pattern>/shipmentDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteShipmentServlet</servlet-name>
+    <url-pattern>/deleteShipmentDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UpdateShipmentServlet</servlet-name>
+    <url-pattern>/updateShipmentDetail</url-pattern>
+  </servlet-mapping>
+  
    <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
@@ -102,6 +149,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>updateExistingDeviceServlet</servlet-name>
         <url-pattern>/updateExistingDeviceServlet</url-pattern>
     </servlet-mapping>
+
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

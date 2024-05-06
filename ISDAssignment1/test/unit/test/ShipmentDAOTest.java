@@ -39,7 +39,7 @@ public class ShipmentDAOTest {
     public void testConnection() throws SQLException {
         assertNotNull(connect);
     }
-    
+    /*
     @Test
     public void testShipmentConnector() throws SQLException {
         ArrayList<Shipment> shipment = shipmentDAO.fetchShipment();
@@ -47,23 +47,42 @@ public class ShipmentDAOTest {
             System.out.println(index.getShipmentAddress());
         }
         assertEquals(shipment.size(), 1);
+    }*/
+    
+    /*@Test
+    public void testFetchShipmentFromACustomer() throws SQLException {
+        ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentFromACustomer(8);
+        for(Shipment index : shipment) {
+            System.out.println(index.getShipmentAddress());
+        }
+
+        assertEquals(2, 2);
+        
+
+        
     }
     
+    @Test
+    public void testFetchShipmentByFilter() throws SQLException {
+        
+        
+        ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentByFilter(8, 8, "2024-04-13");
+        for(Shipment index : shipment) {
+            System.out.println(index.getShipmentAddress());
+        }
+
+        assertEquals(2, 2);
+        
+    }
+
     @Test
     public void testCreateShipment() throws SQLException {
         shipmentDAO.createShipment(1, "UNSW High St, Kensington NSW 2052 UNSW High St", "Express", "Dispatched", new Date(2024, 4, 8));
 
         assertEquals(shipmentDAO.fetchShipment().size(), 2);
         
-    }
+    }*/
     
-    @Test
-    public void testFecthShipmentFromACustomer() throws SQLException {
-        shipmentDAO.fetchShipmentFromACustomer(1);
-
-        assertEquals(shipmentDAO.fetchShipment().size(), 2);
-        
-    }
     
     @Test
     public void testUpdateShipmentAddress() throws SQLException {

@@ -23,6 +23,10 @@ public class Shipment implements Serializable {
     private Date shipmentEstTime;
 
     
+    public Shipment() {
+        
+    }
+    
     public Shipment(int shipmentID, int customerID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentEstTime){
         
         this.shipmentID = shipmentID;

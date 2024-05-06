@@ -128,7 +128,8 @@
                             
                             <td><c:out value="${device.productName}" /></td>
                             <td><c:out value="${device.productType}" /></td>
-                            <td><c:out value="${device.productUnitPrice}" /></td>
+                            <fmt:formatNumber var="formattedUnitPrice" type="number" minFractionDigits="2" maxFractionDigits="2" value="${device.productUnitPrice}" />
+                            <td><c:out value="${formattedUnitPrice}" /></td>
                             <td><c:out value="${device.productDetails}"/></td>
                             <td>
                                 <a href="/shoppingCartServlet?id=<c:out value='${device.productID}' />">Add to Cart</a>                   

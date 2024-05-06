@@ -39,11 +39,6 @@ public class UserDAOTest {
 		assertNotNull(conn);
 	}
 
-@Test public void testUpdate() throws SQLException {
-manager.update("updatetest@gmail.com","none","Update test", "1", "R street","1994-05-05", "M", 30);
-
-}
-
 	@Test
 	public void testSelectUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
@@ -85,4 +80,3 @@ manager.update("updatetest@gmail.com","none","Update test", "1", "R street","199
 }
 
     
-

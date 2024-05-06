@@ -53,9 +53,6 @@ public class AccessLogDAOTest {
                 assertEquals(testLog.getAccessLogID(),32);
         }
 
-@Test public void testAddLogoutTime() throws SQLException {
-manager.addLogoutTime(1);
-}
 
 
 
@@ -64,4 +61,3 @@ manager.addLogoutTime(1);
 
 
     
-

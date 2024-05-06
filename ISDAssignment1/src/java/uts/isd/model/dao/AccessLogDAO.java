@@ -22,13 +22,15 @@ import java.sql.Time;
 public class AccessLogDAO {
     private Statement st;
     private PreparedStatement readSt;
-    private PreparedStatement updateSt;
-    private PreparedStatement deleteSt;
     private PreparedStatement filterSt;
+    private PreparedStatement findSt;
+    private PreparedStatement updateSt;
+    private PreparedStatement findbyLogIDSt ;
     private String readQuery = "SELECT * FROM accesslogs WHERE userID=?";
-    private String filterQuery = "SELECT * from accesslogs WHERE userID=? AND accessLogDate=?";
+    private String filterQuery = "SELECT * FROM accesslogs WHERE userID=? AND accessLogDate=?";
+    private String findQuery = "SELECT * FROM accesslogs WHERE userID=? ORDER BY accessLogDate DESC, loginTime DESC LIMIT 1";
     private String updateQuery = "UPDATE accesslogs SET logoutTime=? WHERE accessLogID=?";
-
+    private String findbyLogIDQuery = "SELECT * FROM accesslogs WHERE accessLogID=?";
 
 
 	public AccessLogDAO (Connection connection) throws SQLException {
@@ -36,7 +38,9 @@ public class AccessLogDAO {
 		st = connection.createStatement();
 		readSt = connection.prepareStatement(readQuery);
                 filterSt = connection.prepareStatement(filterQuery);
+                findSt = connection.prepareStatement(findQuery);
                 updateSt = connection.prepareStatement(updateQuery);
+                findbyLogIDSt = connection.prepareStatement(findbyLogIDQuery);
 	}
 
         // Create Operation: create a user access log
@@ -64,15 +68,42 @@ public class AccessLogDAO {
 		
 }
 
-public void addLogoutTime(int accessLogID) throws SQLException{
-Time logoutTime = new Time(System.currentTimeMillis());
+// Update operation: update logoutTime
+        public UserAccessLog updateLogoutTime(Time logoutTime, int accessLogID) throws SQLException {
+            updateSt.setTime(1, logoutTime);
+            updateSt.setInt(2, accessLogID);
+            int row = updateSt.executeUpdate();
+            System.out.println("row " + row + " updated successfully");
+            findbyLogIDSt.setInt(1, accessLogID);
+            ResultSet rs = findbyLogIDSt.executeQuery();
+            rs.next();
+            int userID = rs.getInt(2);
+            Date accessLogDate = rs.getDate(3);
+            Time loginTime = rs.getTime(4);
+            UserAccessLog accessLog = new UserAccessLog(accessLogID, userID, accessLogDate, loginTime, logoutTime);
+            return accessLog;
 
-updateSt.setTime(1, logoutTime);
-updateSt.setInt(2, accessLogID);
-int row = updateSt.executeUpdate();
-System.out.println("row" + row + " updated successfuly");
+
 }
 
+
+
+//Find most recently created access logs
+        public UserAccessLog findMostRecent(int userID) throws SQLException{
+            findSt.setInt(1, userID);
+            ResultSet rs = findSt.executeQuery();
+            rs.next();
+            int accessLogID = rs.getInt(1);
+            Date accessLogDate = rs.getDate(3);
+            Time loginTime = rs.getTime(4);
+            Time logoutTime = rs.getTime(5);
+            UserAccessLog userLog = new UserAccessLog(accessLogID, userID, accessLogDate, loginTime, logoutTime);
+            return userLog;
+        }
+
+
+
+        //Find user access logs based on date
         public ArrayList<UserAccessLog> filterAccessLogDate(int userID, String filterDate) throws SQLException {
                 filterSt.setInt(1, userID);
                 filterSt.setDate(2, Date.valueOf(filterDate));
@@ -92,6 +123,5 @@ System.out.println("row" + row + " updated successfuly");
 }
 
 }
-
 
 

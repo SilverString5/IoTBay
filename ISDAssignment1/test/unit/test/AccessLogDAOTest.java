@@ -5,6 +5,7 @@
 package unit.test;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import uts.isd.model.dao.*;
@@ -39,7 +40,18 @@ public class AccessLogDAOTest {
         public void testFilterAccessLog() throws SQLException {
                 ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2024-05-03");
                 assertEquals(filLogs.size(),1);
-}
+        }
+         @Test
+          public void testupdateLogout() throws SQLException {
+          UserAccessLog accessLog = manager.updateLogoutTime(Time.valueOf("19:07:23"), 20);
+          assertEquals(Time.valueOf("19:07:23"),accessLog.getLogoutTime());
+        }   
+
+        @Test
+        public void testFindMostRecent() throws SQLException {
+                UserAccessLog testLog = manager.findMostRecent(3);
+                assertEquals(testLog.getAccessLogID(),32);
+        }
 
 @Test public void testAddLogoutTime() throws SQLException {
 manager.addLogoutTime(1);

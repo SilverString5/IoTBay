@@ -7,13 +7,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     Author     : notba
 */
 
-h1, p {
+h1, p, h2 {
     font-family: Barlow;
     color:#074f92;
     
 }
 
-
+errors {
+    text-align: center;
+}
+.myheader
+{
+    text-align: center;
+}
 body {
 
     background-color:#f7f7f7;
@@ -34,7 +40,7 @@ body {
 .menu ul{ list-style-type: none;
             margin: 0px;
             padding: 0px;
-            borader: 0px;
+            border: 0px;
             overflow: hidden;
             position: fixed;
             width: 100%;
@@ -74,7 +80,7 @@ body {
 }
 
 a:link, a:visited{
-    color:#3ffb09;
+    color:#7A9E05;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 12px;    
@@ -122,20 +128,26 @@ button:hover{
 }
 
 .myForm {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
     text-align: left;
     font-family: Barlow;
     color: #3f9642;
     font-weight: bold;
 }
 
+
 .myFormdiv {
 
     display: flex;
     justify-content: center;
-
+    
 
 
 }
+
+
 
 .myForm input{
   padding: 12px 20px;

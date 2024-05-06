@@ -3,11 +3,7 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-<<<<<<<< HEAD:ISDAssignment2/nbproject/project.xml
-            <name>ISDAssignment2</name>
-========
             <name>ISDAssignment1</name>
->>>>>>>> main:ISDAssignment1/nbproject/project.xml
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">

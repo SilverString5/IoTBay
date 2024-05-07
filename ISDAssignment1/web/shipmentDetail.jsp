@@ -37,14 +37,14 @@
                 <h3>Shipping Address: <%=shipment.getShipmentAddress()%></h3> 
                 <h3>Delivery Method: <%=shipment.getShipmentMethod()%></h3>
                 
-                <button><a href="shipmentHistory.jsp">Back To Shipments</a></button>
+                <button><a href="./shipmentHistory.jsp">Back To Shipments</a></button>
                 
                 <form method="POST" action="/deleteShipmentDetail">
                     <button type="submit">Delete</button>
                 </form>
                 
                 <%if (shipment.getShipmentStatus().equals("Pending")) {%>
-                <button type="submit"><a href="/updateShipmentForm.jsp">Update</a></button>
+                <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
                 <% } %>
 
             </div>

@@ -79,7 +79,7 @@
                 <td><%=shipment.getShipmentEstTime()%></td>
                 
                 
-                <td> <a href="/shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View </a>
+                <td> <a href="./shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View </a>
                     <!--<form method="POST">
                         <input type="hidden" name="viewButton" value="true"> 
                         <button type="submit">View</button>

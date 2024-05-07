@@ -61,7 +61,7 @@
         <%} else {%>
         
         <p> You are trying to modify a shipment when its on the way. Click on the button below to go back to shipmentHistory</p>
-        <button><a href="/shipmentHistory.jsp">Go Back To Shipment History</a></button>
+        <button><a href="./shipmentHistory.jsp">Go Back To Shipment History</a></button>
         <%} %>
            
         <!--

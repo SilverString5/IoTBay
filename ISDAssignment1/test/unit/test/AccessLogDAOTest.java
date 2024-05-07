@@ -53,6 +53,12 @@ public class AccessLogDAOTest {
                 assertEquals(testLog.getAccessLogID(),32);
         }
 
+        @Test
+        public void testViewAccessLogs() throws SQLException {
+        ArrayList<UserAccessLog> accessLogs = manager.viewAccessLogs(14);
+        assertTrue(accessLogs.size()>= 3);
+        }
+
 
 
 

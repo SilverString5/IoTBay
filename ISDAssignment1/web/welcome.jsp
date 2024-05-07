@@ -1,9 +1,3 @@
-<%-- 
-    Document   : main
-    Created on : Mar 28, 2024, 3:29:37 PM
-    Author     : pyaephyozaw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
@@ -28,15 +22,36 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
             </ul>
             </div>
+         
             <br>
             <br>
-            Welcome, <%=user.getName()%>
+            <p>Welcome, <%=user.getName()%></p>
+            
+            
+            <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
+                <input type="hidden" id="origin" name="origin" value="welcome">
+                <button type="submit">View Your Access Logs</button><br>   
+            </form>
 
             <%}  else {%>
+                        <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+                            <br><br><br>
+            </div>
+            <div class="myFormdiv">
+            <form class="myForm">
+                
         <h1> Hello Anonymous User, </h1>
+        <br>
         <h2> Do you want to register? </h2>
-        <button><a href="register.jsp">Register</a></button>
-        
+        <br>
+        <a href="register.jsp">Register</a>
+            </form>
+            </div>
         <% } %>
     </body>
 </html>

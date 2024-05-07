@@ -51,6 +51,11 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
   </servlet>
+      <servlet>
+        <servlet-name>SearchAccessLogsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.SearchAccessLogsServlet</servlet-class>
+    </servlet>
+    
   <servlet>
 <servlet-name>deviceSearchServlet</servlet-name>
         <servlet-class>uts.isd.controller.deviceSearchServlet</servlet-class>
@@ -76,6 +81,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>updateExistingDeviceServlet</servlet-name>
         <servlet-class>uts.isd.controller.updateExistingDeviceServlet</servlet-class>
     </servlet>
+
 
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
@@ -114,6 +120,10 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
        <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchAccessLogsServlet</servlet-name>
+    <url-pattern>/SearchAccessLogsServlet</url-pattern>
   </servlet-mapping>
    <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>

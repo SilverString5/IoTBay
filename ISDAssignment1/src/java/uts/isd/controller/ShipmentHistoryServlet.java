@@ -42,9 +42,9 @@ public class ShipmentHistoryServlet extends HttpServlet{
         
         HttpSession session = request.getSession();
         
-        //User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
-        User user = new User();
+        /*User user = new User();
         user.setUserID(8);
 	user.setName("Ryuji Sakamoto");
 	user.setEmail("SakamotoR@phantom.com");
@@ -53,10 +53,10 @@ public class ShipmentHistoryServlet extends HttpServlet{
         user.setAddress("15 Shujin St, Jefferson, SA, 4021");
         user.setuserDOB(new java.sql.Date(new Date(2002, 8, 29).getTime()));
         user.setGender("M");
-	session.setAttribute("user", user);
+	session.setAttribute("user", user);*/
 
         ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
-        try {
+        /*try {
                 db = new DBConnector();
                 conn = db.openConnection();
                 shipmentDAO = new ShipmentDAO(conn);
@@ -64,7 +64,7 @@ public class ShipmentHistoryServlet extends HttpServlet{
             } catch (SQLException | ClassNotFoundException e) {
                 // Handle exception
                 e.printStackTrace();
-            }
+            }*/
         
         try {
             System.out.println("pass");
@@ -88,11 +88,10 @@ public class ShipmentHistoryServlet extends HttpServlet{
         
         User user = (User) session.getAttribute("user");
         
-        String searchButton = request.getParameter("searchButton");
+        //String searchButton = request.getParameter("searchButton");
         
-        if(searchButton != null) {
-          String date = request.getParameter("date");
-        if(request.getParameter("shipmentID").equals("") || date == null){
+        String date = request.getParameter("date");
+        if(request.getParameter("shipmentID").equals("") || date.length()==0){
             session.setAttribute("shipmentFilterError", "Please fill in both shipment ID and date");
             request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
             
@@ -128,7 +127,10 @@ public class ShipmentHistoryServlet extends HttpServlet{
             System.out.println(e);
         }
         }
-        }
+        
+        /*if(searchButton != null) {
+          
+        }*/
         
         /*String viewButton = request.getParameter("viewButton");
         if(viewButton != null) {

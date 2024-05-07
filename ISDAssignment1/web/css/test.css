@@ -22,7 +22,7 @@ body {
 .flexbox {
     display: flex;
     justify-content: center;
-    background-color: pink;
+    
 }
 
 .left-container, .right-container, .first-column, .second-column {
@@ -128,7 +128,7 @@ select > option {
 /*Order Detail*/
 
 .shipment-status-container {
-    background-color: blue;
+    
 }
 
 .first-column, .second-column {

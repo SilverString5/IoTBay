@@ -54,15 +54,25 @@ public class ShipmentDAO {
         createQuery.setString(4, shipmentStatus);
         createQuery.setDate(5, new java.sql.Date(calculateShipmentDate(shipmentDate).getTime()));
         
+        System.out.println(createQuery);
+        
         createQuery.executeUpdate();
                 
     }
     
     public Date calculateShipmentDate(Date currentDate) {
+        currentDate.setTime(currentDate.getTime() - 36000000);
+        System.out.println(currentDate);
+        
+        /*
         Calendar tempDate = Calendar.getInstance();
         tempDate.setTime(currentDate);
         tempDate.add(Calendar.DAY_OF_MONTH, 2);
-        return tempDate.getTime();
+        System.out.println(tempDate + " " + currentDate);*/
+        currentDate.setTime(currentDate.getTime() + 172800000);
+        System.out.println(currentDate);
+        
+        return currentDate;
     }
     
     //Read/Fetch - in general

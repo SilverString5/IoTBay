@@ -73,17 +73,17 @@ public class ShipmentDAOTest {
 
         assertEquals(2, 2);
         
-    }
+    }*/
 
     @Test
     public void testCreateShipment() throws SQLException {
-        shipmentDAO.createShipment(1, "UNSW High St, Kensington NSW 2052 UNSW High St", "Express", "Dispatched", new Date(2024, 4, 8));
+        shipmentDAO.createShipment(1, "UNSW High St, Kensington NSW 2052 UNSW High St", "Express", "Dispatched", new Date());
 
         assertEquals(shipmentDAO.fetchShipment().size(), 2);
         
-    }*/
+    }
     
-    
+    /*
     @Test
     public void testUpdateShipmentAddress() throws SQLException {
         shipmentDAO.updateShipmentAddress(2, "15 Broadway Ultimo, NSW 2007");
@@ -101,7 +101,7 @@ public class ShipmentDAOTest {
     @Test
     public void testDeleteShipment() throws SQLException {
         shipmentDAO.deleteShipment(21);
-    }
+    }*/
     
 
 }

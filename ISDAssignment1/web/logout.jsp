@@ -29,8 +29,7 @@
         </div>
           <%  }  else { %>
         <div class="window">
-            <h1>You have not logged out.</h1>
-            <p>Please click the button to try again</p>
+            <h1>Please confirm you wish to log out</h1>
         <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
             <button type="submit">Confirm Logout</button>
         </form>

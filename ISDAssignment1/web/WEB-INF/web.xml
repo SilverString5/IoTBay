@@ -76,6 +76,11 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>updateExistingDeviceServlet</servlet-name>
         <servlet-class>uts.isd.controller.updateExistingDeviceServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>createShipmentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.createShipmentServlet</servlet-class>
+    </servlet>
 
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
@@ -148,6 +153,11 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-mapping>
         <servlet-name>updateExistingDeviceServlet</servlet-name>
         <url-pattern>/updateExistingDeviceServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>createShipmentServlet</servlet-name>
+        <url-pattern>/createShipment</url-pattern>
     </servlet-mapping>
 
   <session-config>

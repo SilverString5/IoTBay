@@ -43,9 +43,9 @@
                     <button type="submit">Delete</button>
                 </form>
                 
-                
+                <%if (shipment.getShipmentStatus().equals("Pending")) {%>
                 <button type="submit"><a href="/updateShipmentForm.jsp">Update</a></button>
-                
+                <% } %>
 
             </div>
             

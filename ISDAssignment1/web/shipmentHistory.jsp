@@ -33,6 +33,8 @@
                 <label for="date">Date: </label>
                 <input type="date" id = "date" name = "date">
                 
+                <%=request.getParameter("date") %>
+                
                 <input type="hidden" name="searchButton" value="true">
                 <button type="submit">Search</button>
             </form>
@@ -75,6 +77,8 @@
                 
                 <input type="hidden" name="shipmentDateRecord" value="<%=shipment.getShipmentEstTime() %>">
                 <td><%=shipment.getShipmentEstTime()%></td>
+                
+                
                 <td> <a href="/shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View </a>
                     <!--<form method="POST">
                         <input type="hidden" name="viewButton" value="true"> 

@@ -25,6 +25,7 @@
         
         <%Shipment shipment = (Shipment) session.getAttribute("shipment");%>
         
+        <% if(shipment.getShipmentStatus().equals("Pending")) {%>
         <div class="shipping-container">
             <h2>Shipping Address</h2>
             
@@ -34,33 +35,6 @@
                 <div class="shipping-details-container">
                 <label for="streetAddress">Street Address: </label><br>
                 <input type="text" id = "streetAddress" name = "streetAddress" value="<%=shipment.getShipmentAddress()%>">
-                
-                <table>
-                            <tr>
-                                <td>City: </td>
-                                <td>State/Territory: </td>
-                                <td>Postcode: </td>
-                            </tr>
-                            <tr>
-                                <td><input type= "text" id = "city" name = "city"></td>
-                                <td>
-                                    <div class="country-dropdown">
-                                    <select id="state" name="state">
-                                        <option value="" selected> choose one</option>
-                                        <option value="act">Australian Capital Territory</option>
-                                        <option value="nsw">New South Wales</option>
-                                        <option value="nt">Northern Territory</option>
-                                        <option value="qld">Queensland</option>
-                                        <option value="sa">South Australia</option>
-                                        <option value="tas">Tasmania</option>
-                                        <option value="vic">Victoria</option>
-                                        <option value="wa">Western Australia</option>
-                                    </select>
-                                    </div>
-                                </td>
-                                <td><input type= "text" id = "postcode" name = "postcode"></td>
-                            </tr>
-                        </table>
                 
                 <label for="shipmentMethod">Delivery Method: </label><br>
                 
@@ -84,6 +58,11 @@
                 <!-- class="submit-button" -->
         </form>
         </div>
+        <%} else {%>
+        
+        <p> You are trying to modify a shipment when its on the way. Click on the button below to go back to shipmentHistory</p>
+        <button><a href="/shipmentHistory.jsp">Go Back To Shipment History</a></button>
+        <%} %>
            
         <!--
        <div class="flexbox">

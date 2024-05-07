@@ -26,7 +26,7 @@
             <h2>Shipping Address</h2>
             
             
-            <form method="post">
+            <form method="POST" action="/createShipment">
                 
                 <div class="shipping-details-container">
                 <label for="streetAddress">Street Address: </label><br>
@@ -42,7 +42,7 @@
                                 <td><input type= "text" id = "city" name = "city"></td>
                                 <td>
                                     <div class="country-dropdown">
-                                    <select id="suburb" name="suburb">
+                                    <select id="state" name="state">
                                         <option value="" selected> choose one</option>
                                         <option value="act">Australian Capital Territory</option>
                                         <option value="nsw">New South Wales</option>
@@ -60,7 +60,7 @@
                         </table>
                 
                 <label for="shipmentMethod">Delivery Method: </label><br>
-                <select name="suburb">
+                <select name="shipmentMethod">
                     <option value="" selected> Choose Your Delivery Type</option>
                     <option value="Standard">Standard</option>
                     <option value="Express">Express</option>

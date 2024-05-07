@@ -4,7 +4,6 @@
  */
 package uts.isd.controller;
 
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,11 +22,12 @@ import uts.isd.model.Shipments;
 import uts.isd.model.dao.UserDAO;
 import java.util.*;
 
+
 /**
  *
  * @author lorinchanel
  */
-public class UpdateShipmentServlet extends HttpServlet{
+public class createShipmentServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,29 +38,27 @@ public class UpdateShipmentServlet extends HttpServlet{
         Shipment shipment = (Shipment) session.getAttribute("shipment");
         ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
         
-        
-        
         String streetAddress = request.getParameter("streetAddress");
-        /*String city = request.getParameter("city");
+        String city = request.getParameter("city");
         String state = request.getParameter("state");
-        String postcode = request.getParameter("postcode");*/
-        String deliveryMethod = request.getParameter("deliveryMethod");
+        String postcode = request.getParameter("postcode");
         
-        //String shipmentAddress = streetAddress + ", " + city + " " + state + " " + postcode;
+        
+        
+        String shipmentAddress = streetAddress + ", " + city + " " + state + " " + postcode;
+        String shipmentMethod = request.getParameter("shipmentMethod");
+        String shipmentStatus = "Pending";
+        Date shipmentDate = new Date();
+       
+        
+        
         
         try {
-            shipmentDAO.updateShipmentAddress(shipment.getShipmentID(), streetAddress);
-            shipmentDAO.updateShipmentMethod(shipment.getShipmentID(), deliveryMethod);
+            shipmentDAO.createShipment(user.getUserID(), shipmentAddress , shipmentMethod, shipmentStatus, shipmentDate);
+           
             
-            System.out.println("pass");
-            
-            Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
-            
-            session.setAttribute("shipments", shipments);
             
             request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
-            
-            //
             
             
             
@@ -70,9 +68,6 @@ public class UpdateShipmentServlet extends HttpServlet{
         
         
         
-        
-        
-        
-        
     }
+    
 }

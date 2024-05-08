@@ -28,11 +28,13 @@ public class UserDAO {
     private PreparedStatement deleteSt;
     private PreparedStatement checkSt;
     private PreparedStatement retrieveSt;
+    private PreparedStatement findSt;
     private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
     private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
     private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
     private String checkQuery = "SELECT * FROM users WHERE userEmail=?";
     private String retrieveQuery = "SELECT userID FROM users WHERE userEmail=?";
+    private String findQuery = "SELECT * from users WHERE userID=?";
 
 
 	public UserDAO(Connection connection) throws SQLException {
@@ -43,6 +45,7 @@ public class UserDAO {
 		deleteSt = connection.prepareStatement(deleteQuery);
                 checkSt = connection.prepareStatement(checkQuery);
                 retrieveSt = connection.prepareStatement(retrieveQuery);
+                findSt = connection.prepareStatement(findQuery);
 	}
 
 // Create Operation: create a user
@@ -77,6 +80,24 @@ public class UserDAO {
             return ID;
 }
 
+ //Find a user based on userID
+        public User findUser(int userID) throws SQLException{
+            retrieveSt.setInt(1,userID);
+            ResultSet rs = retrieveSt.executeQuery();
+            rs.next();
+            String userEmail = rs.getString(2);
+            String userPassword = rs.getString(3);
+            String userFullName = rs.getString(4);
+            String userPhone = rs.getString(5);
+            String userAddress = rs.getString(6);
+            Date userDOB = rs.getDate(7);
+            String userGender = rs.getString(8);
+            String userType = rs.getString(9);
+            User user = new User(userID, userEmail, userPassword, userFullName, userPhone, 
+            userAddress, userDOB, userGender, userType);
+            return user;
+
+}
 
 
 

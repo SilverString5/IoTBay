@@ -5,7 +5,6 @@
 package uts.isd.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 
 import uts.isd.model.User;
+import java.sql.Date;
 import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 import uts.isd.model.dao.AccessLogDAO;
@@ -30,41 +30,53 @@ public class SearchAccessLogsServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 AccessLogDAO accessLogDAO = (AccessLogDAO)session.getAttribute("accessLogDAO");
                 User user = (User)session.getAttribute("user");
+
                 String origin = request.getParameter("origin");
                 String enteredDate = request.getParameter("logdate");
+                String dateError="";
+                if (user==null){
+                String anonError = "You must log in to see your access logs.";
+                session.setAttribute("annonError", anonError);
+                                }
 
-                if (origin.equals("welcome") || enteredDate==null || enteredDate.isEmpty()){
+
+                else if (origin.equals("welcome")){
                     try{
                         ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
                         session.setAttribute("accessLogs", accessLogs);
-                        request.getRequestDispatcher("viewAccessLogs.jsp").include(request, response);
                         }
                 catch (SQLException e) {
                 System.out.println(e);
-                                        }
-                }
-           if (origin.equals("viewAccessLogs")){
-                try{
+                                       }
+                                                  }
+                else if (origin.equals("viewAccessLogs")){
+                    try{
             
-                Date convertedDate = Date.valueOf(enteredDate);
-                long now = System.currentTimeMillis();
-                Date nowDate = new Date(now);
-                    if (convertedDate.after(nowDate)){
-                        String dateError="The entered date is in the future";
-                        session.setAttribute("dateError", dateError);
-                      }
+                        Date convertedDate = Date.valueOf(enteredDate);
+                        long now = System.currentTimeMillis();
+                        Date nowDate = new Date(now);
+                        if (convertedDate.after(nowDate)){
+                            dateError+=" The entered date is in the future. ";
+                            session.setAttribute("dateError", dateError);
+                                                          }
                 ArrayList<UserAccessLog> accessLogs = accessLogDAO.filterAccessLogDate(user.getUserID(), enteredDate);
                 session.setAttribute("accessLogs", accessLogs);
-                request.getRequestDispatcher("viewAccessLogs.jsp").include(request, response);
                 }
                 catch (SQLException e) {
                 System.out.println(e);
-                                        }
-                }
-            
+                                       }
+                catch (IllegalArgumentException e){
+                System.out.println(e);
+                dateError+=" The date entered must be a valid non-empty date. ";
+                session.setAttribute("dateError",dateError);
+                                                  }
 
+                                                                }
+            
+            request.getRequestDispatcher("viewAccessLogs.jsp").include(request, response);
 
             }
+
 
             }
 

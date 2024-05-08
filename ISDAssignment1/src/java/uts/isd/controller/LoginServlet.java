@@ -34,12 +34,13 @@ public class LoginServlet extends HttpServlet {
                 String invalidLogin = "";
                 try {
                 User user = userDAO.login(email, password);
-                accessLogDAO.createUserAccessLog(user.getUserID());
-                UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                     if (user!=null){
+                        accessLogDAO.createUserAccessLog(user.getUserID());
+                        UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                         session.setAttribute("user", user);
                         session.setAttribute("accessLog",accessLog);
                         request.getRequestDispatcher("welcome.jsp").include(request, response);
+
                         }
                     else {
                         invalidLogin+="Your login details are incorrect. Please try again or register.";

@@ -30,6 +30,54 @@ public class SearchAccessLogsServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 AccessLogDAO accessLogDAO = (AccessLogDAO)session.getAttribute("accessLogDAO");
                 User user = (User)session.getAttribute("user");
+<<<<<<< Updated upstream
+=======
+                String origin = request.getParameter("origin");
+                String enteredDate = request.getParameter("logdate");
+                String dateError="";
+                if (user==null){
+                String anonError = "You must log in to see your access logs.";
+                session.setAttribute("annonError", anonError);
+                                }
+
+
+                else if (origin.equals("welcome")){
+                    try{
+                        ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
+                        session.setAttribute("accessLogs", accessLogs);
+                        }
+                catch (SQLException e) {
+                System.out.println(e);
+                                       }
+                                                  }
+                else if (origin.equals("viewAccessLogs")){
+                    try{
+            
+                        Date convertedDate = Date.valueOf(enteredDate);
+                        long now = System.currentTimeMillis();
+                        Date nowDate = new Date(now);
+                        if (convertedDate.after(nowDate)){
+                            dateError+=" The entered date is in the future. ";
+                            session.setAttribute("dateError", dateError);
+                                                          }
+                ArrayList<UserAccessLog> accessLogs = accessLogDAO.filterAccessLogDate(user.getUserID(), enteredDate);
+                session.setAttribute("accessLogs", accessLogs);
+                }
+                catch (SQLException e) {
+                System.out.println(e);
+                                       }
+                catch (IllegalArgumentException e){
+                System.out.println(e);
+                dateError+=" The date entered must be a valid non-empty date. ";
+                session.setAttribute("dateError",dateError);
+                                                  }
+
+                                                                }
+            
+            request.getRequestDispatcher("viewAccessLogs.jsp").include(request, response);
+
+            }
+>>>>>>> Stashed changes
 
             }
 

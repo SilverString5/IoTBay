@@ -1,17 +1,18 @@
 package uts.isd.model;
-import java.util.*;
+//import java.util.*;
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Order implements Serializable {
     private int orderID;
-    private String orderDate;
+    private Date orderDate;
     private String orderStatus;
     private int customerID;
     private int shipmentID;
-    private int totalAmount;
-    private String shipmentStatus;
+    private double totalAmount;
+//    private String shipmentStatus;
     
-    public Order(int orderID, String orderDate, String orderStatus, int totalAmount, int customerID, int shipmentID){
+    public Order(int orderID, Date orderDate, String orderStatus, double totalAmount, int customerID, int shipmentID){
         this.orderID = orderID;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
@@ -25,7 +26,7 @@ public class Order implements Serializable {
         this.orderID = orderID;
     }
     
-    public void setOrderDate (String orderDate){
+    public void setOrderDate (Date orderDate){
         this.orderDate = orderDate;
     }
     
@@ -33,9 +34,9 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
     
-    public void setShipmentStatus(String shipmentStatus){
-        this.shipmentStatus = shipmentStatus;       
-    }
+//    public void setShipmentStatus(String shipmentStatus){
+//        this.shipmentStatus = shipmentStatus;       
+//    }
     
     public void setTotalAmount(int totalAmount){
         this.totalAmount = totalAmount;
@@ -53,7 +54,7 @@ public class Order implements Serializable {
         return this.orderID;
     }
     
-    public String getOrderDate (){
+    public Date getOrderDate (){
         return this.orderDate;
     }
     
@@ -61,11 +62,11 @@ public class Order implements Serializable {
         return this.orderStatus;
     }
     
-    public String getShipmentStatus(){
-        return this.shipmentStatus;
-    }
+//    public String getShipmentStatus(){
+//        return this.shipmentStatus;
+//    }
     
-    public int getTotalAmount(){
+    public double getTotalAmount(){
         return this.totalAmount;
     }
     

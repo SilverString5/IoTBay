@@ -15,12 +15,14 @@ import uts.isd.model.Product;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.OrderDAO;
 import uts.isd.model.dao.ProductDAO;
+import uts.isd.model.dao.UserDAO;
 
 public class ConnServlet extends HttpServlet {
 
 	private DBConnector db;
 	private ProductDAO productDAO;
         private OrderDAO orderDAO;
+        private UserDAO userDAO;
 	private Connection conn;
 
 	@Override
@@ -41,6 +43,8 @@ public class ConnServlet extends HttpServlet {
 		try {
 			productDAO = new ProductDAO(conn);
                         orderDAO = new OrderDAO(conn);
+                        userDAO = new UserDAO(conn);
+                        
                         ArrayList<Product> products = productDAO.fetchAllProducts();
                         session.setAttribute("listDevice", products);
                         
@@ -50,7 +54,11 @@ public class ConnServlet extends HttpServlet {
                 
 		session.setAttribute("productDAO", productDAO);
                 session.setAttribute("orderDAO", orderDAO);
-		request.getRequestDispatcher("index.jsp").include(request, response);
+                session.setAttribute("userDAO", userDAO);
+                if(request != null && response != null)
+                    request.getRequestDispatcher("index.jsp").include(request, response);
+                
+                   
 	}
         
         @Override

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import uts.isd.model.Product;
 /**
@@ -23,9 +24,12 @@ public class ProductDAO {
 	private PreparedStatement readSt;
 	private PreparedStatement updateSt;
 	private PreparedStatement deleteSt;
+        private PreparedStatement updateStockSt;
 	private String readQuery = "SELECT * FROM Product";
 	private String updateQuery = "UPDATE Product SET ProductName = ?, ProductType= ?, ProductUnitPrice= ?, ProductDetails= ?, ProductInStock= ? WHERE ProductID=?";
 	private String deleteQuery = "DELETE FROM Product WHERE ProductID= ? ";
+        
+        private String updateStock = "UPDATE Product SET ProductInStock=? WHERE ProductID=?";
         
         public ProductDAO(Connection connection) throws SQLException {
 		connection.setAutoCommit(true);
@@ -33,9 +37,23 @@ public class ProductDAO {
 		readSt = connection.prepareStatement(readQuery);
 		updateSt = connection.prepareStatement(updateQuery);
 		deleteSt = connection.prepareStatement(deleteQuery);
+                updateStockSt = connection.prepareStatement(updateStock);
 	}
         
+        public HashMap<Integer, Integer> fetchStock () throws SQLException {
+            HashMap<Integer, Integer> map = new HashMap();
+            ResultSet rs = readSt.executeQuery();
+            while(rs.next()){
+                map.put(rs.getInt(1), rs.getInt(6));
+            }
+            return map;
+        }
         
+        public void updateStock (int productID, int stock) throws SQLException {
+            updateStockSt.setInt(1, stock);
+            updateStockSt.setInt(2, productID);
+            updateStockSt.executeUpdate();
+        }
         
         // Read Operation: read a list of all products with its name, type, price, details
         public ArrayList<Product> fetchAllProducts() throws SQLException {

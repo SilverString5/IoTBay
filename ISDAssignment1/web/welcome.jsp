@@ -16,45 +16,26 @@
         <title>Welcome Page</title>
     </head>
     <body>
-        
-        <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <!--<li><a href="register.jsp" > Login</a></li>-->
-                <!--<li><a href="register.jsp" > Register</a></li>-->
-                <li><a href="welcome.jsp" > You</a></li>
-            </ul>
-        </div>
-        <br>  
-        <br>
-        
-        <%if(request.getParameter("submitted") != null){%>
-            <%  
-            
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                String phoneNumber = request.getParameter("phonenumber");
-                String address = request.getParameter("address");
-                String password = request.getParameter("password");
-                Staff user = new Staff(email, name, phoneNumber, password, address);
-                session.setAttribute("user", user);
-               
-            %>
-        <%}%>
+
+
         <% User user = (User)session.getAttribute("user");%>
         
-        <%if(user != null){%>
-            <h1>Hello <%=user.getName()%>,
-                <br> 
-                Welcome to IoTBay Web Application
-            </h1>
-            <button><a href="logout.jsp">Log out</a></button>
-         </div>
-            
-        <%}  else {%>
-            <h1> Hello Anonymous User, </h1>
-            <h2> Do you want to register? </h2>
-            <button><a href="register.jsp">Register</a></button>
+        <%if (session.getAttribute("user") != null){%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+            <br>
+            <br>
+            Welcome, <%=user.getName()%>
+
+            <%}  else {%>
+        <h1> Hello Anonymous User, </h1>
+        <h2> Do you want to register? </h2>
+        <button><a href="register.jsp">Register</a></button>
         
         <% } %>
     </body>

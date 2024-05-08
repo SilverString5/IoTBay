@@ -16,19 +16,21 @@
         <title>Shopping Cart Page</title>
     </head>
     <%
-        HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
+        HashMap<Integer, Integer> shoppingCart = new HashMap();
+        if(session.getAttribute("shoppingCart") != null)
+            shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
         ArrayList<Product> cartList = (ArrayList<Product>)session.getAttribute("cartList");
     %>
     
     <body>
-<!--        <div class="menu">
+        <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
                 <li><a href="login.jsp" > Login</a></li>
                 <li><a href="register.jsp" > Register</a></li>
                 <li><a href="welcome.jsp" > You</a></li>
             </ul>
-        </div>-->
+        </div>
         <div>
             <table width="100%" >
                 <tr>
@@ -55,15 +57,22 @@
                     %>
                 </tr>
                 <% } %>
-                <% session.setAttribute("totalAmount", totalAmount); %>
+                <% // session.setAttribute("totalAmount", totalAmount); %>
+                <tr>
+                    <td colspan="5"></td>
+                    <td class="price-id">Total Price: $<%= totalAmount %></td>
+                </tr>
             </table>
         </div>
         <div>
-            <form method="GET" action="/ISDAssignment1/SaveOrderServlet">
+<!--            <form method="GET" action="/ISDAssignment1/SaveOrderServlet">
                 <button type="submit">Save the Order</button>
-            </form>
+            </form>-->
             <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
                 <button type="submit">Submit the Order</button>
+            </form>
+            <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">
+                <button type="submit">Continue Shopping</button>
             </form>
                 
         </div>

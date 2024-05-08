@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/*IotBay
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package uts.isd.model.dao;
 
-//import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,34 +11,159 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import uts.isd.model.User;
-//import uts.isd.model.Staff;
+import java.sql.Date;
+
+
+
 
 /**
  *
- * @author pyaephyozaw
+ * @author notba
  */
 public class UserDAO {
+    private Connection con; 
     private Statement st;
     private PreparedStatement readSt;
-    private String readQuery = "SELECT * FROM user";
-    
-    public UserDAO(Connection connection) throws SQLException {
-        connection.setAutoCommit(true);
-        st = connection.createStatement();
-        readSt = connection.prepareStatement(readQuery);
-    }
-   
-    public ArrayList<User> fetchUsers() throws SQLException {
-        ResultSet rs = readSt.executeQuery();
-        ArrayList<User> users = new ArrayList<User>();
-        while (rs.next()){
-            String firstName = rs.getString(2);
-//            String lastName = rs.getString(3);
-            User u = new User();
-            u.setName(firstName);
-            System.out.println(u.getName());
-            users.add(u);
-        }
-        return users;
-    }
+    private PreparedStatement updateSt;
+    private PreparedStatement deleteSt;
+    private PreparedStatement checkSt;
+    private PreparedStatement retrieveSt;
+    private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
+    private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
+    private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
+    private String checkQuery = "SELECT * FROM users WHERE userEmail=?";
+    private String retrieveQuery = "SELECT userID FROM users WHERE userEmail=?";
+
+
+	public UserDAO(Connection connection) throws SQLException {
+		connection.setAutoCommit(true);
+		st = connection.createStatement();
+		readSt = connection.prepareStatement(readQuery);
+		updateSt = connection.prepareStatement(updateQuery);
+		deleteSt = connection.prepareStatement(deleteQuery);
+                checkSt = connection.prepareStatement(checkQuery);
+                retrieveSt = connection.prepareStatement(retrieveQuery);
+	}
+
+// Create Operation: create a user
+	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
+		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender)";
+		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
+                + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "')";
+		st.executeUpdate(columns + values);
+	}
+//Check if user already exists to prevent re-registration
+        public boolean checkExists(String userEmail) throws SQLException{
+            boolean exists = false;
+            checkSt.setString(1, userEmail);
+            ResultSet rs = checkSt.executeQuery();
+            ArrayList<User> results = new ArrayList<>();
+            while (rs.next()){
+                String email = rs.getString(2);
+                if (userEmail.equals(email)){
+                        exists = true;
+                }
+            }
+
+                return exists;
+            }
+
+ //Retrieve userID based on email
+        public int retrieveUserID(String userEmail) throws SQLException{
+            retrieveSt.setString(1, userEmail);
+            ResultSet rs = retrieveSt.executeQuery();
+            rs.next();
+            int ID = rs.getInt(1);
+            return ID;
 }
+
+
+
+
+	// Read Operation: user login
+	public User login(String userEmail, String userPassword) throws SQLException {
+		readSt.setString(1, userEmail);
+		readSt.setString(2, userPassword);
+		ResultSet rs = readSt.executeQuery();
+
+		while (rs.next()) {
+			String dataUserEmail = rs.getString(2);
+			String dataUserPass = rs.getString(3);
+			if (userEmail.equals(dataUserEmail) && userPassword.equals(dataUserPass)) {
+				int userID = Integer.parseInt(rs.getString(1));
+				String userFullName = rs.getString(4);
+				String userPhone = rs.getString(5);
+                                String userAddress = rs.getString(6);
+                                Date userDOB = rs.getDate(7);
+                                String userGender = rs.getString(8);
+                                String userType = rs.getString(9);
+				return new User(userID, userEmail, userPassword, userFullName, userPhone, userAddress, userDOB, userGender, userType);
+				
+                            }
+		
+                          }
+                return null;
+                        }
+
+	// Update Operation: update user
+	public User update(String userEmail, String userPassword, String userFullName, 
+        String userPhone, String userAddress, String userDOB, String userGender, int userID) throws SQLException {
+                updateSt.setString(1, userEmail);
+		updateSt.setString(2, userPassword);
+		updateSt.setString(3, userFullName);
+                updateSt.setString(4, userPhone);
+                updateSt.setString(5, userAddress);
+                updateSt.setDate(6, Date.valueOf(userDOB));
+                updateSt.setString(7, userGender);
+                updateSt.setString(8, Integer.toString(userID));
+
+
+		int row = updateSt.executeUpdate();
+		System.out.println("row " + row + " updated successfuly");
+                checkSt.setString(1, userEmail);
+                ResultSet rs = checkSt.executeQuery();
+                rs.next();
+                String userType = rs.getString(9);
+                User user = new User (userID, userEmail, userPassword, 
+                userFullName, userPhone, userAddress, Date.valueOf(userDOB), userGender, userType);
+                return user;  
+
+
+
+	}
+
+	// Delete Operation: delete a user by userEmail & userPassword
+	public void delete(String userEmail, String userPassword) throws SQLException {
+		deleteSt.setString(1, userEmail);
+                deleteSt.setString(2, userPassword);
+		int row = deleteSt.executeUpdate();
+		System.out.println("row " + row + " deleted successfuly");
+	}
+
+	// Fetch All: List all users
+	public ArrayList<User> fetchUsers() throws SQLException {
+		String fetch = "SELECT * FROM users";
+		ResultSet rs = st.executeQuery(fetch);
+		ArrayList<User> allUsers = new ArrayList<>();
+
+		while (rs.next()) {
+                        int userID=rs.getInt(1);
+                        String userEmail = rs.getString(2);
+                        String userPassword = rs.getString(3);
+			String userFullName = rs.getString(4);
+                        String userPhone = rs.getString(5);
+                        String userAddress = rs.getString(6);
+                        Date userDOB = rs.getDate(7);
+                        String userGender = rs.getString(8);
+                        String userType=rs.getString(9);
+                        User user = new User(userID, userEmail, userPassword, userFullName, 
+                        userPhone, userAddress, userDOB, userGender, userType);
+                        allUsers.add(user);
+
+		}
+		return allUsers;
+	}
+}
+
+
+    

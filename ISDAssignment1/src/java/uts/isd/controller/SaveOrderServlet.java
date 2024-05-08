@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uts.isd.model.Product;
+import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.OrderDAO;
 import uts.isd.model.dao.ProductDAO;
@@ -47,6 +48,7 @@ public class SaveOrderServlet extends HttpServlet{
        orderDAO = (OrderDAO)session.getAttribute("orderDAO");
        HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
        ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartList");
+       User user = (User) session.getAttribute("user");
        ArrayList<Integer> quantityList = new ArrayList();
        double totalAmount = (double)session.getAttribute("totalAmount");
        for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
@@ -57,7 +59,8 @@ public class SaveOrderServlet extends HttpServlet{
         }
        try {
 //           orderDAO = new OrderDAO(conn);
-           orderDAO.CreateOrder(1, totalAmount, quantityList, cartList);
+
+           orderDAO.CreateOrder(user.getUserID(), totalAmount, quantityList, cartList);
        } catch(SQLException e) {
            System.out.print(e);
         }

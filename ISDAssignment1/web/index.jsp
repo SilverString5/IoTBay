@@ -15,7 +15,7 @@
         <title>IoTBay WebStore</title>
     </head>
     
-    <% User user = (User)session.getAttribute("user"); 
+    <%  User user = (User)session.getAttribute("user"); 
         ArrayList<Product> deviceList = (ArrayList<Product>) session.getAttribute("listDevice");
         int quantity = 0;
         int id = 0;
@@ -28,7 +28,8 @@
 //            for(Integer key: keys){
 //                id = key;
 //            }
-            quantity = shoppingCart.get(productID);
+            if(productID != 0)
+                quantity = shoppingCart.get(productID);
         }
     %>
     <body>
@@ -42,8 +43,9 @@
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="./register.jsp" > Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
             </ul>
                                 
             </div>
@@ -75,7 +77,7 @@
                         </form>
         </div>
         
-        <%if (user != null && user.getType().equals("S")){%> 
+        <%if (user != null && user.getUserType().equals("S")){%> 
             <div>
                 <center>
                     <h1>Device Collection Management</h1>

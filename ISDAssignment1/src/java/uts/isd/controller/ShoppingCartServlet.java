@@ -42,6 +42,7 @@ public class ShoppingCartServlet extends HttpServlet{
               shoppingCart.put(productID, 1);
               session.setAttribute("shoppingCart", shoppingCart);
           }
-          request.getRequestDispatcher("index.jsp").include(request, response);       
+          request.getRequestDispatcher("index.jsp").include(request, response);
+        
     }
 }

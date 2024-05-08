@@ -27,12 +27,15 @@ public class updateDeviceFormServlet extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        //getting the productID from request object
         int productID = Integer.parseInt(request.getParameter("productID"));
         
         HttpSession session = request.getSession();
         ProductDAO productDAO = (ProductDAO) session.getAttribute("productDAO");
         
         try{
+            //set request object with attribute product of that specific ID
+            //So the product data can be used in productForm, and also indicate it should perform an updating action.
             Product existingProduct = productDAO.getProduct(productID);
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("productForm.jsp");

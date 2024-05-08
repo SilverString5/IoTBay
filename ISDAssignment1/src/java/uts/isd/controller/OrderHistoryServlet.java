@@ -27,7 +27,9 @@ public class OrderHistoryServlet extends HttpServlet {
         OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         ArrayList<Order> orderList = new ArrayList();
         try {
-            orderList = orderDAO.readOrderHistory(user.getUserID());
+            if(user != null){
+                orderList = orderDAO.readOrderHistory(user.getUserID());
+            }       
         }catch (SQLException e){
             System.out.print(e);
         }

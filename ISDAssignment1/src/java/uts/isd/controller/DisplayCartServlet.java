@@ -95,4 +95,10 @@ public class DisplayCartServlet extends HttpServlet {
           session.setAttribute("cartList", productList);
           request.getRequestDispatcher("shoppingcart.jsp").include(request, response);       
     }
+    
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=UTF-8");
+        doGet(request, response);
+    } 
 }

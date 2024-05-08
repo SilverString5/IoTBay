@@ -50,7 +50,8 @@
                     %>
                     
                     <td><%= quantity%></td>
-                    <td><%= subtotal*quantity%></td>
+                    <% subtotal *= quantity; %>
+                    <td><%= subtotal%></td>
                     <% 
                         totalAmount += subtotal; 
                     %>

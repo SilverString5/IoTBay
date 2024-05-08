@@ -34,7 +34,8 @@ public class SubmitOrderServlet extends HttpServlet{
        ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartList");
        User user = (User) session.getAttribute("user");
        ArrayList<Integer> quantityList = new ArrayList();
-       double totalAmount = (double)session.getAttribute("totalAmount");
+//       double totalAmount = (double)session.getAttribute("totalAmount");
+        double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
        for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
                   Integer quantity = entry.getValue();
 //                  product = productDAO.getProduct(productID);
@@ -44,7 +45,12 @@ public class SubmitOrderServlet extends HttpServlet{
 //       HashMap<Integer, Integer> updateStock = new HashMap();
        try {
 //            orderDAO.CreateOrder(user.getUserID(), totalAmount, quantityList, cartList);
-            orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList);
+            if(user != null){  //register user
+                orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList);
+            }else{  //anonymouse
+                orderDAO.anonymousOrder(totalAmount, quantityList, cartList);  //userid is 0 (null) for all anonymous users
+            }
+            
             HashMap<Integer, Integer> products = productDAO.fetchStock();
             for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
                 Integer productID = entry.getKey();

@@ -33,13 +33,46 @@ public class UpdateOrderServlet extends HttpServlet{
         HashMap<Integer, Integer> quantityMap = (HashMap<Integer, Integer>)session.getAttribute("quantityMap");
 //        int orderID = Integer.parseInt(request.getParameter("orderID")); //check null
         if(request.getParameter("saved") == null){
-            int productID = Integer.parseInt(request.getParameter("productID"));
-        int productQuantity = Integer.parseInt(request.getParameter("productQuantity"));
-        if(quantityMap.containsKey(productID)){
-            quantityMap.put(productID, productQuantity);
-        }
-        request.getRequestDispatcher("updateorder.jsp").include(request, response);
-        }
+            System.out.println("Entered Here");
+            String quantityStr = request.getParameter("productQuantity");
+            if(quantityStr == null || quantityStr.trim().isEmpty() || !(quantityStr.matches("[0-9]+"))){
+//                System.out.println("entered");
+                request.setAttribute("quantityError", "Quantity can't be empty or non-numeric.");
+                
+            }else{
+                
+                int productID = Integer.parseInt(request.getParameter("productID"));
+                int productQuantity = Integer.parseInt(request.getParameter("productQuantity"));
+                try{
+                    int stockInDB = productDAO.fetchSingleStock(productID);
+                    if(stockInDB >= productQuantity){
+                        if(request.getParameter("cartUpdate") == null){
+                            System.out.println("ENTERED FIRST IF");
+                            if(quantityMap.containsKey(productID)){
+                                quantityMap.put(productID, productQuantity);
+                            }
+                        }else{
+                            System.out.println("Entered HERE 2");
+                            HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
+                            if(shoppingCart.containsKey(productID)){
+                                shoppingCart.put(productID, productQuantity);
+                            }
+                            request.getRequestDispatcher("DisplayCartServlet").forward(request, response);  //if use include, the buttons in shoppingcart.jsp wont show??
+                            return;
+                        }                      
+                    }else{
+                        request.setAttribute("insufficientStockError", "There is insufficient stock for the product. Please choose the lower quantity");
+                    }
+                }catch(SQLException e){
+                    System.out.print(e);
+                }              
+            }
+        if(request.getParameter("cartUpdate") == null){
+            request.getRequestDispatcher("updateorder.jsp").include(request, response);
+        }else{
+            request.getRequestDispatcher("DisplayCartServlet").forward(request, response);
+        }          
+        
 //        int productID = Integer.parseInt(request.getParameter("productID"));
 //        int productQuantity = Integer.parseInt(request.getParameter("productQuantity"));
 //        if(quantityMap.containsKey(productID)){
@@ -55,7 +88,7 @@ public class UpdateOrderServlet extends HttpServlet{
        
 //       double unitPrice = Double.parseDouble(request.getParameter("unitPrice"));
 //       double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
-        else if(request.getParameter("saved") != null && request.getParameter("saved").equals("yes")){
+        }else if(request.getParameter("saved") != null && request.getParameter("saved").equals("yes")){
             ArrayList<Integer> updatedQuantityList = new ArrayList();
             for(Map.Entry<Integer, Integer> entry : quantityMap.entrySet()){
                 Integer quantity = entry.getValue();

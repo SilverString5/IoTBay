@@ -36,8 +36,10 @@ public class OrderDAO {
     private PreparedStatement fetchProductIdSt;
     private PreparedStatement searchOrderSt;
     private PreparedStatement updateStatusSt;
+    private PreparedStatement updateStatusSt2;
     private PreparedStatement fetchRecentOrderSt;
     private PreparedStatement updateOrderSt;
+    private PreparedStatement anonymousOrderSt;
     
     private String readQuery = "SELECT * FROM `Order` WHERE UserID=?";
     private String readSpecificOrder = "SELECT * FROM `Order` WHERE OrderID=? AND OrderDate=?";
@@ -49,9 +51,11 @@ public class OrderDAO {
     private String orderLineItem = "INSERT INTO `OrderLineItem` (ProductID, OrderID, ProductQuantity, SubTotal) VALUES (?, ?, ?, ?) "
                                     + "ON DUPLICATE KEY UPDATE ProductQuantity = VALUES(ProductQuantity), SubTotal = VALUES(SubTotal)";
     private String fetchProductID = "SELECT * FROM `OrderLineItem` WHERE OrderID=?";
-    public String updateStatus = "UPDATE `Order` SET OrderStatus='Cancelled' WHERE UserID=?";
     
+    public String updateStatus = "UPDATE `Order` SET OrderStatus='Cancelled' WHERE UserID=?";
+    public String updateStatus2 = "UPDATE `Order` SET OrderStatus='Cancelled' WHERE OrderID=?";
     private String submitOrder = "INSERT INTO `Order` (UserID,OrderDate,OrderStatus,TotalAmount) VALUES (?, ?, ?, ?)";
+    private String anonymousOrder = "INSERT INTO `Order` (OrderDate,OrderStatus,TotalAmount) VALUES (?, ?, ?)";
     private String fetchRecentOrder = "Select OrderID FROM `Order` ORDER BY OrderID DESC LIMIT 1";
     private String updateOrder = "UPDATE `Order` SET OrderDate=?, TotalAmount=? WHERE OrderID=?";
             
@@ -67,8 +71,10 @@ public class OrderDAO {
         deleteSt = connection.prepareStatement(deleteOrder);
         fetchProductIdSt = connection.prepareStatement(fetchProductID);
         updateStatusSt = connection.prepareStatement(updateStatus);
+        updateStatusSt2 = connection.prepareStatement(updateStatus2);
         fetchRecentOrderSt = connection.prepareStatement(fetchRecentOrder);
         updateOrderSt = connection.prepareStatement(updateOrder);
+        anonymousOrderSt = connection.prepareStatement(anonymousOrder);
         
     }
     
@@ -121,6 +127,33 @@ public class OrderDAO {
         submitOrderSt.setString(3, "Processing");
         submitOrderSt.setDouble(4, totalAmount);
         submitOrderSt.executeUpdate();
+        
+        int i = 0;
+        ResultSet rs = fetchRecentOrderSt.executeQuery();
+        while(rs.next()){
+            int orderID = rs.getInt(1);
+            for (Product product : cartList){
+                  orderLineItemSt.setInt(1, product.getProductID());
+                  orderLineItemSt.setInt(2, orderID);
+                  int quantity = quantityList.get(i);
+                  i++;
+                  orderLineItemSt.setInt(3, quantity); //add
+                  double subTotal = quantity * product.getProductUnitPrice();
+                  orderLineItemSt.setDouble(4, subTotal);
+                  orderLineItemSt.executeUpdate();
+              }
+        }
+       
+    }
+    
+    public void anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList) throws SQLException { //just add orderID? (TBD) 
+//        submitOrderSt.setInt(1, customerID);
+        LocalDate date = LocalDate.now();
+        Date sqlDate = Date.valueOf(date);
+        anonymousOrderSt.setDate(1, sqlDate);
+        anonymousOrderSt.setString(2, "Processing");
+        anonymousOrderSt.setDouble(3, totalAmount);
+        anonymousOrderSt.executeUpdate();
         
         int i = 0;
         ResultSet rs = fetchRecentOrderSt.executeQuery();
@@ -257,4 +290,10 @@ public class OrderDAO {
         updateStatusSt.executeUpdate();
         
     }
+    
+    public void cancelOrder (int orderID) throws SQLException{
+        updateStatusSt2.setInt(1, orderID);
+        updateStatusSt2.executeUpdate();
+    }
+    
 }

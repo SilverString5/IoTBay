@@ -12,6 +12,8 @@
     <%
         ArrayList<Product> productList = (ArrayList<Product>)session.getAttribute("productList");
         HashMap<Integer, Integer> quantityMap = (HashMap<Integer, Integer>)session.getAttribute("quantityMap");
+        String quantityError = (String) request.getAttribute("quantityError");
+        String insufficientStockErr = (String) request.getAttribute("insufficientStockError");
 //        int orderID = Integer.parseInt(request.getParameter("orderID"));
     %>
     <body>
@@ -23,6 +25,12 @@
                 <!--<li><a href="http://localhost:8080/ISDAssignment1/" > Orders </a></li>-->
             </ul>                            
         </div>
+        <% if(quantityError != null) { %>
+            <p style="color:red"><%= quantityError %></p>
+        <% } %>
+        <% if( insufficientStockErr != null){ %>
+            <p style="color:red"><%= insufficientStockErr %></p>
+        <% } %>
         <div>
             <table width="100%" >
                 <tr>
@@ -33,6 +41,7 @@
                     <th>Quantity</th>
                     <th>SubTotal</th>
                 </tr>
+                
                 <% double totalAmount = 0.0; %>
                 <%for (Product product : productList){ %>
                 <tr>

@@ -15,6 +15,7 @@
         <title>Orders</title>
     </head>
     <%
+        User user = (User)session.getAttribute("user");
         String submitted = request.getParameter("submitted");
         ArrayList<Order> orderList = (ArrayList<Order>)session.getAttribute("orderList");
         Order specificOrder = null;
@@ -60,8 +61,9 @@
                     <th>Shipment Number</th>
                     <th>View Details</th>
                     <th>Update Order</th>
+                    <th>Cancel Order</th>
                 </tr>
-        <% if(submitted == null){ %>        
+        <% if(submitted == null && user != null){ %>        
                 <%
                     for(Order order : orderList) {
                 %>
@@ -86,6 +88,14 @@
                             <input type="submit" value="Update"/>
                         </form>
                     </td>
+                    
+                    <td>
+                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                            <input type="hidden" name="function" value="Cancel"/>
+                            <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
+                            <input type="submit" value="Cancel"/>
+                        </form>
+                    </td>
                 </tr>
                 <% } %>
         <% }else if(submitted != null && submitted.equals("yes")){ %>
@@ -99,13 +109,31 @@
                     <td><%= specificOrder.getShipmentID() %></td>
                     <td>
                         <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                            <input type="hidden" name="function" value="View"/>
                             <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
                             <input type="submit" value="View Details"/>
                         </form>
                     </td>
+                    
+                    <td>
+                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                            <input type="hidden" name="function" value="Update"/>
+                            <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
+                            <input type="submit" value="Update"/>
+                        </form>
+                    </td>
+                    
+                    <td>
+                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                            <input type="hidden" name="function" value="Cancel"/>
+                            <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
+                            <input type="submit" value="Cancel"/>
+                        </form>
+                    </td>
+                    
                 </tr>   
                 <% } %>
-                <% } %>
+            <% } %>
                 
             </table>
         </div>

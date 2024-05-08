@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import uts.isd.model.*;
@@ -50,6 +51,22 @@ public class ViewOrderServlet extends HttpServlet{
             session.setAttribute("orderID", orderID);
             session.setAttribute("originalQuantity", unchanged);
             request.getRequestDispatcher("updateorder.jsp").include(request, response);
+        }else if(function.equals("Cancel")){
+            try{
+                orderDAO.cancelOrder(orderID);
+                HashMap<Integer, Integer> products = productDAO.fetchStock();
+                for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+                    Integer id = entry.getKey();
+                    Integer quantity = entry.getValue();
+                    if(products.containsKey(id)){
+                        int newStock = products.get(id) + quantity;
+                        productDAO.updateStock(id, newStock);
+                    }
+                }
+            }catch(SQLException e){
+                System.out.print(e);
+            }
+            request.getRequestDispatcher("OrderHistoryServlet").forward(request, response);
         }
     }
        

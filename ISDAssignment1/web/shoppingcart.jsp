@@ -20,6 +20,8 @@
         if(session.getAttribute("shoppingCart") != null)
             shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
         ArrayList<Product> cartList = (ArrayList<Product>)session.getAttribute("cartList");
+        String quantityError = (String) request.getAttribute("quantityError");
+        String insufficientStockErr = (String) request.getAttribute("insufficientStockError");
     %>
     
     <body>
@@ -31,6 +33,15 @@
                 <li><a href="welcome.jsp" > You</a></li>
             </ul>
         </div>
+        <div>
+            <% if(quantityError != null) { %>
+            <p style="color:red"><%= quantityError %></p>
+            <% } %>
+            <% if( insufficientStockErr != null){ %>
+            <p style="color:red"><%= insufficientStockErr %></p>
+            <% } %>
+        </div>
+        
         <div>
             <table width="100%" >
                 <tr>
@@ -49,7 +60,14 @@
                     <td><%= product.getProductDetails()%></td>
                     <td><%= product.getProductUnitPrice()%></td> 
                     <% double subtotal = product.getProductUnitPrice() * shoppingCart.get(product.getProductID());%>
-                    <td><%= shoppingCart.get(product.getProductID()) %></td>
+                    <td>
+                        <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">
+                            <input type="hidden" name="cartUpdate" value="true"/>
+                            <input type="hidden" name="productID" value="<%= product.getProductID()%>" />
+                            <input type="number" name="productQuantity" value="<%= shoppingCart.get(product.getProductID()) %>" onchange="this.form.submit()"/>
+                        </form>
+                        
+                    </td>
                     <td><%= subtotal%></td>
                     <% 
                         totalAmount += subtotal; 
@@ -57,7 +75,7 @@
                     %>
                 </tr>
                 <% } %>
-                <% // session.setAttribute("totalAmount", totalAmount); %>
+                
                 <tr>
                     <td colspan="5"></td>
                     <td class="price-id">Total Price: $<%= totalAmount %></td>
@@ -69,6 +87,7 @@
                 <button type="submit">Save the Order</button>
             </form>-->
             <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
+                <input type="hidden" name="totalAmount" value="<%= totalAmount %>"/>
                 <button type="submit">Submit the Order</button>
             </form>
             <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">

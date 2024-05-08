@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import uts.isd.model.dao.*;
+import uts.isd.dao.*;
 import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 

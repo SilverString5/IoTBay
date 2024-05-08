@@ -12,9 +12,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import uts.isd.model.Payment;
-import uts.isd.model.Payment;
-import uts.isd.model.dao.DBConnector;
-import uts.isd.model.dao.PaymentDAO;
+import uts.isd.dao.DBConnector;
+import uts.isd.dao.PaymentDAO;
 
 public class PaymentDAOTest {
     private DBConnector connector;

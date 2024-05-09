@@ -31,7 +31,7 @@ public class UserDAO {
     private PreparedStatement findSt;
     private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
     private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
-    private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
+    private String deleteQuery = "DELETE FROM users WHERE userID=?";
     private String checkQuery = "SELECT * FROM users WHERE userEmail=?";
     private String retrieveQuery = "SELECT userID FROM users WHERE userEmail=?";
     private String findQuery = "SELECT * from users WHERE userID=?";
@@ -81,22 +81,12 @@ public class UserDAO {
 }
 
  //Find a user based on userID
-        public User findUser(int userID) throws SQLException{
-            retrieveSt.setInt(1,userID);
+        public int findUser(String userEmail) throws SQLException{
+            retrieveSt.setString(1,userEmail);
             ResultSet rs = retrieveSt.executeQuery();
             rs.next();
-            String userEmail = rs.getString(2);
-            String userPassword = rs.getString(3);
-            String userFullName = rs.getString(4);
-            String userPhone = rs.getString(5);
-            String userAddress = rs.getString(6);
-            Date userDOB = rs.getDate(7);
-            String userGender = rs.getString(8);
-            String userType = rs.getString(9);
-            User user = new User(userID, userEmail, userPassword, userFullName, userPhone, 
-            userAddress, userDOB, userGender, userType);
-            return user;
-
+            int userID = rs.getInt(retrieveQuery);
+            return userID;
 }
 
 
@@ -154,9 +144,8 @@ public class UserDAO {
 	}
 
 	// Delete Operation: delete a user by userEmail & userPassword
-	public void delete(String userEmail, String userPassword) throws SQLException {
-		deleteSt.setString(1, userEmail);
-                deleteSt.setString(2, userPassword);
+	public void delete(int userID) throws SQLException {
+		deleteSt.setInt(1, userID);
 		int row = deleteSt.executeUpdate();
 		System.out.println("row " + row + " deleted successfuly");
 	}

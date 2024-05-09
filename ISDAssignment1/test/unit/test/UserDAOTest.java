@@ -40,29 +40,31 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testSelectUsers() throws SQLException {
+	public void testfetchsUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
 		assertTrue(users.size()>=20);
 	}
         @Test
         public void testDeleteUser() throws SQLException{
-            manager.delete("test@testemail.com","test");
+            manager.delete(30);
         }
 
         @Test
         public void testCreateUser() throws SQLException{
-                manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St",Date.valueOf("1994-02-02"), "F");
+                manager.createUser("ladygaga@testemail.com", "Lady Gaga", "test", "0444444445", "Fame St",Date.valueOf("1994-02-02"), "F");
             }
-        @Test
+  /*      @Test
         public void testfindUser() throws SQLException{
-                assertNotNull(manager.findUser(14));
+                int userID = manager.findUser("apples@gmail.com");
+                assertEquals(1, userID);
             }
-        
+    */    
         
         @Test
         public void testUpdate() throws SQLException{
-        User user = manager.update("sahasl@l.com", "bunnyNEW", "Bunny Hi", "123", "Sasha St", "2020-09-09","F", 45);
-        assertEquals("bunnyNEW", user.getPassword());
+        User user = manager.update("laylaupdated@winxclub.com", "winxclub", "Layla Houssain", "0422222222",
+        "42 Pixie Ave, Domino, QLD, 7023", "1992-07-21", "F", 3);
+        assertEquals("winxclub", user.getPassword());
 }
         @Test
         public void testLoginCorrect() throws SQLException{

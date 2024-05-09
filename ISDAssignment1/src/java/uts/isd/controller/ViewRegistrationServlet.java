@@ -19,15 +19,7 @@ public class ViewRegistrationServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
                 UserDAO userDAO = (UserDAO)session.getAttribute("userDAO");
-                User currentUser = (User) session.getAttribute("user");
-                try {                
-                User user = userDAO.findUser(currentUser.getUserID());
-                session.setAttribute("user", user);
-
-                }
-                catch (SQLException e){
-                System.out.println(e);
-                }
+                User user = (User) session.getAttribute("user");
                 request.getRequestDispatcher("manageRegistration.jsp").include(request, response);
 
             }

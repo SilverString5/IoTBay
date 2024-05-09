@@ -60,6 +60,10 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-class>uts.isd.controller.UpdateRegistrationServlet</servlet-class>
   </servlet>
     <servlet>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DeleteRegistrationServlet</servlet-class>
+  </servlet>
+    <servlet>
     <servlet-name>ViewAccessLogsServlet</servlet-name>
     <servlet-class>uts.isd.controller.ViewAccessLogsServlet</servlet-class>
   </servlet>
@@ -145,6 +149,10 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <servlet-mapping>
     <servlet-name>UpdateRegistrationServlet</servlet-name>
     <url-pattern>/UpdateRegistrationServlet</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <url-pattern>/DeleteRegistrationServlet</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
     <servlet-name>ViewAccessLogsServlet</servlet-name>

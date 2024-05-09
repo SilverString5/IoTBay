@@ -14,7 +14,8 @@
     <body>
         
     <%User user = (User)session.getAttribute("user");
-    String updateMsgs = (String)session.getAttribute("updateMsgs");%>
+    String updateMsgs = (String)session.getAttribute("updateMsgs");
+    String noLoginError = (String)session.getAttribute("noLoginError");%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
@@ -23,6 +24,9 @@
             </ul>
             </div>
             <br><br><br>
+    <%if (noLoginError!=null){ %>
+    <p> <%= noLoginError %></p>
+    <% } %>
 <div class="myFormdiv">
     <form action="<%= request.getContextPath()%>/DeleteRegistrationServlet" method="post">
         <button type="submit">Delete Your Account</button>

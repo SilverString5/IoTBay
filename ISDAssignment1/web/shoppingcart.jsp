@@ -45,55 +45,88 @@
         <div>
             <table width="100%" >
                 <tr>
+                    <th></th>
                     <th>Device</th>
                     <th>Type</th>
                     <th>Device Details</th>
                     <th>Unit Price</th> 
                     <th>Quantity</th>
                     <th>SubTotal</th>
+                    <th>Remove an Item</th>
                 </tr>
                 <% double totalAmount = 0.0; %>
-                <%for (Product product : cartList){ %>
+                <% if(shoppingCart != null && !shoppingCart.isEmpty()) { %>                
+                    <%for (Product product : cartList){ %>
+                    <tr>
+                        <td><img height="70" width="70" src="css/<%=product.getProductImg()%>"></td>
+                        <td><%= product.getProductName()%></td>
+                        <td><%= product.getProductType()%></td> 
+                        <td><%= product.getProductDetails()%></td>
+                        <td>$<%= product.getProductUnitPrice()%></td> 
+                        <% double subtotal = product.getProductUnitPrice() * shoppingCart.get(product.getProductID());%>
+                        <td>
+                            <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">
+                                <input type="hidden" name="cartUpdate" value="true"/>
+                                <input type="hidden" name="productID" value="<%= product.getProductID()%>" />
+                                <input type="number" name="productQuantity" value="<%= shoppingCart.get(product.getProductID()) %>" onchange="this.form.submit()"/>
+                            </form>
+
+                        </td>
+                        <td>$<%= subtotal%></td>
+                        <% 
+                            totalAmount += subtotal; 
+    //                        session.setAttribute("totalAmount", totalAmount);
+                        %>
+                        <td>
+                            <form method="GET" action="/ISDAssignment1/RemoveCartItemServlet">
+                                <input type="hidden" name="function" value="RemoveAnItem"/>
+                                <input type="hidden" name="productID" value="<%= product.getProductID() %>"/>
+                                <input type="submit" value="Remove"/>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+
+                    <tr>
+                        <td colspan="6"></td>
+                        <td colspan="2" class="price-id">Total Price: $<%= totalAmount %></td>
+                    </tr>
+                <% }else { %>
+                    <tr height="200px">
+                        <td colspan="8">Shopping Cart is Empty</td>
+                    </tr>
+                <% } %>
                 <tr>
-                    <td><%= product.getProductName()%></td>
-                    <td><%= product.getProductType()%></td> 
-                    <td><%= product.getProductDetails()%></td>
-                    <td><%= product.getProductUnitPrice()%></td> 
-                    <% double subtotal = product.getProductUnitPrice() * shoppingCart.get(product.getProductID());%>
-                    <td>
-                        <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">
-                            <input type="hidden" name="cartUpdate" value="true"/>
-                            <input type="hidden" name="productID" value="<%= product.getProductID()%>" />
-                            <input type="number" name="productQuantity" value="<%= shoppingCart.get(product.getProductID()) %>" onchange="this.form.submit()"/>
+                    <td colspan="3">
+                        <form method="GET" action="/ISDAssignment1/RemoveCartItemServlet">
+                            <input type="hidden" name="function" value="ClearCart"/>
+                            <% if(shoppingCart != null && !shoppingCart.isEmpty()){ %>
+                                <button type="submit"> Clear the Cart </button>
+                            <% }else{ %>
+                                <button disabled> Clear the Cart</button>
+                            <% } %>
                         </form>
                         
                     </td>
-                    <td><%= subtotal%></td>
-                    <% 
-                        totalAmount += subtotal; 
-//                        session.setAttribute("totalAmount", totalAmount);
-                    %>
-                </tr>
-                <% } %>
-                
-                <tr>
-                    <td colspan="5"></td>
-                    <td class="price-id">Total Price: $<%= totalAmount %></td>
+                    <td colspan="2">
+                        <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">
+                            <button type="submit">Continue Shopping</button>
+                        </form>
+                    </td>
+                    <td colspan="3">
+                        <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
+                            <input type="hidden" name="totalAmount" value="<%= totalAmount %>"/>
+                            <% if(shoppingCart != null && !shoppingCart.isEmpty()){ %>
+                                <button type="submit">Submit the Order</button>
+                            <% }else{ %>
+                                <button disabled> Submit the Order</button>
+                            <% } %>
+<!--                            <button type="submit">Submit the Order</button>-->
+                        </form>
+                    </td>
                 </tr>
             </table>
         </div>
-        <div>
-<!--            <form method="GET" action="/ISDAssignment1/SaveOrderServlet">
-                <button type="submit">Save the Order</button>
-            </form>-->
-            <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
-                <input type="hidden" name="totalAmount" value="<%= totalAmount %>"/>
-                <button type="submit">Submit the Order</button>
-            </form>
-            <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">
-                <button type="submit">Continue Shopping</button>
-            </form>
-                
-        </div>
+        
     </body>
 </html>

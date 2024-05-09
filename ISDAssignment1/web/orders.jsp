@@ -36,7 +36,7 @@
             if(request.getAttribute("errorMessage") != null){
                 errorMessage = (String) request.getAttribute("errorMessage");
         %>
-                <p><%= errorMessage%></p>
+                <p style="color:red"><%= errorMessage%></p>
         <%}%>
         
         <div>
@@ -71,7 +71,7 @@
                     <td><%= order.getOrderID() %></td>
                     <td><%= order.getOrderDate() %></td>
                     <td><%= order.getOrderStatus() %></td> 
-                    <td><%= order.getTotalAmount() %></td> 
+                    <td>$<%= order.getTotalAmount() %></td> 
                     <td><%= order.getShipmentID() %></td>
                     <td>
                         <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
@@ -105,7 +105,7 @@
                     <td><%= specificOrder.getOrderID() %></td>
                     <td><%= specificOrder.getOrderDate() %></td>
                     <td><%= specificOrder.getOrderStatus() %></td> 
-                    <td><%= specificOrder.getTotalAmount() %></td> 
+                    <td>$<%= specificOrder.getTotalAmount() %></td> 
                     <td><%= specificOrder.getShipmentID() %></td>
                     <td>
                         <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
@@ -131,7 +131,23 @@
                         </form>
                     </td>
                     
-                </tr>   
+                </tr>
+                
+                <tr>
+                    <td colspan="8">
+                        <form method="GET" action="/ISDAssignment1/OrderHistoryServlet">
+                            <button type="submit">View All Orders</button>
+                        </form>
+                    </td>
+                
+                </tr>
+                
+                
+                <% }else{ %>
+                    <tr height="200px">
+                        <td colspan="8">There is no order matching the inputted order number or date.</td>
+
+                    </tr>
                 <% } %>
             <% } %>
                 

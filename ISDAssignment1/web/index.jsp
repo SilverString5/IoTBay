@@ -17,28 +17,22 @@
     
     <%  User user = (User)session.getAttribute("user"); 
         ArrayList<Product> deviceList = (ArrayList<Product>) session.getAttribute("listDevice");
-        int quantity = 0;
-        int id = 0;
-        int productID = 0;
-        if(request.getParameter("proID") != null)
-            productID = Integer.parseInt(request.getParameter("proID"));
+//        int quantity = 0;
+//        int id = 0;
+//        int productID = 0;
+//        if(request.getParameter("proID") != null)
+//            productID = Integer.parseInt(request.getParameter("proID"));
         if(session.getAttribute("shoppingCart") != null){
             HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
 //            Set<Integer> keys = shoppingCart.keySet();
 //            for(Integer key: keys){
 //                id = key;
 //            }
-            if(productID != 0)
-                quantity = shoppingCart.get(productID);
+//            if(productID != 0)
+//                quantity = shoppingCart.get(productID);
         }
     %>
     <body>
-        <%if(session.getAttribute("shoppingCart") != null){%>
-            <h1>Hello World</h1>
-            <h2><%=productID%></h2>
-            <h2><%=quantity%></h2>
-            
-         <% } %>
         <%if(user != null){%>
             <div class="menu">
             <ul>
@@ -141,7 +135,7 @@
                 <table border="1" cellpadding="5">
                     <caption><h2>IoTBay Online Shop</h2></caption>
                     <tr>
-                        
+                        <th></th>
                         <th>Device</th>
                         <th>Type</th>
                         <th>Price</th>
@@ -150,6 +144,7 @@
                     </tr>
                     <%for (Product device: deviceList) {%>
                     <tr>
+                        <td><img src="css/<%=device.getProductImg()%>"></td>
                         <td><%= device.getProductName() %></td>
                         <td><%= device.getProductType() %></td>
                         <td><%= device.getProductUnitPrice() %></td>

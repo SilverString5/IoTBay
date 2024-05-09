@@ -31,6 +31,7 @@
         <div>
             <table width="100%" >
                 <tr>
+                    <th></th>
                     <th>Device</th>
                     <th>Type</th>
                     <th>Device Details</th>
@@ -41,17 +42,18 @@
                 <% double totalAmount = 0.0; %>
                 <%for (Product product : productList){ %>
                 <tr>
+                    <td><img height="70" width="70" src="css/<%=product.getProductImg()%>"></td>
                     <td><%= product.getProductName()%></td>
                     <td><%= product.getProductType()%></td> 
                     <td><%= product.getProductDetails()%></td>
-                    <td><%= product.getProductUnitPrice()%></td> 
+                    <td>$<%= product.getProductUnitPrice()%></td> 
                     <%  double subtotal = product.getProductUnitPrice();
                         int quantity = quantityMap.get(product.getProductID());
                     %>
                     
                     <td><%= quantity%></td>
                     <% subtotal *= quantity; %>
-                    <td><%= subtotal%></td>
+                    <td>$<%= subtotal%></td>
                     <% 
                         totalAmount += subtotal; 
                     %>

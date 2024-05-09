@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.servlet.http.HttpSession;
 import uts.isd.model.Product;
 /**
  *
@@ -27,10 +26,10 @@ public class ProductDAO {
         private PreparedStatement updateStockSt;
         private PreparedStatement fetchStockSt;
 	private String readQuery = "SELECT * FROM Product";
-	private String updateQuery = "UPDATE Product SET ProductName = ?, ProductType= ?, ProductUnitPrice= ?, ProductDetails= ?, ProductInStock= ? WHERE ProductID=?";
+	private String updateQuery = "UPDATE Product SET ProductName = ?, ProductType= ?, ProductUnitPrice= ?, ProductDetails= ?, ProductInStock= ? WHERE ProductID= ?";
 	private String deleteQuery = "DELETE FROM Product WHERE ProductID= ? ";
-        
-        private String updateStock = "UPDATE Product SET ProductInStock=? WHERE ProductID=?";
+        private String updateStockQuery = "UPDATE Product SET ProductInStock= ? WHERE ProductID= ?";
+//        private String updateStock = "UPDATE Product SET ProductInStock=? WHERE ProductID=?";
         private String fetchStock = "SELECT ProductInStock FROM Product WHERE ProductID=?";
         
         public ProductDAO(Connection connection) throws SQLException {
@@ -39,39 +38,17 @@ public class ProductDAO {
 		readSt = connection.prepareStatement(readQuery);
 		updateSt = connection.prepareStatement(updateQuery);
 		deleteSt = connection.prepareStatement(deleteQuery);
-                updateStockSt = connection.prepareStatement(updateStock);
+                updateStockSt = connection.prepareStatement(updateStockQuery);
                 fetchStockSt = connection.prepareStatement(fetchStock);
 	}
         
-        public HashMap<Integer, Integer> fetchStock () throws SQLException {
-            HashMap<Integer, Integer> map = new HashMap();
-            ResultSet rs = readSt.executeQuery();
-            while(rs.next()){
-                map.put(rs.getInt(1), rs.getInt(6));
-            }
-            return map;
-        }
         
-        public void updateStock (int productID, int stock) throws SQLException {
-            updateStockSt.setInt(1, stock);
-            updateStockSt.setInt(2, productID);
-            updateStockSt.executeUpdate();
-        }
         
-        public int fetchSingleStock (int productID) throws SQLException {
-            fetchStockSt.setInt(1, productID);
-            ResultSet rs = fetchStockSt.executeQuery();
-            int productStock = 0;
-            while(rs.next()){
-                productStock = rs.getInt(1);
-            }
-            return productStock;
-        }
-        
-        // Read Operation: read a list of all products with its name, type, price, details
+        // Read Operation: read a list of all devices with its image, id, name, type, price, details
         public ArrayList<Product> fetchAllProducts() throws SQLException {
             
             ResultSet rs = readSt.executeQuery();
+            
             ArrayList<Product> products = new ArrayList();
 
             while (rs.next()) {
@@ -81,8 +58,10 @@ public class ProductDAO {
                     double ProductUnitPrice = rs.getDouble(4);
                     String ProductDetails = rs.getString(5);
                     int ProductInStock = rs.getInt(6);
+                    String ProductImg = rs.getString(7);
                     
-                    Product product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock);
+                    
+                    Product product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock, ProductImg);
                     products.add(product);
             }
             
@@ -91,7 +70,8 @@ public class ProductDAO {
             return products;
 	}
         
-        //Filter and read a list of products by name and type, return all products when filtering empty string
+        //Read Operation: Filter and read a list of devices by name and type
+        //return all devices when filtering empty string
         public ArrayList<Product> fetchFilteredProducts(String productName, String productType) throws SQLException {
             
             String filteringQuery = "SELECT * FROM Product"+" WHERE ProductName LIKE '"+productName+"%' AND ProductType LIKE '"+productType+"%'";
@@ -106,14 +86,16 @@ public class ProductDAO {
                 double ProductUnitPrice = rs.getDouble(4);
                 String ProductDetails = rs.getString(5);
                 int ProductInStock = rs.getInt(6);
+                String ProductImg = rs.getString(7);
 
-                Product product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock);
+                Product product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock, ProductImg);
                 products.add(product);
             }
             return products;
         }
         
-        //Get book for update
+        //Update Operation: return an existing device by its ID
+        //Hence update the device by it's data
         public Product getProduct(int productID) throws SQLException{
             String getBookQuery = "SELECT * FROM Product WHERE ProductID = "+ productID;
             ResultSet rs = st.executeQuery(getBookQuery);
@@ -126,13 +108,14 @@ public class ProductDAO {
                 double ProductUnitPrice = rs.getDouble(4);
                 String ProductDetails = rs.getString(5);
                 int ProductInStock = rs.getInt(6);
-                product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock);
+                String ProductImg = rs.getString(7);
+                product = new Product(ProductID, ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock, ProductImg);
             }
             
             return product;
         }
         
-        //Create Operation: create a product
+        //Create Operation: create a device by input name, type, price, details and stock
 	public void createProduct(String productName, String productType, double productUnitPrice, String productDetails, int productInStock) throws SQLException {
 		String columns = "INSERT INTO Product (ProductName, ProductType, ProductUnitPrice, ProductDetails, ProductInStock)";
 		String values = "VALUES('" + productName + "','" + productType + "'," + productUnitPrice + ",'" + productDetails + "'," + productInStock +" )";
@@ -142,7 +125,7 @@ public class ProductDAO {
         
         
         
-        // Update Operation: update Name, Type, Price, Detail, Stock of a product
+        //Update Operation: update a device by input name, type, price, detail and stock
 	public void updateProduct(String productName, String productType, double productUnitPrice, String productDetails, int productInStock, int ProductID) throws SQLException {
 		//ensure the update form has prefilled data from the database
                 updateSt.setString(1, productName);
@@ -158,16 +141,43 @@ public class ProductDAO {
         
         
         
-        // Delete Operation: delete a product by id
+        //Delete Operation: delete a device by it's id
 	public void deleteProduct(int ProductID) throws SQLException {
-		//ensure ID can be passed down by the read list
+		
                 deleteSt.setString(1, Integer.toString(ProductID));
 		
                 deleteSt.executeUpdate();
 		System.out.println("1 row deleted successfuly");
 	}
         
-      
+        //Update Operation: specific for add to cart feature in ordering
+        //the productID is passdown by postmethod and request object
+        //the stockVolumn is the stock that has been manipulated in the ordering servlet
+        public void updateStock(int productID, int stockVolumn) throws SQLException{            
+            updateStockSt.setString(1, Integer.toString(stockVolumn));
+            updateStockSt.setString(2, Integer.toString(productID));
+            updateStockSt.executeUpdate();
+            System.out.println("1 row updated successfuly");
+
+        }
         
-    
+        public HashMap<Integer, Integer> fetchStock () throws SQLException {
+            HashMap<Integer, Integer> map = new HashMap();
+            ResultSet rs = readSt.executeQuery();
+            while(rs.next()){
+                map.put(rs.getInt(1), rs.getInt(6));
+            }
+            return map;
+        }
+               
+        public int fetchSingleStock (int productID) throws SQLException {
+            fetchStockSt.setInt(1, productID);
+            ResultSet rs = fetchStockSt.executeQuery();
+            int productStock = 0;
+            while(rs.next()){
+                productStock = rs.getInt(1);
+            }
+            return productStock;
+        }
+
 }

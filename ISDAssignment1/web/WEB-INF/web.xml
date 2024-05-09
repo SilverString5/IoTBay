@@ -68,6 +68,12 @@
     <load-on-startup>0</load-on-startup>
   </servlet>
   
+  <servlet>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <servlet-class>uts.isd.controller.RemoveCartItemServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
     <url-pattern>/ConnServlet</url-pattern>
@@ -121,6 +127,11 @@
   <servlet-mapping>
     <servlet-name>UpdateOrderServlet</servlet-name>
     <url-pattern>/UpdateOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <url-pattern>/RemoveCartItemServlet</url-pattern>
   </servlet-mapping>
   
   <session-config>

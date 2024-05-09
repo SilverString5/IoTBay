@@ -84,11 +84,18 @@ public class DisplayCartServlet extends HttpServlet {
 //                shoppingCart = orderDAO.getQuantity(orderID);
 //                session.setAttribute("shoppingCart", shoppingCart);
 //            }
-                for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
+                if(shoppingCart != null){
+                    for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
                     Integer productID = entry.getKey();
                     product = productDAO.getProduct(productID);
                     productList.add(product);
                 }
+            }
+//                for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
+//                    Integer productID = entry.getKey();
+//                    product = productDAO.getProduct(productID);
+//                    productList.add(product);
+//                }
           } catch (SQLException e){
               System.out.print(e);
           }

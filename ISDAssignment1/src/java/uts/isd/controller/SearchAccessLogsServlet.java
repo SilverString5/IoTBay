@@ -39,8 +39,7 @@ public class SearchAccessLogsServlet extends HttpServlet {
                 session.setAttribute("annonError", anonError);
                                 }
 
-
-                else if (origin.equals("welcome")){
+                else if ((enteredDate==null)){
                     try{
                         ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
                         session.setAttribute("accessLogs", accessLogs);

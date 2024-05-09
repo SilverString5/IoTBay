@@ -10,17 +10,19 @@ public class Product implements Serializable{
     private double productUnitPrice;
     private String productDetails;
     private int productInStock;
+    private String productImg;
     
     public Product(){
     }
     
-    public Product(int productID, String productName, String productType, double productUnitPrice, String productDetails, int productInStock){
+    public Product(int productID, String productName, String productType, double productUnitPrice, String productDetails, int productInStock, String productImg){
       this.productID = productID;
       this.productName = productName;
       this.productType = productType;
       this.productUnitPrice = productUnitPrice;
       this.productDetails = productDetails;
       this.productInStock = productInStock;
+      this.productImg = productImg;
       
     }
     
@@ -70,6 +72,10 @@ public class Product implements Serializable{
     
     public int getProductInStock() {
         return this.productInStock;
+    }
+    
+    public String getProductImg(){
+        return this.productImg;
     }
     
     

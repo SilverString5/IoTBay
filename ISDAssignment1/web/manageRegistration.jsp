@@ -1,5 +1,4 @@
 
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.*"%>
 
@@ -14,63 +13,47 @@
     </head>
     <body>
         
-    <%User user = (User)session.getAttribute("user");%>
-  
-        <h1>Your Registration Details</h1>
+    <%User user = (User)session.getAttribute("user");
+    String updateMsgs = (String)session.getAttribute("updateMsgs");%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+            </div>
+
     </body>
-    <form action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">
-    <table>
+    <br><br>
+<div class="myFormdiv">
+    <form class=myForm action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">
+                <h1>Your Registration Details</h1>
         <input type="hidden" name="ID" value="<%=user.getUserID()%>"">
-        <tr>
-            <th>Email: </th>
-            <td>
-                  <input type="text" name="email" value="<%=user.getEmail()%>">
-            </td>
-        </tr>
-        <tr>
-            <th>Password: </th>
-            <td>
-                <input type="password" name="password" value=<%=user.getPassword()%>>
-            <td>
-        </tr>
-        <tr>
-            <th>Full Name: </th>
-            <td>
-                <input type="text" name="name" value=<%=user.getName()%>>
-            </td>
-        </tr>
-        <tr>
-            <th>Phone Number: </th>
-            <td>
-                <input type="text" name="phone" value="<%=user.getPhone()%>">
-            </td>  
-        </tr>
-        <tr>
-            <th>Address: </th>
-             <td>
-                 <input type="text" name="address" value="<%=user.getAddress()%>">
-             </td>
-        </tr>
-        <tr>
-            <th>Date of Birth: </th>
-            <td>
-                <input type="date" name="DOB" value="<%=user.getuserDOB()%>">
-            </td>
-        </tr>
-        <tr>
-        <td>
-        <th>Gender: </th>
+        <label for="email">Email:</label><br>
+        <input type="text" name="email" value="<%=user.getEmail()%>"><br>
+        <label for="password">Password: </label><br> 
+        <input type="password" name="password" value=<%=user.getPassword()%>><br>
+        <label for="name">Full Name: </label><br>
+        <input type="text" name="name" value=<%=user.getName()%>><br>
+        <label for="phone">Phone Number: </label><br>
+        <input type="text" name="phone" value="<%=user.getPhone()%>"><br>
+        <label for="address">Address: </label><br>
+        <input type="text" name="address" value="<%=user.getAddress()%>"><br>
+        <label for=DOB>Date of Birth: </label><br>
+        <input type="date" name="DOB" value="<%=user.getuserDOB()%>"><br>
+        Gender: <br>
         <input type="radio" id="female" name="gender" value="F">
-        <label for="female"> Female </label>
+        <label for="female"> Female </label><br>
         <input type="radio" id="male" name="gender" value="M">
-        <label for="male"> Male </label>
+        <label for="male"> Male </label><br>
         <input type="radio" id="other" name="gender" value="O"
-        <label for="other"> Other </label>
+        <label for="other"> Other </label><br>
         <input type="radio" id="private" name="gender" value="P"
-        <label for="private">Prefer not to say</label><br>
-        </td>       
-        <br>
-        </tr>
-    </table>
+               <label for="private">Prefer not to say</label>         
+        <br><button type="Submit">Submit</button>
+            <% if (updateMsgs!=null){%>
+            <p><%=updateMsgs%></p>
+           <% }%>
     </form>
+    </div>
 </html>

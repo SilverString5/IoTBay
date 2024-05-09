@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="css/reglayout.css">
     <title>IoTBay WebStore</title>
 </head>
-    <% User user = (User)session.getAttribute("user"); 
+
+    <!-- Servlet side input check results -->
+    <% 
         String productNameErr = (String) request.getAttribute("productNameErr");
         String productTypeErr = (String) request.getAttribute("productTypeErr");
         String productUnitPriceErr = (String) request.getAttribute("productUnitPriceErr");
@@ -28,52 +30,48 @@
     %>
 
 <body>
-        <%if(user != null){%>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-        <%}else{%>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-            </ul>
-            </div>
-            <br>
-            <br>
-        <%} %>
+        
+    <!-- Nav Bar Block -->    
+    <div class="menu">
+    <ul>
+        <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+        <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+        <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+    </ul>
+    </div>
+    <br>
+    <br>
+
+    <!-- Device management block for staff-->
     <div>
         <center>
             <h1>Device Collection Management</h1>
             <h2>
-                <form action="<%= request.getContextPath()%>/addDeviceFormServlet" method="POST">
+                <form action="http://localhost:8080/ISDAssignment1/addDeviceFormServlet" method="POST">
                     <button type="submit">Add new device</button>
                 </form>
 
                 &nbsp;&nbsp;&nbsp;
-                <form action="<%= request.getContextPath()%>/ConnServlet" method="POST">
+                <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">
                     <button type="submit">List all devices</button>
                 </form>
 
             </h2>
         </center>
     </div>
+    
+    <!-- Device update/create form for staff -->
     <div align="center">
-        
         <c:if test="${device != null}">
-            <form action="<%= request.getContextPath()%>/updateExistingDeviceServlet" method="post">
+            <!-- update -->
+            <form action="http://localhost:8080/ISDAssignment1/updateExistingDeviceServlet" method="post">
         </c:if>
         <c:if test="${device == null}">
-            <form action="<%= request.getContextPath()%>/createNewProductServlet" method="post">
+            <!-- create -->
+            <form action="http://localhost:8080/ISDAssignment1/createNewProductServlet" method="post">
         </c:if>
+            
+            <!-- Form -->
         <table border="1" cellpadding="5">
             <caption>
                 <h2>
@@ -86,6 +84,7 @@
                 </h2>
             </caption>
             
+            <!-- Error Displaying -->
             <caption>
                 <% if(productNameErr != null) { %>
                 <%=productNameErr%></h1
@@ -103,27 +102,25 @@
                 <%=productInStockErr%>
                 <% } %>
             <caption/>
-
-                <c:if test="${device != null}">
-                    <input type="hidden" name="productID" value="<c:out value='${device.productID}' />" />
-                </c:if>           
+            
+            <!-- Form inputs -->
+            <c:if test="${device != null}">
+                <input type="hidden" name="productID" value="<c:out value='${device.productID}' />" />
+            </c:if>  
+                
             <tr>
                 <th>Device Name: </th>
                 <td>
                     <input type="text" name="productName" size="45"
-                            value="<c:out value='${device.productName}' />"
-                        />
+                           value="<c:out value='${device.productName}' />"/>
                 </td>
             </tr>
             
-           
-
             <tr>
                 <th>Device Type </th>
                 <td>
                     <input type="text" name="productType" size="45"
-                            value="<c:out value='${device.productType}' />"
-                    />
+                            value="<c:out value='${device.productType}' />"/>
                 </td>
             </tr>
 
@@ -131,8 +128,7 @@
                 <th>Price: </th>
                 <td>
                     <input type="text" name="productUnitPrice" size="5"
-                            value="<c:out value='${device.productUnitPrice}' />"
-                    />
+                            value="<c:out value='${device.productUnitPrice}' />"/>
                 </td>
             </tr>
    
@@ -140,8 +136,7 @@
                 <th>Details: </th>
                 <td>
                     <input type="text" name="productDetails" size="100"
-                            value="<c:out value='${device.productDetails}' />"
-                    />
+                            value="<c:out value='${device.productDetails}' />"/>
                 </td>
             </tr>
 
@@ -149,8 +144,7 @@
                 <th>Stock: </th>
                 <td>
                     <input type="text" name="productInStock" size="5"
-                            value="<c:out value='${device.productInStock}' />"
-                    />
+                            value="<c:out value='${device.productInStock}' />"/>
                 </td>
             </tr>
 

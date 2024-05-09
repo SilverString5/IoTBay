@@ -4,6 +4,7 @@
  */
 package uts.isd.controller;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -32,7 +33,75 @@ public class UpdateRegistrationServlet extends HttpServlet {
                 String fullName = request.getParameter("name");
                 String phoneNumber = request.getParameter("phone");
                 String address = request.getParameter("address");  
+                String stringDOB = request.getParameter("DOB");
+                String gender = request.getParameter("gender");
+                int errorCount = 0;
+                String updateMsgs="";
+                
+                
+                   if ((!email.contains("@")) || !email.contains(".com") || email.isEmpty()){
+                            errorCount++;
+                            updateMsgs+=" The entered email address is invalid.\n";
+                    }
 
+                    if (password.length()<7){
+                            errorCount++;
+                            updateMsgs+=" Your password must be at least 7 characters long.\n" ;
+                     }
+                     // Phone number validation
+                        try {
+                        int intPhone = Integer.parseInt(phoneNumber);
+                            if (phoneNumber.length()>10){
+                                errorCount++;
+                                updateMsgs+= "Phone numbers must not be longer than 10 characters.\n";
+                            }
+                        }
+                        catch (NumberFormatException e){
+                        System.out.println(e);
+                        errorCount++;
+                        updateMsgs+="A phone number cannot have non-numeric characters";
+                        }
+
+
+                    if (address.length()<5){
+                        errorCount++;
+                        updateMsgs+=" The address entered must be at least 5 characters.\n";
+                    }
+                    
+                    // Date validation
+                    try {
+                    Date DOB = Date.valueOf(stringDOB);
+                    long now = System.currentTimeMillis();
+                    Date nowDate = new Date(now);
+                    if (DOB.after(nowDate)){
+                        errorCount++;
+                        updateMsgs+=" Your date of birth is in the future.";
+                      }
+                    }
+
+                    catch (IllegalArgumentException e) {
+                    System.out.println(e);
+                    errorCount++;
+                    updateMsgs+="The date entered must be a non-empty date";
+                                                        }
+
+    
+
+		if (errorCount>0) {
+			session.setAttribute("updateMsgs", updateMsgs);
+		} else {
+			try {
+                        user = userDAO.update(email, password, fullName, 
+                        phoneNumber, address, stringDOB, gender, ID);
+                        session.setAttribute("user", user);
+                       updateMsgs+=" You have successfully updated your account details";
+                        session.setAttribute("updateMsgs", updateMsgs);
+                            }
+                        catch (SQLException e) {
+                        System.out.println(e);
+                                                }
+                        }
+			request.getRequestDispatcher("manageRegistration.jsp").include(request, response);                   
     
 }
 

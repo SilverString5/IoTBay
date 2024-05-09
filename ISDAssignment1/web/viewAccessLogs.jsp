@@ -5,19 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.*"%>
+<%@page import="uts.isd.model.*, java.sql.Date"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
-<<<<<<< Updated upstream
 
-=======
 <%long now = System.currentTimeMillis();
 Date currentDate = new Date(now);
 String dateError=(String)session.getAttribute("dateError");
 String anonError = (String)session.getAttribute("anonError");
 %>
->>>>>>> Stashed changes
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,15 +30,12 @@ String anonError = (String)session.getAttribute("anonError");
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp">You</a></li>
             </ul>
                <br><br><br>
-                        <form action="<%= request.getContextPath()%>/ConnServlet" method="get">
-                            <button type="submit">View Your Access Logs</button>
-                        </form>                   
+                 
             </div>
             <br>
             
         <h1>Access Logs</h1>
-<<<<<<< Updated upstream
-=======
+
             <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
                 <label for="logdate"> Date: </label>
                 <input type="date" id="logdate" name="logdate">
@@ -58,7 +52,7 @@ String anonError = (String)session.getAttribute("anonError");
                     <%=anonError%>
                 </h1>
                 <%} else {%>
->>>>>>> Stashed changes
+
         <div align="center">
             <table border="1", cellpadding="5">
                 <tr>

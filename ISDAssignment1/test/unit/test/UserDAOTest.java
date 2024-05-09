@@ -53,6 +53,11 @@ public class UserDAOTest {
         public void testCreateUser() throws SQLException{
                 manager.createUser("test3@testemail.com", "Tester", "test", "0444444444", "Ray St",Date.valueOf("1994-02-02"), "F");
             }
+        @Test
+        public void testfindUser() throws SQLException{
+                assertNotNull(manager.findUser(14));
+            }
+        
         
         @Test
         public void testUpdate() throws SQLException{

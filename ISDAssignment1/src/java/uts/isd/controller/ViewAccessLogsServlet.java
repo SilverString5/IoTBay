@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.RequestDispatcher;
 
 import uts.isd.model.User;
-import java.sql.Date;
 import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 import uts.isd.model.dao.AccessLogDAO;
@@ -24,35 +22,28 @@ import uts.isd.model.dao.AccessLogDAO;
  *
  * @author notba
  */
-public class SearchAccessLogsServlet extends HttpServlet {
+public class ViewAccessLogsServlet extends HttpServlet {
         @Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                 HttpSession session = request.getSession();
                 AccessLogDAO accessLogDAO = (AccessLogDAO)session.getAttribute("accessLogDAO");
                 User user = (User)session.getAttribute("user");
-                String enteredDate = request.getParameter("logdate");
-                String dateError="";
 
                 if (user==null){
                 String anonError = "You must log in to see your access logs.";
                 session.setAttribute("anonError", anonError);
                                 } else {
                 try{
-                    Date date = Date.valueOf(enteredDate);
-                    ArrayList<UserAccessLog> accessLogs = accessLogDAO.filterAccessLogDate(user.getUserID(), enteredDate);
+                    ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
                     session.setAttribute("accessLogs", accessLogs);
-                }
-                catch (IllegalArgumentException e){
-                dateError+="The entered date must be a valid non-empty date.";
-                session.setAttribute("dateError", dateError);
                 }
                 catch( SQLException e){
                     System.out.println(e);}
                 }
-
             request.getRequestDispatcher("viewAccessLogs.jsp").include(request, response);
             }
 }
+
 
 
 

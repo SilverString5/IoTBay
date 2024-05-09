@@ -5,20 +5,23 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.*, java.sql.Date"%>
+<%@page import="uts.isd.model.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 
 
 <%long now = System.currentTimeMillis();
-Date currentDate = new Date(now);
 String dateError=(String)session.getAttribute("dateError");
 String anonError = (String)session.getAttribute("anonError");
 %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/reglayout.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Your Access Logs</title>
     </head>
     <body>
@@ -29,17 +32,17 @@ String anonError = (String)session.getAttribute("anonError");
                 <li><a href="http://localhost:8080/ISDAssignment1/login.jsp">Login</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp">You</a></li>
             </ul>
-               <br><br><br>
-                 
+               <br><br><br>                 
             </div>
             <br>
             
         <h1>Access Logs</h1>
-
+            <form action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
+                <button type="submit">View All Your Access Logs</button><br>   
+            </form>
             <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
                 <label for="logdate"> Date: </label>
                 <input type="date" id="logdate" name="logdate">
-                <input type="hidden" id="origin" name="origin" value="viewAccessLogs">
                 <button type="submit">Search</button><br>   
             </form>
                 <% if (dateError!=null){%>
@@ -57,11 +60,11 @@ String anonError = (String)session.getAttribute("anonError");
             <table border="1", cellpadding="5">
                 <tr>
                     <th>Log ID</th>
-                    <th>Date</th>
+                    <th>Date (YYYY-MM-DD)</th>
                     <th>Login Time</th>
                     <th>Logout Time</th>       
                 </tr>
-            <c:forEach var="log" items="${allMyLogs}">
+            <c:forEach var="log" items="${accessLogs}">
                 <tr>
                     <td><c:out value="${log.accessLogID}" /></td>
                     <td><c:out value="${log.accessLogDate}" /></td>

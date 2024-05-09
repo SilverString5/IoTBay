@@ -33,8 +33,8 @@
             <br>
             <p>Welcome, <%=user.getName()%></p>
    
-            <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
-                <input type="hidden" id="origin" name="origin" value="welcome">
+            <form action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
+                <input type="hidden" id="origin" name="viewAll" value="viewAll">
                 <button type="submit">View Your Access Logs</button><br>   
             </form>
             <form action="<%= request.getContextPath()%>/ViewRegistrationServlet" method="post">

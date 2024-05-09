@@ -22,10 +22,11 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
             </ul>
             </div>
-
-    </body>
-    <br><br>
+            <br><br><br>
 <div class="myFormdiv">
+    <form action="<%= request.getContextPath()%>/DeleteRegistrationServlet" method="post">
+        <button type="submit">Delete Your Account</button>
+    </form>
     <form class=myForm action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">
                 <h1>Your Registration Details</h1>
         <input type="hidden" name="ID" value="<%=user.getUserID()%>"">
@@ -56,4 +57,7 @@
            <% }%>
     </form>
     </div>
+    </body>
+    <br><br>
+
 </html>

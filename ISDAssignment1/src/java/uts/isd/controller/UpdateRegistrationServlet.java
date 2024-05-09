@@ -59,13 +59,13 @@ public class UpdateRegistrationServlet extends HttpServlet {
                         catch (NumberFormatException e){
                         System.out.println(e);
                         errorCount++;
-                        updateMsgs+="A phone number cannot have non-numeric characters";
+                        updateMsgs+="A phone number cannot have non-numeric characters. \n";
                         }
 
 
                     if (address.length()<5){
                         errorCount++;
-                        updateMsgs+=" The address entered must be at least 5 characters.\n";
+                        updateMsgs+=" The address entered must be at least 5 characters. \n";
                     }
                     
                     // Date validation
@@ -75,14 +75,14 @@ public class UpdateRegistrationServlet extends HttpServlet {
                     Date nowDate = new Date(now);
                     if (DOB.after(nowDate)){
                         errorCount++;
-                        updateMsgs+=" Your date of birth is in the future.";
+                        updateMsgs+=" Your date of birth is in the future. \n";
                       }
                     }
 
                     catch (IllegalArgumentException e) {
                     System.out.println(e);
                     errorCount++;
-                    updateMsgs+="The date entered must be a non-empty date";
+                    updateMsgs+=" The date entered must be a non-empty date, \n";
                                                         }
 
     

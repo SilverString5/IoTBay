@@ -53,12 +53,6 @@ public class PaymentDAO {
     }
     
     
-    
-    
-    
-    
-    
-    
     //Update Operation: update user - all
     public void updatePayment(int paymentID, String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber) throws SQLException {
         
@@ -73,10 +67,7 @@ public class PaymentDAO {
     }
     
     
-    
-    
-    
-    
+   
     
     //Delete Operation: delete a payment by paymentID.
     public void deletePayment(int PaymentID) throws SQLException{
@@ -86,13 +77,17 @@ public class PaymentDAO {
     
     }
     
+    //Delete Operation: delete a payment by userID.
+    public void deletePaymentByUser(int UserID) throws SQLException{
+        
+        String deleteQuery = "DELETE FROM Payment WHERE UserID=" + UserID;
+        statement.executeUpdate(deleteQuery);
     
-    
+    }
     
     
     
     public ArrayList<Payment> fetchPayment() throws SQLException {
-        //String fetch = "SELECT * FROM Payment";
         ResultSet resultSet = readStatement.executeQuery(readQuery);
         ArrayList<Payment> payments = new ArrayList<>();
         
@@ -105,11 +100,54 @@ public class PaymentDAO {
             int userID = resultSet.getInt(6);
 
             
-            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCardNumber, paymentCVC);
+            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
             payments.add(payment);
         }
         
         return payments;
     }
     
+    public void updatePaymentMethod(int paymentID, String paymentMethod) throws SQLException{
+        String updateQuery = "UPDATE payment SET PaymentMethod='" + paymentMethod + "' WHERE PaymentID=" + paymentID;
+        statement.executeUpdate(updateQuery);
+    }
+    public void updateExpiryDate(int paymentID, Date expiryDate) throws SQLException{
+        PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET ExpiryDate=? WHERE PaymentID=?");
+        updateQuery.setDate(1, new java.sql.Date(expiryDate.getTime()));
+        updateQuery.setInt(2, paymentID);
+        updateQuery.executeUpdate();
+    }
+    
+    public void updatePaymentCVC(int paymentID, int paymentCVC) throws SQLException{
+        String updateQuery = "UPDATE payment SET PaymentCVC='" + paymentCVC + "' WHERE PaymentID=" + paymentID;
+        statement.executeUpdate(updateQuery);
+    }
+    
+    public void updateCardNumber(int paymentID, int paymentCardNumber) throws SQLException{
+        String updateQuery = "UPDATE payment SET PaymentCardNumber='" + paymentCardNumber + "' WHERE PaymentID=" + paymentID;
+        statement.executeUpdate(updateQuery);
+    }
+    
+    public Payment findPaymentRecord(int paymentID) throws SQLException {
+        String find = "SELECT * FROM Payment WHERE PaymentID=" + paymentID;
+        ResultSet result = readStatement.executeQuery(find);
+        String paymentMethod = result.getString(2);
+        Date expiryDate = result.getDate(3);
+        int paymentCVC = result.getInt(4);
+        int paymentCardNumber = result.getInt(5);
+        int userID = result.getInt(6);
+        Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+        return payment;
+    }
+    
+    public ArrayList<Payment> fetchPaymentFromACustomer(int customerID) throws SQLException {
+        ArrayList<Payment> payments = new ArrayList<> ();
+        for(Payment payment : fetchPayment()){
+            if(payment.getCustomerID() == customerID) {
+                payments.add(payment);
+            }
+        }
+        return payments;
+    }
+
 }

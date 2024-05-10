@@ -18,6 +18,7 @@
     <%
         ArrayList<Product> productList = (ArrayList<Product>)session.getAttribute("productList");
         HashMap<Integer, Integer> quantityMap = (HashMap<Integer, Integer>)session.getAttribute("quantityMap");
+        int orderID = (Integer)session.getAttribute("orderID");
     %>
     <body>
         <div class="menu">
@@ -25,11 +26,16 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-                <!--<li><a href="http://localhost:8080/ISDAssignment1/" > Orders </a></li>-->
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
             </ul>                            
         </div>
+        <br> 
+        <br>
+        <br>
         <div>
             <table width="100%" >
+                <caption><h1>Order Details for Order Number: <%= orderID %></h1></caption>
                 <tr>
                     <th></th>
                     <th>Device</th>
@@ -59,10 +65,10 @@
                     %>
                 </tr>
                 <% } %>
-                <% // session.setAttribute("totalAmount", totalAmount); %>
+                
                 <tr>
                     <td colspan="5"></td>
-                    <td class="price-id">Total Price: $<%= totalAmount %></td>
+                    <td colspan="2" class="price-id">Total Price: $<%= totalAmount %></td>
                 </tr>
             </table>
         </div>

@@ -33,11 +33,11 @@ public class UpdateOrderServlet extends HttpServlet{
         HashMap<Integer, Integer> quantityMap = (HashMap<Integer, Integer>)session.getAttribute("quantityMap");
 //        int orderID = Integer.parseInt(request.getParameter("orderID")); //check null
         if(request.getParameter("saved") == null){
-            System.out.println("Entered Here");
+//            System.out.println("Entered Here");
             String quantityStr = request.getParameter("productQuantity");
             if(quantityStr == null || quantityStr.trim().isEmpty() || !(quantityStr.matches("[0-9]+"))){
 //                System.out.println("entered");
-                request.setAttribute("quantityError", "Quantity can't be empty or non-numeric.");
+                request.setAttribute("quantityError", "Quantity can't be empty or non-numeric or negative numbers.");
                 
             }else{
                 
@@ -47,12 +47,12 @@ public class UpdateOrderServlet extends HttpServlet{
                     int stockInDB = productDAO.fetchSingleStock(productID);
                     if(stockInDB >= productQuantity){
                         if(request.getParameter("cartUpdate") == null){
-                            System.out.println("ENTERED FIRST IF");
+//                            System.out.println("ENTERED FIRST IF");
                             if(quantityMap.containsKey(productID)){
                                 quantityMap.put(productID, productQuantity);
                             }
                         }else{
-                            System.out.println("Entered HERE 2");
+//                            System.out.println("Entered HERE 2");
                             HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
                             if(shoppingCart.containsKey(productID)){
                                 shoppingCart.put(productID, productQuantity);
@@ -95,8 +95,8 @@ public class UpdateOrderServlet extends HttpServlet{
                 updatedQuantityList.add(quantity);
             }
        
-//            int orderID = Integer.parseInt(request.getParameter("orderID"));
-            int orderID = (int)session.getAttribute("orderID");
+            int orderID = (Integer)session.getAttribute("orderID");
+//            int orderID = (int)session.getAttribute("orderID");
             double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
             HashMap<Integer, Integer> original = (HashMap<Integer, Integer>)session.getAttribute("originalQuantity");
             ArrayList<Product> productList = (ArrayList<Product>)session.getAttribute("productList");
@@ -142,7 +142,4 @@ public class UpdateOrderServlet extends HttpServlet{
        }
        
        
-//       request.getRequestDispatcher("updateorder.jsp").include(request, response);
-       
-    }
-}
+//       request.getRequestDispatcher("updateorder.jsp").include(request, r

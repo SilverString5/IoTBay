@@ -29,30 +29,40 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-                <!--<li><a href="http://localhost:8080/ISDAssignment1/" > Orders </a></li>-->
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
             </ul>                            
         </div>
-        <%  String errorMessage = "";
-            if(request.getAttribute("errorMessage") != null){
+        <br> 
+        <br> 
+        <br> 
+        <%  String errorMessage = ""; %>
+        <%    if(request.getAttribute("errorMessage") != null){
                 errorMessage = (String) request.getAttribute("errorMessage");
         %>
-                <p style="color:red"><%= errorMessage%></p>
-        <%}%>
+        
+                <p style="color:red"><%= errorMessage %></p>
+        <% } %>
         
         <div>
-            <form method="GET" action="/ISDAssignment1/SearchOrderServlet">
+            <form id="searchForm" method="GET" action="/ISDAssignment1/SearchOrderServlet">
                 <label for="orderID">Order Number:</label>
                 <input name="orderID" type="text" placeholder="Fill in order number">
-                
+                <br> 
                 <label for="orderDate">Order Date:</label>
                 <input name="orderDate" type="text" placeholder="yyyy-mm-dd">
                 <input type="hidden" id="submitted" name="submitted" value="yes">
+                <br>
                 <input type="submit" value="Search">
+            </form>
+            <form id="searchForm" method="GET" action="/ISDAssignment1/OrderHistoryServlet">
+                  <input type="submit" value="View All Orders">
             </form>
         </div>
         
         <div>
             <table width="100%">
+                <caption><h1>Order History List</h1></caption>
                 <tr>
                     <th>Order Number</th>
                     <th>Order Date</th>
@@ -74,26 +84,34 @@
                     <td>$<%= order.getTotalAmount() %></td> 
                     <td><%= order.getShipmentID() %></td>
                     <td>
-                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                        <form method="GET" action="./ViewOrderServlet">
                             <input type="hidden" name="function" value="View"/>
                             <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <input type="submit" value="View Details"/>
+                            <input class="editBtn" type="submit" value="View"/>
                         </form>
                     </td>
                     
                     <td>
-                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                        <form method="GET" action="./ViewOrderServlet">
                             <input type="hidden" name="function" value="Update"/>
                             <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <input type="submit" value="Update"/>
+                            <% if(order.getOrderStatus().equals("Cancelled")){ %>
+                                <input class="disBtn" type="submit" value="Update" disabled/>
+                            <% }else{ %>
+                                <input class="editBtn" type="submit" value="Update"/>
+                            <% } %> 
                         </form>
                     </td>
                     
                     <td>
-                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                        <form method="GET" action="./ViewOrderServlet">
                             <input type="hidden" name="function" value="Cancel"/>
                             <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <input type="submit" value="Cancel"/>
+                            <% if(order.getOrderStatus().equals("Cancelled")){ %>
+                                <input class="disBtn" type="submit" value="Cancel" disabled/>
+                            <% }else{ %>
+                                <input class="editBtn" type="submit" value="Cancel"/>
+                            <% } %>
                         </form>
                     </td>
                 </tr>
@@ -111,7 +129,7 @@
                         <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
                             <input type="hidden" name="function" value="View"/>
                             <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
-                            <input type="submit" value="View Details"/>
+                            <input class="editBtn" type="submit" value="View Details"/>
                         </form>
                     </td>
                     
@@ -119,27 +137,26 @@
                         <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
                             <input type="hidden" name="function" value="Update"/>
                             <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
-                            <input type="submit" value="Update"/>
+                            <% if(specificOrder.getOrderStatus().equals("Cancelled")){ %>
+                                <input class="disBtn" type="submit" value="Update" disabled/>
+                            <% }else{ %>
+                                <input class="editBtn" type="submit" value="Update"/>
+                            <% } %>
                         </form>
                     </td>
                     
                     <td>
-                        <form method="GET" action="/ISDAssignment1/ViewOrderServlet">
+                        <form method="GET" action="./ViewOrderServlet">
                             <input type="hidden" name="function" value="Cancel"/>
                             <input type="hidden" name="orderID" value="<%= specificOrder.getOrderID() %>"/>
-                            <input type="submit" value="Cancel"/>
+                        <% if(specificOrder.getOrderStatus().equals("Cancelled")){ %>
+                                <input class="disBtn" type="submit" value="Cancel" disabled/>
+                            <% }else{ %>
+                                <input class="editBtn" type="submit" value="Cancel"/>
+                            <% } %>
                         </form>
                     </td>
                     
-                </tr>
-                
-                <tr>
-                    <td colspan="8">
-                        <form method="GET" action="/ISDAssignment1/OrderHistoryServlet">
-                            <button type="submit">View All Orders</button>
-                        </form>
-                    </td>
-                
                 </tr>
                 
                 

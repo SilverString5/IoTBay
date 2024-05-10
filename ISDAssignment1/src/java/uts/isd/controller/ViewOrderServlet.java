@@ -46,8 +46,10 @@ public class ViewOrderServlet extends HttpServlet{
         session.setAttribute("productList", productList);
         session.setAttribute("quantityMap", map);
         if(function.equals("View")){
+            session.setAttribute("orderID", orderID);
             request.getRequestDispatcher("orderdetail.jsp").include(request, response);        
         }else if(function.equals("Update")){
+//            session.setAttribute("orderID", orderID);
             session.setAttribute("orderID", orderID);
             session.setAttribute("originalQuantity", unchanged);
             request.getRequestDispatcher("updateorder.jsp").include(request, response);
@@ -66,6 +68,7 @@ public class ViewOrderServlet extends HttpServlet{
             }catch(SQLException e){
                 System.out.print(e);
             }
+//            request.setAttribute("")
             request.getRequestDispatcher("OrderHistoryServlet").forward(request, response);
         }
     }

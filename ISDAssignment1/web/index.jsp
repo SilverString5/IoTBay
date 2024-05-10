@@ -40,6 +40,7 @@
                 <li><a href="./register.jsp" > Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
             </ul>
                                 
             </div>
@@ -53,6 +54,7 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
             </ul>
                
                 
@@ -67,9 +69,7 @@
                             <input type="text" name="searchType" value="" placeholder="Search product by type"/>
                             <button type="submit">Search</button>
                         </form>
-                        <form method="GET" action="/ISDAssignment1/DisplayCartServlet">
-                            <button type="submit">ShoppingCart</button>
-                        </form>
+                        
         </div>
         
         <%if (user != null && user.getUserType().equals("S")){%> 
@@ -152,17 +152,8 @@
                         <td>
                             <form method="GET" action="/ISDAssignment1/ShoppingCartServlet">
                                 <input type="hidden" name="proID" value="<%= device.getProductID()%>"/>
-                                <input type="submit" value="Add to cart"/>
-                            </form>
-                        </td>
-                    </tr>
-                    <% } %>
-                     
-                </table>
-            </div> 
-        <%}%>
-        
-        
-
-    </body>
-</html>
+                                <% if(device.getProductInStock() == 0){ %>
+                                    <input type="submit" value="Add to cart" disabled/>
+                                <% }else{ %>
+                                    <input type="submit" value="Add to cart"/>
+                                <% }

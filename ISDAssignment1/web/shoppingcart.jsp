@@ -33,17 +33,22 @@
                 <li><a href="welcome.jsp" > You</a></li>
             </ul>
         </div>
+        <br>
+        <br>
+        <br> 
+        <!--<br>-->
+        <!--<br>-->
         <div>
             <% if(quantityError != null) { %>
-            <p style="color:red"><%= quantityError %></p>
+                <p style="color:red"><%= quantityError %></p>
             <% } %>
             <% if( insufficientStockErr != null){ %>
-            <p style="color:red"><%= insufficientStockErr %></p>
+                <p style="color:red"><%= insufficientStockErr %></p>
             <% } %>
         </div>
-        
         <div>
             <table width="100%" >
+                <caption><h1>Shopping Cart</h1></caption>
                 <tr>
                     <th></th>
                     <th>Device</th>
@@ -81,7 +86,7 @@
                             <form method="GET" action="/ISDAssignment1/RemoveCartItemServlet">
                                 <input type="hidden" name="function" value="RemoveAnItem"/>
                                 <input type="hidden" name="productID" value="<%= product.getProductID() %>"/>
-                                <input type="submit" value="Remove"/>
+                                <input id="removeBtn" type="submit" value="Remove"/>
                             </form>
                         </td>
                     </tr>
@@ -101,25 +106,25 @@
                         <form method="GET" action="/ISDAssignment1/RemoveCartItemServlet">
                             <input type="hidden" name="function" value="ClearCart"/>
                             <% if(shoppingCart != null && !shoppingCart.isEmpty()){ %>
-                                <button type="submit"> Clear the Cart </button>
+                                <button class="availBtn" type="submit"> Clear the Cart </button>
                             <% }else{ %>
-                                <button disabled> Clear the Cart</button>
+                                <button class="disBtn" disabled> Clear the Cart</button>
                             <% } %>
                         </form>
                         
                     </td>
                     <td colspan="2">
                         <form action="http://localhost:8080/ISDAssignment1/ConnServlet" method="POST">
-                            <button type="submit">Continue Shopping</button>
+                            <button class="availBtn" type="submit">Continue Shopping</button>
                         </form>
                     </td>
                     <td colspan="3">
                         <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
                             <input type="hidden" name="totalAmount" value="<%= totalAmount %>"/>
                             <% if(shoppingCart != null && !shoppingCart.isEmpty()){ %>
-                                <button type="submit">Submit the Order</button>
+                                <button class="availBtn" type="submit">Submit the Order</button>
                             <% }else{ %>
-                                <button disabled> Submit the Order</button>
+                                <button class="disBtn" disabled> Submit the Order</button>
                             <% } %>
 <!--                            <button type="submit">Submit the Order</button>-->
                         </form>

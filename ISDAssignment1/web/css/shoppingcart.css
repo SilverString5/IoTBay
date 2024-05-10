@@ -8,13 +8,105 @@ and open the template in the editor.
     Author     : pyaephyozaw
 */
 
+.menu { font:15px/20px verdana,arial,helvetica,sans-serif; 
+        text-align: center;
+        }
+.menu li { display: inline;
+            float: left;
+            }
+.menu li a { display: block;
+                padding: 12px;
+                text-decoration: none;
+                color:#074f92;
+                border-right:1px solid #ffffff;
+                }
+.menu ul{ list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            borader: 0px;
+            /*overflow: hidden;*/
+            position: fixed;
+            width: 100%;
+            background-color: #fafafa;
+            border-bottom:1px solid #000000;
+            } 
+            
+
+.menu a:hover:not(.active) {
+    background-color: #e5f0f7;
+    color: #329c67;
+}
+
+.menu a:active {
+    background-color: #10608f;
+    color: white;
+}
+
 table, th, td{
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
 }
 
+th{
+    background-color: #B4D351;
+}
+
 .price-id {
     text-align: center;
 }
 
+.availBtn, #removeBtn, .editBtn, #updateBtn {
+    background-color: #7A9E05;
+    color: white;
+    border: none;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+    transition-duration: 0.5s; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.availBtn:hover, .removeBtn:hover, .editBtn:hover, #updateBtn:hover{
+    background-color: #B4D351;
+    cursor: pointer;
+}
+
+.disBtn {
+    background-color: #bbc3c9;
+    color: white;
+    border: none;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+    transition-duration: 0.5s; 
+    margin-top: 10px;
+    margin-bottom: 10px; 
+}
+
+#searchForm {
+    display:inline-block;
+    text-align: left;
+    padding:10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#searchForm input{
+    padding:10px;
+    margin:6px 0;
+    border-radius:4px;
+}
+/*In updateorder.jsp*/
+#updateForm {
+    display: flex;
+/*    margin-left: auto;
+    margin-right: auto;*/
+    float:right;
+}
+
+#updateForm input{
+    margin-right: 10px;
+    flex: 1;
+}

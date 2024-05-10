@@ -156,4 +156,17 @@
                                     <input type="submit" value="Add to cart" disabled/>
                                 <% }else{ %>
                                     <input type="submit" value="Add to cart"/>
-                                <% }
+                                <% } %>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+                     
+                </table>
+            </div> 
+        <%}%>
+        
+        
+
+    </body>
+</html>

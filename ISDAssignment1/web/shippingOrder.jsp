@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./css/test.css">
         
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
@@ -20,6 +20,15 @@
     </head>
     
     <body>
+        
+        <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/shipmentHistory.jsp" >Shipping </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+        </div>
         
         
         <div class="shipping-container">

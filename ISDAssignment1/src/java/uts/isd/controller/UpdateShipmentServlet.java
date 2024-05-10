@@ -32,7 +32,14 @@ public class UpdateShipmentServlet extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        System.out.println("pass throughupdate");
+        
+        
+        
         HttpSession session = request.getSession();
+        
+        session.removeAttribute("invalidUpdateAddress");
+        session.removeAttribute("invalidUpdateAddressArray");
         
         User user = (User) session.getAttribute("user");
         Shipment shipment = (Shipment) session.getAttribute("shipment");
@@ -48,7 +55,20 @@ public class UpdateShipmentServlet extends HttpServlet{
         
         //String shipmentAddress = streetAddress + ", " + city + " " + state + " " + postcode;
         
-        try {
+        if(streetAddress.isEmpty()){
+            session.setAttribute("invalidUpdateAddress", "Please fill in a street address");
+            request.getRequestDispatcher("updateShipmentForm.jsp").forward(request, response);
+        }
+        else if(streetAddress.length() <= 19){
+             session.setAttribute("invalidUpdateAddress", "Please fill in a valid street address");
+            request.getRequestDispatcher("updateShipmentForm.jsp").forward(request, response);
+        }
+        else if(!checkAddressFormat(streetAddress).isEmpty()){
+            session.setAttribute("invalidUpdateAddressArray", checkAddressFormat(streetAddress));
+            request.getRequestDispatcher("updateShipmentForm.jsp").forward(request, response);
+        }
+        else {
+            try {
             shipmentDAO.updateShipmentAddress(shipment.getShipmentID(), streetAddress);
             shipmentDAO.updateShipmentMethod(shipment.getShipmentID(), deliveryMethod);
             
@@ -67,12 +87,62 @@ public class UpdateShipmentServlet extends HttpServlet{
         } catch(SQLException e) {
             System.out.println(e);
         }
-        
-        
-        
-        
+        }
         
         
         
     }
+    
+    public ArrayList<String> checkAddressFormat(String streetAddress){
+        //check if there is a street in beginning
+        String[] streetAddressArray = streetAddress.split(" ");
+        System.out.println(streetAddressArray);
+        ArrayList<String> errorMsg = new ArrayList<>();
+        
+        
+        
+        int amountOfState = 0;
+        
+        for(String word : streetAddressArray){
+            
+            if(isAState(word) && amountOfState <= 1){
+                amountOfState++;
+            }
+            
+        }
+        
+        if(amountOfState == 0 || amountOfState > 1){
+            errorMsg.add("Please fix your state");
+        }
+        
+
+        try {
+            Integer.parseInt(streetAddressArray[streetAddressArray.length - 1]);
+            
+            if(streetAddressArray[streetAddressArray.length - 1].length() != 4){
+                errorMsg.add("Invalid postcode");
+            }
+            
+        } catch (NumberFormatException e) {
+            errorMsg.add("Please add a postcode");
+        }
+        
+        return errorMsg;
+    }
+    
+    public boolean isAState(String word){
+        
+        String[] listOfState = {"NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"};
+        
+        for(String state: listOfState){
+            if(word.equalsIgnoreCase(state)){
+                return true;
+            }
+        }
+        
+        
+        return false;
+        
+    }
+    
 }

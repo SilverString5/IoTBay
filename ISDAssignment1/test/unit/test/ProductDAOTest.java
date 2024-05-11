@@ -5,7 +5,7 @@
  */
 package unit.test;
 
-import uts.isd.model.dao.DBConnector;
+import uts.isd.dao.DBConnector;
 import java.sql.Connection;
 import java.sql.SQLException;
 

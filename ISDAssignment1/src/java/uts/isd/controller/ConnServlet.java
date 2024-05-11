@@ -71,10 +71,9 @@ public class ConnServlet extends HttpServlet {
 	@Override
 	public void destroy() {
 		try {
-			db.closeConnection();
+                    db.closeConnection();
 		} catch (SQLException e) {
-			System.out.println(e);
+                    System.out.println(e);
 		}
 	}
-
 }

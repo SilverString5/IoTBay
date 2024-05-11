@@ -24,23 +24,30 @@ public class OrderHistoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
+//        System.out.println("HEY " + user);
         OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         ArrayList<Order> orderList = new ArrayList();
-        try {
-            if(user != null){
+        if(user != null){
+            try {  
+//                System.out.println("UserID " + user.getUserID());               
                 orderList = orderDAO.readOrderHistory(user.getUserID());
-            }       
-        }catch (SQLException e){
-            System.out.print(e);
+                session.setAttribute("orderList", orderList);
+                request.getRequestDispatcher("orders.jsp").include(request, response);
+            }catch (SQLException e){
+                System.out.print(e);
+            }
+        }else{
+           request.getRequestDispatcher("orders.jsp").include(request, response); 
         }
-        session.setAttribute("orderList", orderList);
-        request.getRequestDispatcher("orders.jsp").include(request, response);
+        
+//        session.setAttribute("orderList", orderList);
+//        request.getRequestDispatcher("orders.jsp").include(request, response);
     }
 
     @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html;charset=UTF-8");
                 doGet(request, response);
-//		request.getRequestDispatcher("updateorder.jsp").forward(request, response);
+		request.getRequestDispatcher("updateorder.jsp").forward(request, response);
 	} 
 }

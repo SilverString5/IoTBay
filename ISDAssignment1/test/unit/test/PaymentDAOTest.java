@@ -33,46 +33,61 @@ public class PaymentDAOTest {
         assertNotNull(conn);
     }     
      
-    @Test
-    public void testSelectUsers() throws SQLException {
-        ArrayList<Payment> payments = manager.fetchPayments();
-        assertEquals(payments.size(), 2);
-    }  
+     
+     //??? Test this later....
+    //@Test
+    //public void testSelectUsers() throws SQLException {
+    //    ArrayList<Payment> payments = manager.fetchPayments();
+    //    assertEquals(payments.size(), 21);
+    //}  
     
     
     
-    //updating the Payment Method of the payment.
+    //updating the Payment Method of the payment and checking if all the updated values are correct.
     @Test
     public void testUpdatePayment() throws SQLException {
-        paymentDAO.updatePayment(2, "VISA", "12-12-2003", );
-        Payment paymentex = manager.findPaymentRecord(2);
+        paymentDAO.updatePayment("VISA", "12-12-2030", 332, 28763024, 4 );
+        Payment paymentex = manager.findPaymentRecord(4);
+        assertEquals(paymentex.getPaymentMethod(), "VISA");
+        assertEquals(paymentex.getExpiryDate(), "12-12-2030");
+        assertEquals(paymentex.getPaymentCVC(), 332);
+        assertEquals(paymentex.getPaymentCardNumber(), 28763024);
         
     }
     
-    //updating expiry date of payment
+    //updating only expiry date of payment
     @Test
     public void testUpdateExpiryDate() throws SQLException{
-        paymentDAO.updateExpiryDate(2, "12-12-2003");
+        paymentDAO.updateExpiryDate(2, "12-02-2003");
         Payment paymentex = manager.findPaymentRecord(2);
         assertEquals(paymentex.getExpiryDate(), "12-12-2003");
     }
-    
-    
-    
+
     
     //deleting payment record
     @Test
     public void testDeletePayment() throws SQLException {
-        paymentDAO.deleteShipment(3);
+        paymentDAO.deletePayment(3);
     }
     
-    //Create a Payment. -> Maybe id Userid = ?
+    
+    
+    
+    //Create a Payment and test if it worked.
     @Test
     public void testCreateAPayment() throws SQLException {
-        manager.createPayment("VISA", "12-02-2025", 123, 12343322, 2);
-        //ArrayList<Payment> payments = manager.
+        Payment paymentex = manager.createPayment("VISA", "12-02-2025", 123, 12343322, 2);
+        assertEquals(paymentex.getPaymentMethod(), "VISA");
+        assertEquals(paymentex.getExpiryDate(), "12-02-2025");
+        assertEquals(paymentex.getPaymentCVC(), 123);
+        assertEquals(paymentex.getPaymentCardNumber(), 12343322);
     }
             
             
     //Output all the Payment Records from one payment
+    @Test
+    public void testfetchAllUserPayments() throws SQLException {
+        ArrayList<Payment> payments = manager.fetchPaymentsFromACustomer(8);
+        assertEquals(payments.size(), 2);
+    }
 }

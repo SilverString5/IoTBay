@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.User;
 import uts.isd.model.dao.UserDAO;
 import java.sql.Date;
+import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 import uts.isd.model.dao.AccessLogDAO;
 
@@ -30,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phonenumber");
                 String address = request.getParameter("address");
-                Date DOB = Date.valueOf(request.getParameter("DOB"));
+                String stringDOB = request.getParameter("DOB");
                 String gender = request.getParameter("gender");
                
 
@@ -42,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
                 
 
 
-                    if ((!email.contains("@")) || !email.contains(".com")){
+                    if ((!email.contains("@")) || !email.contains(".com") || email.isEmpty()){
                             errorCount++;
                             errorMsgs+=" The entered email address is invalid.\n";
                     }
@@ -51,23 +52,42 @@ public class RegisterServlet extends HttpServlet {
                             errorCount++;
                             errorMsgs+=" Your password must be at least 7 characters long.\n" ;
                      }
-
-                    if (phone.length()>10){
+                     // Phone number validation
+                        try {
+                        int intPhone = Integer.parseInt("phone");
+                            if (phone.length()>10){
                         errorCount++;
-                        errorMsgs+= " Please enter a valid phone number without an area code.\n";
-                    }
+                        errorMsgs+= "Phone numbers must not be longer than 10 characters.\n";
+                            }
+                        }
+                        catch (NumberFormatException e){
+                        System.out.println(e);
+                        errorCount++;
+                        errorMsgs+="A phone number cannot have non-numeric characters";
+                        }
+
 
                     if (address.length()<5){
                         errorCount++;
                         errorMsgs+=" The address entered must be at least 5 characters.\n";
                     }
-
+                    
+                    // Date validation
+                    try {
+                    Date DOB = Date.valueOf(stringDOB);
                     long now = System.currentTimeMillis();
                     Date nowDate = new Date(now);
                     if (DOB.after(nowDate)){
                         errorCount++;
                         errorMsgs+=" Your date of birth is in the future.";
                       }
+                    }
+
+                    catch (IllegalArgumentException e) {
+                    System.out.println(e);
+                    errorCount++;
+                    errorMsgs+="The date entered must be a non-empty date";
+}
 
                     try{
                     if (userDAO.checkExists(email)){
@@ -78,23 +98,19 @@ public class RegisterServlet extends HttpServlet {
                             System.out.println(e);
                                             }
 
-
-
-
-
 		if (errorCount>0) {
 			session.setAttribute("errorMsgs", errorMsgs);
 			request.getRequestDispatcher("register.jsp").include(request, response);
 		} else {
 			try {
-				userDAO.createUser(email, password, name, phone, address, DOB, gender);
+				userDAO.createUser(email, password, name, phone, address, Date.valueOf(stringDOB), gender);
 				User user = new User();
                                 user.setUserID(userDAO.retrieveUserID(email));
 				user.setName(name);
 				user.setEmail(email);
 				user.setPassword(password);
 				user.setPhone(phone);
-                                user.setuserDOB(DOB);
+                                user.setuserDOB(Date.valueOf(stringDOB));
                                 user.setGender(gender);
                                 user.setAddress(address);
                                 user.setUserType("C");
@@ -102,6 +118,8 @@ public class RegisterServlet extends HttpServlet {
                                 accessLogDAO.createUserAccessLog(user.getUserID());
                                 UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                                 session.setAttribute("accessLog",accessLog);
+                                ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
+                                session.setAttribute("accessLogs", accessLogs);
 
 				request.getRequestDispatcher("welcome.jsp").include(request, response);
 			} catch (SQLException e) {

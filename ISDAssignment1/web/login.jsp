@@ -13,14 +13,26 @@
     <%
            String invalidLogin = (String) session.getAttribute("invalidLogin");
            User user = (User) session.getAttribute("user");
+           if (user!=null){
     %>
-             <div class="menu">
+                 <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>
             </div>
+    <% } else { %>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+            </ul>
+            </div>
+    <% } %>
             <br>
             <br>
             <br>

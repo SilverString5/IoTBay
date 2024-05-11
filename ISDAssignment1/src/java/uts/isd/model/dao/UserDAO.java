@@ -28,11 +28,13 @@ public class UserDAO {
     private PreparedStatement deleteSt;
     private PreparedStatement checkSt;
     private PreparedStatement retrieveSt;
+    private PreparedStatement findSt;
     private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
     private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
-    private String deleteQuery = "DELETE FROM users WHERE userEmail=? AND userPassword=?";
+    private String deleteQuery = "DELETE FROM users WHERE userID=?";
     private String checkQuery = "SELECT * FROM users WHERE userEmail=?";
     private String retrieveQuery = "SELECT userID FROM users WHERE userEmail=?";
+    private String findQuery = "SELECT * from users WHERE userID=?";
 
 
 	public UserDAO(Connection connection) throws SQLException {
@@ -43,6 +45,7 @@ public class UserDAO {
 		deleteSt = connection.prepareStatement(deleteQuery);
                 checkSt = connection.prepareStatement(checkQuery);
                 retrieveSt = connection.prepareStatement(retrieveQuery);
+                findSt = connection.prepareStatement(findQuery);
 	}
 
 // Create Operation: create a user
@@ -77,6 +80,14 @@ public class UserDAO {
             return ID;
 }
 
+ //Find a user based on userID
+        public int findUser(String userEmail) throws SQLException{
+            retrieveSt.setString(1,userEmail);
+            ResultSet rs = retrieveSt.executeQuery();
+            rs.next();
+            int userID = rs.getInt(retrieveQuery);
+            return userID;
+}
 
 
 
@@ -133,9 +144,8 @@ public class UserDAO {
 	}
 
 	// Delete Operation: delete a user by userEmail & userPassword
-	public void delete(String userEmail, String userPassword) throws SQLException {
-		deleteSt.setString(1, userEmail);
-                deleteSt.setString(2, userPassword);
+	public void delete(int userID) throws SQLException {
+		deleteSt.setInt(1, userID);
 		int row = deleteSt.executeUpdate();
 		System.out.println("row " + row + " deleted successfuly");
 	}

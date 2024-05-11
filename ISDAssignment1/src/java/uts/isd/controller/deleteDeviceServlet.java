@@ -27,12 +27,13 @@ public class deleteDeviceServlet extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        //get device id for deletion
         int productID = Integer.parseInt(request.getParameter("productID"));
-        
         HttpSession session = request.getSession();
         ProductDAO productDAO = (ProductDAO) session.getAttribute("productDAO");
         
         try{
+            //delete and redirect staff back to the list of devices
             productDAO.deleteProduct(productID);
             request.getRequestDispatcher("/ConnServlet").forward(request, response);
             response.sendRedirect("index.jsp");

@@ -52,6 +52,27 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>ViewRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewRegistrationServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>UpdateRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateRegistrationServlet</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DeleteRegistrationServlet</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>ViewAccessLogsServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewAccessLogsServlet</servlet-class>
+  </servlet>
+      <servlet>
+        <servlet-name>SearchAccessLogsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.SearchAccessLogsServlet</servlet-class>
+    </servlet>
+    
+  <servlet>
 <servlet-name>deviceSearchServlet</servlet-name>
         <servlet-class>uts.isd.controller.deviceSearchServlet</servlet-class>
     </servlet>
@@ -81,6 +102,60 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>createShipmentServlet</servlet-name>
         <servlet-class>uts.isd.controller.createShipmentServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ShoppingCartServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DisplayCartServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DisplayCartServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SaveOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.SaveOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SubmitOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.SubmitOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <servlet-class>uts.isd.controller.OrderHistoryServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SearchOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.SearchOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <servlet-class>uts.isd.controller.RemoveCartItemServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
@@ -119,6 +194,26 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
        <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+<servlet-mapping>
+    <servlet-name>ViewRegistrationServlet</servlet-name>
+    <url-pattern>/ViewRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateRegistrationServlet</servlet-name>
+    <url-pattern>/UpdateRegistrationServlet</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <url-pattern>/DeleteRegistrationServlet</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>ViewAccessLogsServlet</servlet-name>
+    <url-pattern>/ViewAccessLogsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchAccessLogsServlet</servlet-name>
+    <url-pattern>/SearchAccessLogsServlet</url-pattern>
   </servlet-mapping>
    <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
@@ -159,6 +254,51 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <servlet-name>createShipmentServlet</servlet-name>
         <url-pattern>/createShipment</url-pattern>
     </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <url-pattern>/ShoppingCartServlet</url-pattern>
+  </servlet-mapping>  
+  
+  <servlet-mapping>
+    <servlet-name>DisplayCartServlet</servlet-name>
+    <url-pattern>/DisplayCartServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SaveOrderServlet</servlet-name>
+    <url-pattern>/SaveOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SubmitOrderServlet</servlet-name>
+    <url-pattern>/SubmitOrderServlet</url-pattern>
+  </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <url-pattern>/OrderHistoryServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SearchOrderServlet</servlet-name>
+    <url-pattern>/SearchOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ViewOrderServlet</servlet-name>
+    <url-pattern>/ViewOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <url-pattern>/UpdateOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <url-pattern>/RemoveCartItemServlet</url-pattern>
+  </servlet-mapping>
 
   <session-config>
     <session-timeout>30</session-timeout>

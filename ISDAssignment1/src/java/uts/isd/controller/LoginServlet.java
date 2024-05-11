@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.User;
 import uts.isd.model.dao.UserDAO;
 import java.sql.Date;
+import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 import uts.isd.model.dao.AccessLogDAO;
 
@@ -34,12 +35,16 @@ public class LoginServlet extends HttpServlet {
                 String invalidLogin = "";
                 try {
                 User user = userDAO.login(email, password);
-                accessLogDAO.createUserAccessLog(user.getUserID());
-                UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                     if (user!=null){
+                        accessLogDAO.createUserAccessLog(user.getUserID());
+                        UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                         session.setAttribute("user", user);
                         session.setAttribute("accessLog",accessLog);
+                        user =(User)session.getAttribute("user");
+                        ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
+                        session.setAttribute("accessLogs", accessLogs);
                         request.getRequestDispatcher("welcome.jsp").include(request, response);
+
                         }
                     else {
                         invalidLogin+="Your login details are incorrect. Please try again or register.";

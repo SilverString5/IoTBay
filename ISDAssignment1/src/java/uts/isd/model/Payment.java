@@ -1,21 +1,26 @@
 package uts.isd.model;
+
 import java.util.*;
 import java.time.*;
 import java.io.Serializable;
 
 public class Payment implements Serializable{
     private int paymentID;
+    private int customerID;
+    
     private String paymentMethod;
-    private Date paymentDate;
+    private Date expiryDate;
     private int paymentCardNumber;
     private int paymentCVC;
     
-    public Payment(int paymentID, String paymentMethod, Date paymentDate, int paymentCardNumber, int paymentCVC){
+    public Payment(int paymentID, String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber, int customerID){
         this.paymentID = paymentID;
+        this.customerID = customerID;
+        
         this.paymentMethod = paymentMethod;
-        this.paymentDate = paymentDate;
-        this.paymentCardNumber = paymentCardNumber;
+        this.expiryDate = expiryDate;
         this.paymentCVC = paymentCVC;
+        this.paymentCardNumber = paymentCardNumber;
         
     }
     
@@ -27,8 +32,8 @@ public class Payment implements Serializable{
         this.paymentMethod = paymentMethod;
     }
     
-    public void setPaymentDate(Date paymentDate){
-        this.paymentDate = paymentDate;
+    public void setExpiryDate(Date expiryDate){
+        this.expiryDate = expiryDate;
     }
     
     public void setPaymentCardNumber(int paymentCardNumber){
@@ -47,8 +52,8 @@ public class Payment implements Serializable{
         return this.paymentMethod;
     }
     
-    public Date getPaymentDate(){
-        return this.paymentDate;
+    public Date getExpiryDate(){
+        return this.expiryDate;
     }
     
     public int getPaymentCardNumber(){
@@ -59,5 +64,12 @@ public class Payment implements Serializable{
         return this.paymentCVC;
     }
     
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
 }
 

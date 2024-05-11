@@ -24,6 +24,7 @@ import javax.servlet.RequestDispatcher;
  */
 public class addDeviceFormServlet extends HttpServlet{
     
+    //redirect to add form
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("productForm.jsp").forward(request, response);

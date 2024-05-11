@@ -23,15 +23,19 @@ import javax.servlet.RequestDispatcher;
  * @author jijianlan
  */
 public class deviceSearchServlet extends HttpServlet{
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ProductDAO productDAO = (ProductDAO) session.getAttribute("productDAO");
+        
+        //prepare search result and input
         ArrayList<Product> products = null;
         String searchName = request.getParameter("searchName");
         String searchType = request.getParameter("searchType");
 
         try{
+            //search and return search result back to the list of device
             products = productDAO.fetchFilteredProducts(searchName, searchType);
             session.setAttribute("listDevice", products);
             request.getRequestDispatcher("index.jsp").include(request, response);

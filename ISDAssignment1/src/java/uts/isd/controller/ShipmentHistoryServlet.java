@@ -26,49 +26,39 @@ import java.util.*;
  *
  * @author lorinchanel
  */
-public class ShipmentHistoryServlet extends HttpServlet{
-    
-    private DBConnector db;
-    private Connection conn;
-    
-    @Override
-    public void init() {
-        
-    }
-    
+public class ShipmentHistoryServlet extends HttpServlet{    
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        //Gets all the necessary data from the session
         HttpSession session = request.getSession();
-        System.out.println("pass");
-        
         User user = (User) session.getAttribute("user");
-        System.out.println("hi" + user);
-        
-        if(user == null){
-            System.out.println("pass null user");
-            response.sendRedirect("./unregisteredWarning.jsp");
-        }
-        else {
-        
 
-        ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
-        System.out.println(shipmentDAO);
+        //if the user is not signed in
+        if(user == null){
+            //redirect them to a warning page
+            response.sendRedirect("./unregisteredWarning.jsp");
+            
+        } else {
+            
+            ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
         
-        try {
-            System.out.println("pass");
-            session.setAttribute("shipmentFilterError", null);
-            Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
+            try {
+                //resets the error messages from the last time user access the form
+                session.setAttribute("shipmentFilterError", null);
+                
+                //Refresh the shipment records currently stored in the session
+                Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
+                session.setAttribute("shipments", shipments);
             
-            session.setAttribute("shipments", shipments);
+                //'redirect' to the shipment history page
+                request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
             
-            request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
             
-            
-        } catch(SQLException e) {
-            System.out.println(e);
-        }
+            } catch(SQLException e) {
+                System.out.println(e);
+            }
         }
         
         
@@ -76,62 +66,59 @@ public class ShipmentHistoryServlet extends HttpServlet{
     
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
         
+        //Gets all the necessary data from the session
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         
-        //String searchButton = request.getParameter("searchButton");
+        //checks if the reset button was pressed
         String resetButton = request.getParameter("resetButton");
-        System.out.println(resetButton);
         
+        //Gets the date submitted by the user
         String date = request.getParameter("date");
+        
+        //if the shipment ID or date input box is empty, an error message should appear asking to fill in the information
         if((request.getParameter("shipmentID").equals("") || date.length()==0)){
             
             session.setAttribute("shipmentFilterError", "Please fill in both shipment ID and date");
             request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
             
         } else {
+            //prevent the error messages from the last time user filter the list
             session.setAttribute("shipmentFilterError", null);
-            String shipmentIDAsString = request.getParameter("shipmentID");
-            int shipmentID = Integer.parseInt(shipmentIDAsString);
-          
-            
-            
-        
+            String shipmentID = request.getParameter("shipmentID");
+ 
             ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
             
             
             try {
-            System.out.println("pass 3");
-            Shipments shipments = new Shipments(shipmentDAO.fetchShipmentByFilter(user.getUserID(), shipmentID, date));
-            
-            session.setAttribute("shipments", shipments);
-            
-            request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
-            
-            
-        } catch(SQLException e) {
-            System.out.println(e);
-        }
-            
-            
-        
-        if(resetButton != null){
-            try {
-                System.out.println("pass 2");
-            System.out.println("pass");
-            Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
-            
-            session.setAttribute("shipments", shipments);
+                //fetch the shipment records that has the same shipment ID and shipment date
+                Shipments shipments = new Shipments(shipmentDAO.fetchShipmentByFilter(user.getUserID(), Integer.parseInt(shipmentID), date));
+                
+                session.setAttribute("shipments", shipments);
+                
+                //'redirect' user back to the shipment history web page
+                request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
+
+            } catch(SQLException e) {
+                System.out.println(e);
+            }
             
             
-            request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
-            
-            
-        } catch(SQLException e) {
-            System.out.println(e);
-        }
-        }
+            //if the reset button was submitted
+            if(resetButton != null){
+                
+                //set the shipment records in the current session to contain all shipments made rather than one created from the filter
+                try {
+                    Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
+                    session.setAttribute("shipments", shipments);
+                    request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
+
+
+                } catch(SQLException e) {
+                    System.out.println(e);
+                }
+            }
             
             
         }
@@ -142,5 +129,5 @@ public class ShipmentHistoryServlet extends HttpServlet{
         
     }
         
-    }
+}
 

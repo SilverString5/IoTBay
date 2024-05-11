@@ -37,132 +37,74 @@
         %>
         
         <%if(user != null) {%>
-        <div class="middle-container">   
-        <div class="shipping-container">
-            <h2>Shipping Address</h2>
+            <div class="middle-container">   
+                <div class="shipping-container">
+                    <h2>Shipping Address</h2>
             
             
-            <% if(errorMsg != null) {
-                for(String errorLine : errorMsg){ %>
-                    
-                    <p><%=errorLine %></p>
-                    
-            <%  } %>
-         <% } %>
-            
-            
-            <form method="POST" action="./createShipment">
-                
-                <div class="shipping-details-container">
-                <label for="streetAddress">Street Address: </label><br>
-                <input type="text" id = "streetAddress" name = "streetAddress">
-                
-                
-                
-                <table>
-                            <tr>
-                                <td>City: </td>
-                                <td>State/Territory: </td>
-                                <td>Postcode: </td>
-                            </tr>
-                            <tr>
-                                <td><input type= "text" id = "city" name = "city"></td>
-                                <td>
-                                    <div class="country-dropdown">
-                                    <select id="state" name="state">
-                                        <option value="" selected> choose one</option>
-                                        <option value="ACT">Australian Capital Territory</option>
-                                        <option value="NSW">New South Wales</option>
-                                        <option value="NT">Northern Territory</option>
-                                        <option value="QLD">Queensland</option>
-                                        <option value="SA">South Australia</option>
-                                        <option value="TAS">Tasmania</option>
-                                        <option value="VIC">Victoria</option>
-                                        <option value="WA">Western Australia</option>
-                                    </select>
-                                    </div>
-                                </td>
-                                <td><input type= "text" id = "postcode" name = "postcode"></td>
-                            </tr>
-                        </table>
-                
-                <label for="shipmentMethod">Delivery Method: </label><br>
-                <select name="shipmentMethod">
-                    <option value="" selected> Choose Your Delivery Type</option>
-                    <option value="Standard">Standard</option>
-                    <option value="Express">Express</option>
-                </select>
-            
-                
-               </div> 
+                    <% if(errorMsg != null) {
+                        for(String errorLine : errorMsg){ %>
 
-                <button class="submit-button" type="submit" name="orderSubmit" value="true"> Submit </button>
-                
-        </form>
-        </div>
-        </div>
-         
-         <% } else { 
-                   response.sendRedirect("./unregisteredWarning.jsp");
-}%>
-         
-           
-        <!--
-       <div class="flexbox">
-        <div class="left-container">
-            
-                
-                
-                <div class="shipping-details-container">
-                
-                    <label for="streetAddress">Street Address: </label><br>
-                    <input type="text" id = "streetAddress" name = "streetAddress">
+                        <p><%=errorLine %></p>
 
-                    <div class="shipping-details-columns">
-                        <table>
-                            <tr>
-                                <td>City: </td>
-                                <td>State/Territory: </td>
-                                <td>Postcode: </td>
-                            </tr>
-                            <tr>
-                                <td><input type= "text" id = "city" name = "city"></td>
-                                <td>
-                                    <div class="country-dropdown">
-                                    <select name="suburb">
-                                        <option value="" selected> choose one</option>
-                                        <option value="act">Australian Capital Territory</option>
-                                        <option value="nsw">New South Wales</option>
-                                        <option value="nt">Northern Territory</option>
-                                        <option value="qld">Queensland</option>
-                                        <option value="sa">South Australia</option>
-                                        <option value="tas">Tasmania</option>
-                                        <option value="vic">Victoria</option>
-                                        <option value="wa">Western Australia</option>
-                                    </select>
-                                    </div>
-                                </td>
-                                <td><input type= "text" id = "postcode" name = "postcode"></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <%  } %>
+                <% } %>
+
+
+                    <form method="POST" action="./createShipment">
+
+                        <div class="shipping-details-container">
+                            <label for="streetAddress">Street Address: </label><br>
+                            <input type="text" id = "streetAddress" name = "streetAddress">
+
+
+
+                            <table>
+                                <tr>
+                                    <td>City: </td>
+                                    <td>State/Territory: </td>
+                                    <td>Postcode: </td>
+                                </tr>
+                                <tr>
+                                    <td><input type= "text" id = "city" name = "city"></td>
+                                    <td>
+                                        <div class="country-dropdown">
+                                            <select id="state" name="state">
+                                                <option value="" selected> choose one</option>
+                                                <option value="ACT">Australian Capital Territory</option>
+                                                <option value="NSW">New South Wales</option>
+                                                <option value="NT">Northern Territory</option>
+                                                <option value="QLD">Queensland</option>
+                                                <option value="SA">South Australia</option>
+                                                <option value="TAS">Tasmania</option>
+                                                <option value="VIC">Victoria</option>
+                                                <option value="WA">Western Australia</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td><input type= "text" id = "postcode" name = "postcode"></td>
+                                </tr>
+                            </table>
+
+                            <label for="shipmentMethod">Delivery Method: </label><br>
+                            <select name="shipmentMethod">
+                                <option value="" selected> Choose Your Delivery Type</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Express">Express</option>
+                            </select>
+
+
+                        </div> 
+
+                        <button class="submit-button" type="submit" name="orderSubmit" value="true"> Submit </button>
+
+                    </form>
                 </div>
-                
-
-                
-                
-                
-                
-            </form>
-           
-                
-        </div>
-        
-        
-        <div class="right-container"> 
-                    <h1>wee</h1>
             </div>
-        </div>-->
-        
+         
+            <% } else { 
+                response.sendRedirect("./unregisteredWarning.jsp");
+            } %>
+         
     </body>
 </html>

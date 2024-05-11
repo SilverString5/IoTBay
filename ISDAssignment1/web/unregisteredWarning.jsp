@@ -20,15 +20,15 @@
         
         <div class="body-background">
         
-        <div class="window">
-            <h1>Unable To Access Page</h1>
-            <p>You are attempting to access a page that is only visible for registered users. Please register an account first to access these web pages.</p>
+            <div class="window">
+                <h1>Unable To Access Page</h1>
+                <p>You are attempting to access a page that is only visible for registered users. Please register an account first to access these web pages.</p>
             
-            <form method="POST" action="./index.jsp">
+                <form method="POST" action="./index.jsp">
                     <button type="submit">Back to Home</button>
-            </form>
+                </form>
             
-        </div>
+            </div>
             
         </div>
     </body>

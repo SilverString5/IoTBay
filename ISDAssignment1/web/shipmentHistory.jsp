@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Shipments</title>
     </head>
+    
     <body>
 
         <% Shipments shipments = (Shipments) session.getAttribute("shipments"); 
@@ -34,88 +35,67 @@
         
         
         <div class="middle-container">
-        <h1>Track Your Orders</h1>
+            <h1>Track Your Orders</h1>
         
         
-            <form method="POST" action="shipmentHistory">
+                <form method="POST" action="shipmentHistory">
                 
-                <div class="search-bar">
-                <label for="shipmentID">Shipment ID: </label>
-                <input type="text" id = "shipmentID" name = "shipmentID">
+                    <div class="search-bar">
+                        <label for="shipmentID">Shipment ID: </label>
+                        <input type="text" id = "shipmentID" name = "shipmentID">
                
 
-                <label for="date">Date: </label>
-                <input type="date" id = "date" name = "date">
+                        <label for="date">Date: </label>
+                        <input type="date" id = "date" name = "date">
+
+                        <input type="hidden" name="searchButton" value="true">
+                        <button type="submit">Search</button>
+
+                        <input type="hidden" name="resetButton" value="true">
+                        <button type="submit"><a href="./shipmentHistory.jsp">Reset</a></button>
+                    </div>
                 
-                <input type="hidden" name="searchButton" value="true">
-                <button type="submit">Search</button>
-                
-                <input type="hidden" name="resetButton" value="true">
-                <button type="submit"><a href="./shipmentHistory.jsp">Reset</a></button>
-                 </div>
-                
-            </form>
+                </form>
             
-            <%if(shipmentFilterError != null) {%> 
-                <p><%=shipmentFilterError%></p> 
-            <%}%>
-            
-            
+                <%if(shipmentFilterError != null) {%> 
+                    <p><%=shipmentFilterError%></p> 
+                <% } %>
+
         
-        
-        <% if(shipments != null) {%>
-        <table class="table">
-            <tr>
-                <th>Shipment ID: </th>
-                <th>Address: </th>
-                <th>Method: </th>
-                <th>Status: </th>
-                <th>Date: </th>
-                <th></th>
-            </tr>
+                <% if(shipments != null) {%>
+                    <table class="table">
+                    <tr>
+                        <th>Shipment ID: </th>
+                        <th>Address: </th>
+                        <th>Method: </th>
+                        <th>Status: </th>
+                        <th>Date: </th>
+                        <th></th>
+                    </tr>
             
             <!-- For Loop That Finds All Shipment Records Based On Prompt -->
             
-            <% for(Shipment shipment : shipments.getListOfCustomerShipments()) { %>
-            <tr>
-                
-                
-
-                <td><%=shipment.getShipmentID()%></td>
-                
-
-                <td><%=shipment.getShipmentAddress()%></td>
-                
-
-                <td><%=shipment.getShipmentMethod()%></td>
-                
-
-                <td><%=shipment.getShipmentStatus()%></td>
-                
-
-                <td><%=shipment.getShipmentEstTime()%></td>
-                
-                
-                <td>
-                    <a href="./shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View >>> </a> 
-                    <%if (shipment.getShipmentStatus().equals("Pending")) {%>
-                        <a href="./deleteShipment.jsp?shippingID=<%=shipment.getShipmentID() %>"> Delete >>> </a>
-                    <%}%>
-                </td>
-
-                
-                
-                    
-                
-            </tr>
-            <% } %>
-            <% } else { %>
-            <h4>You don't have any shipments at the moment</h4>
-            <% } %>
+                    <% for(Shipment shipment : shipments.getListOfCustomerShipments()) { %>
+                        <tr>
+                            <td><%=shipment.getShipmentID()%></td>
+                            <td><%=shipment.getShipmentAddress()%></td>
+                            <td><%=shipment.getShipmentMethod()%></td>
+                            <td><%=shipment.getShipmentStatus()%></td>
+                            <td><%=shipment.getShipmentEstTime()%></td>
+                            <td>
+                                <a href="./shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View >>> </a> 
+                                <%if (shipment.getShipmentStatus().equals("Pending")) {%>
+                                    <a href="./deleteShipment.jsp?shippingID=<%=shipment.getShipmentID() %>"> Delete >>> </a>
+                                <%}%>
+                            </td>                
+                        </tr>
+                    <% } %>
             
-            
-                            
-        </table>
+                <% } else { %>
+                    <h4>You don't have any shipments at the moment</h4>
+                <% } %>
+               
+            </table>
         </div>
         
     </body>

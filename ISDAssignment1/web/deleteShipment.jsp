@@ -25,23 +25,22 @@
         %>
         
          <%if(user != null) {%>
-        <div class="body-background">
+            <div class="body-background">
         
-        <div class="window">
-            <h1>Would you like to cancel your shipment?</h1>
-            <p>By clicking the button below, you are confirming that your shipment for this order will be cancelled</p>
-            
-            <% int shipmentID = Integer.parseInt(request.getParameter("shippingID")); %>
-            
-            <form method="POST" action="./deleteShipmentDetail?shippingID=<%=shipmentID%>">
-                    <button type="submit">Delete</button>
-            </form>
-        </div>
-            
-        </div>
+                <div class="window">
+                    <h1>Would you like to cancel your shipment?</h1>
+                    <p>By clicking the button below, you are confirming that your shipment for this order will be cancelled</p>
+
+                    <% int shipmentID = Integer.parseInt(request.getParameter("shippingID")); %>
+
+                    <form method="POST" action="./deleteShipmentDetail?shippingID=<%=shipmentID%>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
                     
-                    <% } else { 
-                   response.sendRedirect("./unregisteredWarning.jsp");
-}%>
+        <% } else { 
+            response.sendRedirect("./unregisteredWarning.jsp");
+        }%>
     </body>
 </html>

@@ -34,63 +34,57 @@
         %>
         
         <%if(user != null) {%>
-        <div class="middle-container">        
+            <div class="middle-container">        
         
         
-        <div class="shipment-status-container">
-            <h1>Track Your Package</h1>
-            <h3>Shipment Date: <%=shipment.getShipmentEstTime()%> </h2> <!-- calculate estimated time - 5 days after order date -->
-        </div>
-        
-        <% if(shipment.getShipmentStatus().equals("Pending")){ %>
-                <img class="tracking-image" src="./css/Pending.png">
-        <% } else if(shipment.getShipmentStatus().equals("Dispatched")){ %>
-                <img class="tracking-image" src="./css/Dispatched.png">
-        <% } else if(shipment.getShipmentStatus().equals("On Route")){ %>
-                <img class="tracking-image" src="./css/OnRoute.png">
-        <% } else { %>
-                <img class="tracking-image" src="./css/Delivered.png">
-        
-        <% } %>
-        
-        
-        <div class="bottom-container">
-                <h2>Shipment Information</h2>
-                
-                <div class="flexbox">
-                    <div class="first-column">
-                        <h3>Shipping Address:</h3> <p><%=shipment.getShipmentAddress()%></p> 
-                    </div>
-
-                    <div class="second-column">
-                        <h3>Delivery Method:</h3> <p><%=shipment.getShipmentMethod()%></p>
-                    </div>
+                <div class="shipment-status-container">
+                    <h1>Track Your Package</h1>
+                    <h3>Shipment Date: <%=shipment.getShipmentEstTime()%> </h3>
                 </div>
-        </div>
-                
+
+                <!-- Depending on the shipment status, it portrays an image that reflect this information -->
+                <% if(shipment.getShipmentStatus().equals("Pending")){ %>
+                        <img class="tracking-image" src="./css/Pending.png">
+                <% } else if(shipment.getShipmentStatus().equals("Dispatched")){ %>
+                        <img class="tracking-image" src="./css/Dispatched.png">
+                <% } else if(shipment.getShipmentStatus().equals("On Route")){ %>
+                        <img class="tracking-image" src="./css/OnRoute.png">
+                <% } else { %>
+                        <img class="tracking-image" src="./css/Delivered.png">
+
+                <% } %>
+
+
+                <div class="bottom-container">
+                    <h2>Shipment Information</h2>
+
                     <div class="flexbox">
-                         <div class="first-column">
-                        <button><a href="./shipmentHistory.jsp">Back To Shipments</a></button>
-                         </div>
-                        
-                        <div class="second-column align-right">
-                             <%if (shipment.getShipmentStatus().equals("Pending")) {%>
-                                <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
-                            <% } %>
+                        <div class="first-column">
+                            <h3>Shipping Address:</h3> <p><%=shipment.getShipmentAddress()%></p> 
+                        </div>
+
+                        <div class="second-column">
+                            <h3>Delivery Method:</h3> <p><%=shipment.getShipmentMethod()%></p>
                         </div>
                     </div>
-                
-                
-                
-                
-                
-               
+                </div>
 
-        
-    </div>
-    <% } else { 
-                   response.sendRedirect("./unregisteredWarning.jsp");
-}%>
+                <div class="flexbox">
+                    <div class="first-column">
+                        <button><a href="./shipmentHistory.jsp">Back To Shipments</a></button>
+                    </div>
+
+                    <div class="second-column align-right">
+                        <%if (shipment.getShipmentStatus().equals("Pending")) {%>
+                            <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
+                        <% } %>
+                    </div>
+                </div>
+
+            </div>
+        <% } else { 
+                response.sendRedirect("./unregisteredWarning.jsp");
+        }%>
             
         
     </body>

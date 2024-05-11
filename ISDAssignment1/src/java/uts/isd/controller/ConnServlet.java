@@ -61,6 +61,7 @@ public class ConnServlet extends HttpServlet {
                         ArrayList<Product> products = productDAO.fetchAllProducts();
                         session.setAttribute("listDevice", products);
 
+
 		} catch (SQLException e) {
 			System.out.print(e);
 		}

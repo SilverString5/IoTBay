@@ -9,24 +9,22 @@
         <link rel="stylesheet" href="css/reglayout.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
-        <title>Manage Registration</title>
+        <title>Manage Account Details</title>
     </head>
     <body>
         
     <%User user = (User)session.getAttribute("user");
     String updateMsgs = (String)session.getAttribute("updateMsgs");
-    String noLoginError = (String)session.getAttribute("noLoginError");%>
+    if (user!=null){ %>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>
             </div>
             <br><br><br>
-    <%if (noLoginError!=null){ %>
-    <p> <%= noLoginError %></p>
-    <% } %>
 <div class="myFormdiv">
     <form action="<%= request.getContextPath()%>/DeleteRegistrationServlet" method="post">
         <button type="submit">Delete Your Account</button>
@@ -61,7 +59,16 @@
            <% }%>
     </form>
     </div>
-    </body>
-    <br><br>
-
+<% } else { %>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+            </ul>
+            </div>
+            <br><br>
+            <p>You are not logged in!</p>
+<% } %>
+</body>
 </html>

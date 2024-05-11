@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.User;
 import uts.isd.model.dao.UserDAO;
 import java.sql.Date;
+import java.util.ArrayList;
 import uts.isd.model.UserAccessLog;
 import uts.isd.model.dao.AccessLogDAO;
 
@@ -117,6 +118,8 @@ public class RegisterServlet extends HttpServlet {
                                 accessLogDAO.createUserAccessLog(user.getUserID());
                                 UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                                 session.setAttribute("accessLog",accessLog);
+                                ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
+                                session.setAttribute("accessLogs", accessLogs);
 
 				request.getRequestDispatcher("welcome.jsp").include(request, response);
 			} catch (SQLException e) {

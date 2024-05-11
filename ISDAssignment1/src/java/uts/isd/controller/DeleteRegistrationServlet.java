@@ -26,7 +26,6 @@ public class DeleteRegistrationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         UserDAO userDAO = (UserDAO)session.getAttribute("userDAO");
         User user = (User)session.getAttribute("user");
-        String noLoginError = "";
         if (user!=null){
         try{
         userDAO.delete(user.getUserID());
@@ -37,12 +36,8 @@ public class DeleteRegistrationServlet extends HttpServlet {
         System.out.println(e);
         }
                         }
-
-        else {
-        noLoginError+=" You are not logged in. ";
-        session.setAttribute("noLoginError", noLoginError);
         request.getRequestDispatcher("manageRegistration.jsp").include(request,response);
-        }
+        
 
 }
 

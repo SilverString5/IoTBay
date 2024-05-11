@@ -28,17 +28,17 @@ String anonError = (String)session.getAttribute("anonError");
            <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp">Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp">Login</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp">You</a></li>
-            </ul>
-               <br><br><br>                 
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
+            </ul>               
             </div>
-            <br>
+        <br><br><br>
             
-        <h1>Access Logs</h1>
-            <form action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
-                <button type="submit">View All Your Access Logs</button><br>   
+     
+            <form class="myForm" action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
+            <h1>Access Logs</h1>
+            <button type="submit">View All Your Access Logs</button><br>  
             </form>
             <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
                 <label for="logdate"> Date: </label>
@@ -59,6 +59,7 @@ String anonError = (String)session.getAttribute("anonError");
         <div align="center">
             <table border="1", cellpadding="5">
                 <tr>
+                    <th>User ID></th>
                     <th>Log ID</th>
                     <th>Date (YYYY-MM-DD)</th>
                     <th>Login Time</th>
@@ -66,6 +67,7 @@ String anonError = (String)session.getAttribute("anonError");
                 </tr>
             <c:forEach var="log" items="${accessLogs}">
                 <tr>
+                    <td><c:out value="${log.userID}" /></td>
                     <td><c:out value="${log.accessLogID}" /></td>
                     <td><c:out value="${log.accessLogDate}" /></td>
                     <td><c:out value="${log.loginTime}" /></td>

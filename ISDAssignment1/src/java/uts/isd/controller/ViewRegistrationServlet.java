@@ -18,8 +18,13 @@ public class ViewRegistrationServlet extends HttpServlet {
         @Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+                String noLoginError = "";
                 UserDAO userDAO = (UserDAO)session.getAttribute("userDAO");
                 User user = (User) session.getAttribute("user");
+                if (user==null){
+                noLoginError+=" You are not logged in. ";
+                session.setAttribute("noLoginError", noLoginError);
+                }
                 request.getRequestDispatcher("manageRegistration.jsp").include(request, response);
 
             }

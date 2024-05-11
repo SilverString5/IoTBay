@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="/css/test.css">
+        <link rel="stylesheet" href="./css/test.css">
         
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
@@ -22,21 +22,37 @@
            String shipmentFilterError = (String) session.getAttribute("shipmentFilterError");
         %>
         
+        <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/shipmentHistory.jsp" >Shipping </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+            </ul>
+        </div>
         
+        
+        <div class="middle-container">
         <h1>Track Your Orders</h1>
         
-        <div class="search-bar">
+        
             <form method="POST" action="shipmentHistory">
+                
+                <div class="search-bar">
                 <label for="shipmentID">Shipment ID: </label>
                 <input type="text" id = "shipmentID" name = "shipmentID">
+               
 
                 <label for="date">Date: </label>
                 <input type="date" id = "date" name = "date">
                 
-                <%=request.getParameter("date") %>
-                
                 <input type="hidden" name="searchButton" value="true">
                 <button type="submit">Search</button>
+                
+                <input type="hidden" name="resetButton" value="true">
+                <button type="submit"><a href="./shipmentHistory.jsp">Reset</a></button>
+                 </div>
+                
             </form>
             
             <%if(shipmentFilterError != null) {%> 
@@ -44,8 +60,7 @@
             <%}%>
             
             
-            <button>Reset</button>
-        </div>
+        
         
         
         <table class="table">
@@ -63,32 +78,38 @@
             <tr>
                 
                 
-                <input type="hidden" name="shipmentIDRecord" value="<%=shipment.getShipmentID() %>">
+
                 <td><%=shipment.getShipmentID()%></td>
                 
-               <input type="hidden" name="shipmentAddressRecord" value="<%=shipment.getShipmentAddress() %>">
+
                 <td><%=shipment.getShipmentAddress()%></td>
                 
-                <input type="hidden" name="shipmentMethodRecord" value="<%=shipment.getShipmentMethod() %>">
+
                 <td><%=shipment.getShipmentMethod()%></td>
                 
-                <input type="hidden" name="shipmentStatusRecord" value="<%=shipment.getShipmentStatus() %>">
+
                 <td><%=shipment.getShipmentStatus()%></td>
                 
-                <input type="hidden" name="shipmentDateRecord" value="<%=shipment.getShipmentEstTime() %>">
+
                 <td><%=shipment.getShipmentEstTime()%></td>
                 
                 
-                <td> <a href="./shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View </a>
-                    <!--<form method="POST">
-                        <input type="hidden" name="viewButton" value="true"> 
-                        <button type="submit">View</button>
-                    </form>-->
+                <td>
+                    <a href="./shipmentDetail?shippingID=<%=shipment.getShipmentID() %>"> View >>> </a> 
+                    <%if (shipment.getShipmentStatus().equals("Pending")) {%>
+                        <a href="./deleteShipment.jsp?shippingID=<%=shipment.getShipmentID() %>"> Delete >>> </a>
+                    <%}%>
                 </td>
+
+                
+                
+                    
+                
             </tr>
             <% } %>
                             
         </table>
+        </div>
         
     </body>
 </html>

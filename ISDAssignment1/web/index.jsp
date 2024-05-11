@@ -31,6 +31,7 @@
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="./shipmentHistory" > Shipping </a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>

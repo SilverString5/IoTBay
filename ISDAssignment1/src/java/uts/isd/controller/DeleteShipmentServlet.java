@@ -35,24 +35,31 @@ public class DeleteShipmentServlet extends HttpServlet{
         HttpSession session = request.getSession();
         
         User user = (User) session.getAttribute("user");
-        Shipment shipment = (Shipment) session.getAttribute("shipment");
+        //Shipment shipment = (Shipment) session.getAttribute("shipment");
+        
+        
         ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
+        
+        int shipmentID = Integer.parseInt(request.getParameter("shippingID"));
+        
         
         
         
         try {
-            shipmentDAO.deleteShipment(shipment.getShipmentID());
+            
+            
+            shipmentDAO.deleteShipment(shipmentID);
             
             Shipments shipments = (Shipments) session.getAttribute("shipments");
             
             for(Shipment currentShipment : shipments.getListOfCustomerShipments()){
-                if(currentShipment.getShipmentID() == shipment.getShipmentID()){
+                if(currentShipment.getShipmentID() == shipmentID){
                     shipments.getListOfCustomerShipments().remove(currentShipment);
                     break;
                 }
             }
             
-            session.removeAttribute("shipment");
+            session.removeAttribute("shippingID");
             
             
             request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);

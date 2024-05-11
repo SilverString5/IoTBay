@@ -20,6 +20,7 @@
 
         <% Shipments shipments = (Shipments) session.getAttribute("shipments"); 
            String shipmentFilterError = (String) session.getAttribute("shipmentFilterError");
+           User user = (User) session.getAttribute("user");
         %>
         
         <div class="menu">
@@ -62,7 +63,7 @@
             
         
         
-        
+        <% if(shipments != null) {%>
         <table class="table">
             <tr>
                 <th>Shipment ID: </th>
@@ -74,6 +75,7 @@
             </tr>
             
             <!-- For Loop That Finds All Shipment Records Based On Prompt -->
+            
             <% for(Shipment shipment : shipments.getListOfCustomerShipments()) { %>
             <tr>
                 
@@ -107,6 +109,11 @@
                 
             </tr>
             <% } %>
+            <% } else { %>
+            <h4>You don't have any shipments at the moment</h4>
+            <% } %>
+            
+            
                             
         </table>
         </div>

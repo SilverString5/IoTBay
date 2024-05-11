@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="uts.isd.model.*"%>
+<%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -30,16 +32,32 @@
             </ul>
         </div>
         
+        <% ArrayList<String> errorMsg = (ArrayList<String>) session.getAttribute("errorMessage"); 
+           User user = (User) session.getAttribute("user");
+        %>
         
+        <%if(user != null) {%>
+        <div class="middle-container">   
         <div class="shipping-container">
             <h2>Shipping Address</h2>
             
             
-            <form method="POST" action="/createShipment">
+            <% if(errorMsg != null) {
+                for(String errorLine : errorMsg){ %>
+                    
+                    <p><%=errorLine %></p>
+                    
+            <%  } %>
+         <% } %>
+            
+            
+            <form method="POST" action="./createShipment">
                 
                 <div class="shipping-details-container">
                 <label for="streetAddress">Street Address: </label><br>
                 <input type="text" id = "streetAddress" name = "streetAddress">
+                
+                
                 
                 <table>
                             <tr>
@@ -53,14 +71,14 @@
                                     <div class="country-dropdown">
                                     <select id="state" name="state">
                                         <option value="" selected> choose one</option>
-                                        <option value="act">Australian Capital Territory</option>
-                                        <option value="nsw">New South Wales</option>
-                                        <option value="nt">Northern Territory</option>
-                                        <option value="qld">Queensland</option>
-                                        <option value="sa">South Australia</option>
-                                        <option value="tas">Tasmania</option>
-                                        <option value="vic">Victoria</option>
-                                        <option value="wa">Western Australia</option>
+                                        <option value="ACT">Australian Capital Territory</option>
+                                        <option value="NSW">New South Wales</option>
+                                        <option value="NT">Northern Territory</option>
+                                        <option value="QLD">Queensland</option>
+                                        <option value="SA">South Australia</option>
+                                        <option value="TAS">Tasmania</option>
+                                        <option value="VIC">Victoria</option>
+                                        <option value="WA">Western Australia</option>
                                     </select>
                                     </div>
                                 </td>
@@ -82,6 +100,12 @@
                 
         </form>
         </div>
+        </div>
+         
+         <% } else { 
+                   response.sendRedirect("./unregisteredWarning.jsp");
+}%>
+         
            
         <!--
        <div class="flexbox">

@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.*"%>
+
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html>
@@ -28,8 +29,11 @@
             </ul>
         </div>
         
-        <%Shipment shipment = (Shipment) session.getAttribute("shipment"); %>
+        <%Shipment shipment = (Shipment) session.getAttribute("shipment"); 
+          User user = (User) session.getAttribute("user");
+        %>
         
+        <%if(user != null) {%>
         <div class="middle-container">        
         
         
@@ -84,6 +88,9 @@
 
         
     </div>
+    <% } else { 
+                   response.sendRedirect("./unregisteredWarning.jsp");
+}%>
             
         
     </body>

@@ -44,9 +44,13 @@ public class ShipmentHistoryServlet extends HttpServlet{
         System.out.println("pass");
         
         User user = (User) session.getAttribute("user");
-        System.out.println(user);
+        System.out.println("hi" + user);
         
-
+        if(user == null){
+            System.out.println("pass null user");
+            response.sendRedirect("./unregisteredWarning.jsp");
+        }
+        else {
         
 
         ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
@@ -64,6 +68,7 @@ public class ShipmentHistoryServlet extends HttpServlet{
             
         } catch(SQLException e) {
             System.out.println(e);
+        }
         }
         
         

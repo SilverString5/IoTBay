@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -17,6 +18,12 @@
     </head>
     
     <% User user = (User)session.getAttribute("user"); 
+
+        ArrayList<Product> deviceList = (ArrayList<Product>) session.getAttribute("listDevice");
+
+        if(session.getAttribute("shoppingCart") != null){
+            HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
+        }
     %>
     <body>
         <!-- Nav Bar Block -->
@@ -27,6 +34,8 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>
                                 
@@ -39,6 +48,8 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
             </ul>
                
                 
@@ -137,22 +148,25 @@
                         <th></th>
 
                     </tr>
-                    <c:forEach var="device" items="${listDevice}">
-                        <tr>
-                            <td><img src="css/${device.productImg}"></td>
-                            <td><c:out value="${device.productName}" /></td>
-                            <td><c:out value="${device.productType}" /></td>
-                            <fmt:formatNumber var="formattedUnitPrice" type="number" minFractionDigits="2" maxFractionDigits="2" value="${device.productUnitPrice}" />
-                            <td><c:out value="${formattedUnitPrice}" /></td>
-                            <td><c:out value="${device.productDetails}"/></td>
-                            <td>
-                                <form method="POST" action="http://localhost:8080/ISDAssignment1/shoppingCartServlet" >
-                                    <input type="hidden" name="productID" value="${device.productID}"/>
-                                    <button type="submit">Add to Cart</button>
-                                </form>              
-                            </td>
-                        </tr>
-                    </c:forEach>
+                   <%for (Product device: deviceList) {%>
+                    <tr>
+                        <td><img src="css/<%=device.getProductImg()%>"></td>
+                        <td><%= device.getProductName() %></td>
+                        <td><%= device.getProductType() %></td>
+                        <td><%= device.getProductUnitPrice() %></td>
+                        <td><%= device.getProductDetails() %></td>
+                        <td>
+                            <form method="GET" action="/ISDAssignment1/ShoppingCartServlet">
+                                <input type="hidden" name="proID" value="<%= device.getProductID()%>"/>
+                                <% if(device.getProductInStock() == 0){ %>
+                                    <input id="disBtn" type="submit" value="Add to cart" disabled/>
+                                <% }else{ %>
+                                    <input id="addCartBtn" type="submit" value="Add to cart"/>
+                                <% } %>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %> 
                 </table>
             </div> 
         <%}%>

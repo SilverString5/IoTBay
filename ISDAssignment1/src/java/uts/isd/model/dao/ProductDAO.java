@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import uts.isd.model.Product;
 /**
  *
@@ -23,10 +24,12 @@ public class ProductDAO {
 	private PreparedStatement updateSt;
 	private PreparedStatement deleteSt;
         private PreparedStatement updateStockSt;
+        private PreparedStatement fetchStockSt;
 	private String readQuery = "SELECT * FROM Product";
 	private String updateQuery = "UPDATE Product SET ProductName = ?, ProductType= ?, ProductUnitPrice= ?, ProductDetails= ?, ProductInStock= ? WHERE ProductID= ?";
 	private String deleteQuery = "DELETE FROM Product WHERE ProductID= ? ";
         private String updateStockQuery = "UPDATE Product SET ProductInStock= ? WHERE ProductID= ?";
+        private String fetchStock = "SELECT ProductInStock FROM Product WHERE ProductID=?";
         
         public ProductDAO(Connection connection) throws SQLException {
 		connection.setAutoCommit(true);
@@ -35,6 +38,7 @@ public class ProductDAO {
 		updateSt = connection.prepareStatement(updateQuery);
 		deleteSt = connection.prepareStatement(deleteQuery);
                 updateStockSt = connection.prepareStatement(updateStockQuery);
+                fetchStockSt = connection.prepareStatement(fetchStock);
 	}
         
         
@@ -155,6 +159,25 @@ public class ProductDAO {
             updateStockSt.executeUpdate();
             System.out.println("1 row updated successfuly");
 
+        }
+        
+        public HashMap<Integer, Integer> fetchStock () throws SQLException {
+            HashMap<Integer, Integer> map = new HashMap();
+            ResultSet rs = readSt.executeQuery();
+            while(rs.next()){
+                map.put(rs.getInt(1), rs.getInt(6));
+            }
+            return map;
+        }
+               
+        public int fetchSingleStock (int productID) throws SQLException {
+            fetchStockSt.setInt(1, productID);
+            ResultSet rs = fetchStockSt.executeQuery();
+            int productStock = 0;
+            while(rs.next()){
+                productStock = rs.getInt(1);
+            }
+            return productStock;
         }
 
 }

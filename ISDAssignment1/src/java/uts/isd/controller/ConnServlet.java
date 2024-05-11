@@ -24,6 +24,7 @@ import uts.isd.model.dao.ShipmentDAO;
 import uts.isd.model.dao.AccessLogDAO;
 import uts.isd.model.Product;
 import uts.isd.model.dao.ProductDAO;
+import uts.isd.model.dao.PaymentDAO;
 
 
 public class ConnServlet extends HttpServlet {
@@ -34,6 +35,7 @@ public class ConnServlet extends HttpServlet {
 	private Connection conn;
         private AccessLogDAO accessLogDAO;
         private ProductDAO productDAO;
+		private PaymentDAO paymentDAO;
 
 
 	@Override
@@ -58,6 +60,10 @@ public class ConnServlet extends HttpServlet {
 
                         accessLogDAO = new AccessLogDAO(conn);
 			productDAO = new ProductDAO(conn);
+
+						paymentDAO = new PaymentDAO(conn);//Added
+
+
                         ArrayList<Product> products = productDAO.fetchAllProducts();
                         session.setAttribute("listDevice", products);
 
@@ -70,6 +76,8 @@ public class ConnServlet extends HttpServlet {
                 session.setAttribute("shipmentDAO", shipmentDAO);
 
                 session.setAttribute("accessLogDAO",accessLogDAO);
+
+				session.setAttribute("paymentDAO", paymentDAO);
 
 		request.getRequestDispatcher("index.jsp").include(request, response);
 	}

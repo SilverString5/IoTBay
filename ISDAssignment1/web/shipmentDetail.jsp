@@ -83,6 +83,7 @@
 
             </div>
         <% } else { 
+                System.out.println("pass");
                 response.sendRedirect("./unregisteredWarning.jsp");
         }%>
             

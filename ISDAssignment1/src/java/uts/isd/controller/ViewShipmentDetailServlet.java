@@ -33,12 +33,16 @@ public class ViewShipmentDetailServlet extends HttpServlet{
         
         //Gets all the necessary data from the session
         HttpSession session = request.getSession();
-        int shipmentID = Integer.parseInt(request.getParameter("shippingID"));
+        String shipmentID = request.getParameter("shippingID");
         User user = (User) session.getAttribute("user");
         ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
         
+        if(shipmentID == null){
+            response.sendRedirect("./unauthorisedAccessWarning.jsp");
+        }
+        
         //if the user is not signed in
-        if(user == null){
+        else if(user == null || user.getUserType().contains("S")){
             
             //redirect them to a warning page
             response.sendRedirect("./unregisteredWarning.jsp");
@@ -47,7 +51,7 @@ public class ViewShipmentDetailServlet extends HttpServlet{
             
             try {
                 //find the shipment by the user ID
-                Shipment shipment = shipmentDAO.fetchShipmentByFilter(user.getUserID(), shipmentID);
+                Shipment shipment = shipmentDAO.fetchShipmentByFilter(user.getUserID(), Integer.parseInt(shipmentID));
                 
                 //set this shipment record in the session 
                 // in order for the shipmentDetail.jsp to access details about this specific shipment record

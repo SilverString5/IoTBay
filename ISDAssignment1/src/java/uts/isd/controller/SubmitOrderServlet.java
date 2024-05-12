@@ -27,31 +27,30 @@ public class SubmitOrderServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
        HttpSession session = request.getSession();
-//       conn = db.openConnection();
+
        orderDAO = (OrderDAO)session.getAttribute("orderDAO");
        productDAO = (ProductDAO)session.getAttribute("productDAO");
        HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
        ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartList");
        User user = (User) session.getAttribute("user");
        ArrayList<Integer> quantityList = new ArrayList();
-//       double totalAmount = (double)session.getAttribute("totalAmount");
+
         double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
        for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
                   Integer quantity = entry.getValue();
-//                  product = productDAO.getProduct(productID);
-//                  productList.add(product);
+
                   quantityList.add(quantity); 
         }
-//       HashMap<Integer, Integer> updateStock = new HashMap();
+
        try {
-//            orderDAO.CreateOrder(user.getUserID(), totalAmount, quantityList, cartList);
-            if(user != null){  //register user
+            if(user != null){  //registered user
                 orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList);
             }else{  //anonymouse
                 orderDAO.anonymousOrder(totalAmount, quantityList, cartList);  //userid is 0 (null) for all anonymous users
             }
             
             HashMap<Integer, Integer> products = productDAO.fetchStock();
+            //update the product stock in the database accordingly when the user submit the order
             for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
                 Integer productID = entry.getKey();
                 Integer quantity = entry.getValue();

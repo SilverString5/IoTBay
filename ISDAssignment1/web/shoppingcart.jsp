@@ -20,8 +20,10 @@
     </head>
     <%
         HashMap<Integer, Integer> shoppingCart = new HashMap();
+        
         if(session.getAttribute("shoppingCart") != null)
             shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
+        
         ArrayList<Product> cartList = (ArrayList<Product>)session.getAttribute("cartList");
         String quantityError = (String) request.getAttribute("quantityError");
         String insufficientStockErr = (String) request.getAttribute("insufficientStockError");
@@ -74,6 +76,7 @@
                         <td>$<%= product.getProductUnitPrice()%></td> 
                         <% double subtotal = product.getProductUnitPrice() * shoppingCart.get(product.getProductID());%>
                         <td>
+                            <!-- When quantity is changed in the cart, update the "shoppingcart" session varaiable accordingly -->
                             <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">
                                 <input type="hidden" name="cartUpdate" value="true"/>
                                 <input type="hidden" name="productID" value="<%= product.getProductID()%>" />
@@ -130,7 +133,6 @@
                             <% }else{ %>
                                 <button class="disBtn" disabled> Submit the Order</button>
                             <% } %>
-<!--                            <button type="submit">Submit the Order</button>-->
                         </form>
                     </td>
                 </tr>

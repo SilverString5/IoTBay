@@ -113,13 +113,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-name>DisplayCartServlet</servlet-name>
     <servlet-class>uts.isd.controller.DisplayCartServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>SaveOrderServlet</servlet-name>
-    <servlet-class>uts.isd.controller.SaveOrderServlet</servlet-class>
-    <load-on-startup>0</load-on-startup>
-  </servlet>
+  </servlet>  
   
   <servlet>
     <servlet-name>SubmitOrderServlet</servlet-name>
@@ -263,12 +257,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <servlet-mapping>
     <servlet-name>DisplayCartServlet</servlet-name>
     <url-pattern>/DisplayCartServlet</url-pattern>
-  </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>SaveOrderServlet</servlet-name>
-    <url-pattern>/SaveOrderServlet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>  
   
   <servlet-mapping>
     <servlet-name>SubmitOrderServlet</servlet-name>

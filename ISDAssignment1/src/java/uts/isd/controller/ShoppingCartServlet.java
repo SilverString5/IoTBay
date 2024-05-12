@@ -31,13 +31,13 @@ public class ShoppingCartServlet extends HttpServlet{
           if(session.getAttribute("shoppingCart") != null){
               shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
               if(!(shoppingCart.containsKey(productID))){
-                shoppingCart.put(productID, 1);
+                shoppingCart.put(productID, 1);  //creat a new key-value pair if the product is not in the cart
               }else{
+                //if the product is already in the cart, increment the quantity by one when add to cart button is clicked
                 int newQuan = shoppingCart.get(productID);
                 newQuan++;
                 shoppingCart.put(productID, newQuan);
               }    
-//              session.setAttribute("shoppingCart", shoppingCart);
           }else{
               shoppingCart.put(productID, 1);
               session.setAttribute("shoppingCart", shoppingCart);

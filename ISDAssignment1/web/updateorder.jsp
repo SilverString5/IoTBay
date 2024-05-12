@@ -94,7 +94,7 @@
             </form>
             <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">
                 <input type="hidden" name="saved" value="yes" />
-                <input type="hidden" name="orderID" value=" // orderID " />
+<!--                <input type="hidden" name="orderID" value=" // orderID " />-->
                 <input type="hidden" name="totalAmount" value="<%= totalAmount%>" />
                 <input id="updateBtn" type="submit" value="Save"/>
             </form>

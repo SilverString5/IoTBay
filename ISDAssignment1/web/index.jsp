@@ -1,3 +1,9 @@
+<%-- 
+    Document   : createProduct
+    Created on : 02/05/2024, 3:30:18 PM
+    Author     : jialan Guo
+--%>
+
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -8,6 +14,7 @@
 <%@page import="uts.isd.model.dao.*"%>
 <%@page import="uts.isd.controller.*"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

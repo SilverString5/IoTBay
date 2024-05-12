@@ -1,7 +1,7 @@
 <%-- 
     Document   : createProduct
     Created on : 02/05/2024, 3:30:18 PM
-    Author     : jijianlan
+    Author     : jialan Guo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

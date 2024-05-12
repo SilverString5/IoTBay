@@ -34,6 +34,8 @@ public class ShipmentHistoryServlet extends HttpServlet{
         //Gets all the necessary data from the session
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        
+        session.removeAttribute("shipmentFilterError");
 
         //if the user is not signed in
         if(user == null){

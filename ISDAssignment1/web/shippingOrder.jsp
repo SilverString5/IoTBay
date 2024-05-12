@@ -36,7 +36,7 @@
            User user = (User) session.getAttribute("user");
         %>
         
-        <%if(user != null) {%>
+        <%if(user != null && !user.getUserType().contentEquals("S")) {%>
             <div class="middle-container">   
                 <div class="shipping-container">
                     <h2>Shipping Address</h2>

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : unregisteredWarning
-    Created on : 11 May 2024, 11:26:09 pm
+    Document   : unauthorisedAccessWarning
+    Created on : 13 May 2024, 7:34:55 am
     Author     : lorinchanel
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,22 +19,12 @@
     </head>
     <body>
         
-        <%
-           User user = (User) session.getAttribute("user");
-        %>
-        
         <div class="body-background">
         
             <div class="window">
-                <h1>Unable To Access Page</h1>
-                <p>You are attempting to access a page that is only visible for registered users.</p>
+                <h1>Unauthorised Access</h1>
+                <p>You are attempting to access a page that you should only access from shipment history. Please go back to the shipment history page to delete or update your shipment record</p>
             
-                <% if(user == null) {%>
-                    <p>Please register an account first to access these web pages.</p>
-                <%} else { %>
-                    <p>As a staff member, you are unable to access this page. Please go back to the home page.</p>
-                <% } %>
-                
                 <form method="POST" action="./index.jsp">
                     <button type="submit">Back to Home</button>
                 </form>

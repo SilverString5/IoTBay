@@ -35,7 +35,10 @@
         
         
         <div class="middle-container">
-            <h1>Track Your Orders</h1>
+            
+            <% if(user.getUserType().contains("C")) { %>
+            
+                <h1>Track Your Orders</h1>
         
         
                 <form method="POST" action="shipmentHistory">
@@ -95,7 +98,12 @@
                     <h4>You don't have any shipments at the moment</h4>
                 <% } %>
                
-            </table>
+                </table>
+                
+            <% } else { 
+                response.sendRedirect("./unregisteredWarning.jsp");
+             } %>
+            
         </div>
         
     </body>

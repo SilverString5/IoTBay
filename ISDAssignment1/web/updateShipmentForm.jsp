@@ -27,6 +27,7 @@
         <%Shipment shipment = (Shipment) session.getAttribute("shipment");
           String invalidAddress = (String) session.getAttribute("invalidUpdateAddress");
           ArrayList<String> errorMsg = (ArrayList<String>) session.getAttribute("invalidUpdateAddressArray");
+          User user = (User) session.getAttribute("user");
         %>
         
         <div class="menu">
@@ -37,57 +38,61 @@
             </ul>
         </div>
         
-        <% if(shipment.getShipmentStatus().equals("Pending")) {%>
+        <% if(user != null && !user.getUserType().contentEquals("S")) {%>
+            <% if(shipment.getShipmentStatus().equals("Pending")) {%>
         
-            <div class="middle-container">    
-                <div class="shipping-container">
-                    <h2>Shipping Address</h2>
-            
-            
-                    <form method="POST" action="./updateShipmentDetail">
-                
-                        <div class="shipping-details-container">
-                            <label for="streetAddress">Street Address: </label><br>
-                            <input type="text" id = "streetAddress" name = "streetAddress" value="<%=shipment.getShipmentAddress()%>">
-                
-                            <label for="shipmentMethod">Delivery Method: </label><br>
-                            <select name="deliveryMethod" value="<%=shipment.getShipmentMethod()%>">
-                    
-                            <!-- Checks the shipmentMethod and depending on the information, it selects and shows this option first -->
-                            <% if(shipment.getShipmentMethod().equals("Standard")){ %>
-                                <option value="Standard" selected>Standard</option>
-                                <option value="Express">Express</option>
-                    
-                            <%} else {%>
-                                <option value="Standard">Standard</option>
-                                <option value="Express" selected>Express</option>
-                    
+                <div class="middle-container">    
+                    <div class="shipping-container">
+                        <h2>Shipping Address</h2>
+
+
+                        <form method="POST" action="./updateShipmentDetail">
+
+                            <div class="shipping-details-container">
+                                <label for="streetAddress">Street Address: </label><br>
+                                <input type="text" id = "streetAddress" name = "streetAddress" value="<%=shipment.getShipmentAddress()%>">
+
+                                <label for="shipmentMethod">Delivery Method: </label><br>
+                                <select name="deliveryMethod" value="<%=shipment.getShipmentMethod()%>">
+
+                                <!-- Checks the shipmentMethod and depending on the information, it selects and shows this option first -->
+                                <% if(shipment.getShipmentMethod().equals("Standard")){ %>
+                                    <option value="Standard" selected>Standard</option>
+                                    <option value="Express">Express</option>
+
+                                <%} else {%>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Express" selected>Express</option>
+
+                                <% } %>
+                                </select>
+
+
+                            </div> 
+
+                            <% if(invalidAddress != null){ %>
+                                <p><%=invalidAddress%></p>
                             <% } %>
-                            </select>
-            
-                
-                        </div> 
-                
-                        <% if(invalidAddress != null){ %>
-                            <p><%=invalidAddress%></p>
-                        <% } %>
 
-                        <% if(errorMsg != null){ 
-                            for(String error : errorMsg){%>
-                                <p><%=error%></p>
-                            <%}%>
-                
-                        <% } %>
+                            <% if(errorMsg != null){ 
+                                for(String error : errorMsg){%>
+                                    <p><%=error%></p>
+                                <%}%>
 
-                        <button type="submit"> Submit </button>
-                    </form>
+                            <% } %>
 
+                            <button type="submit"> Submit </button>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
-        <%} else {%>
-            <p> You are trying to modify a shipment when its on the way. Click on the button below to go back to shipmentHistory</p>
-            <button><a href="./shipmentHistory.jsp">Go Back To Shipment History</a></button>
-        <%} %>
+            <%} else {%>
+                <p> You are trying to modify a shipment when its on the way. Click on the button below to go back to shipment history page</p>
+                <button><a href="./shipmentHistory.jsp">Go Back To Shipment History</a></button>
+            <%} %>
+        <% } else { 
+                response.sendRedirect("./unregisteredWarning.jsp");
+        } %>
 
     </body>
 </html>

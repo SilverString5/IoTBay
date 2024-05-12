@@ -24,20 +24,28 @@
           User user = (User) session.getAttribute("user");
         %>
         
-         <%if(user != null) {%>
+        <%if(user != null && !user.getUserType().contentEquals("S")) {%>
+         
+            <% String shipmentID = request.getParameter("shippingID"); %>
+                    
+            <% if(shipmentID != null) { %>
+         
             <div class="body-background">
         
                 <div class="window">
                     <h1>Would you like to cancel your shipment?</h1>
                     <p>By clicking the button below, you are confirming that your shipment for this order will be cancelled</p>
-
-                    <% int shipmentID = Integer.parseInt(request.getParameter("shippingID")); %>
-
+                    
+                    <a href="./shipmentHistory.jsp"><button>Back to Shipment History</button></a>
                     <form method="POST" action="./deleteShipmentDetail?shippingID=<%=shipmentID%>">
                         <button type="submit">Delete</button>
                     </form>
                 </div>
             </div>
+                        
+            <% } else { 
+                response.sendRedirect("./unauthorisedAccessWarning.jsp");
+             } %>
                     
         <% } else { 
             response.sendRedirect("./unregisteredWarning.jsp");

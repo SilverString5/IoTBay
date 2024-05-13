@@ -33,14 +33,57 @@ import uts.isd.model.User;
 
 public class createNewPaymentServlet extends HttpServlet{
     @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Payment payment = (Payment) session.getAttribute("payment");
+        PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
+        
+        if (user != null) {
+            try {
+                ArrayList<Payment> previousPayments = paymentDAO.fetchPaymentsFromACustomer(user.getUserID());
+                request.setAttribute("previousPayments", previousPayments);
+            }
+            catch (SQLException e){
+                request.setAttribute("error", "Error fetching previous payments: ");
+            }
+        } else {
+            request.setAttribute("error", "No previous payments found.");
+        }
+        
+        request.getRequestDispatcher("PaymentForm.jsp").forward(request, response);
+    }
+    
+    @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Payment payment = (Payment) session.getAttribute("payment");
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
         
+        
+        //Get the selected payment information from the requested Parameter
+        String selectedPaymentInfo = request.getParameter("previousPayments");
+        
         session.removeAttribute("errorMsgs");
         
+        
+        if (selectedPaymentInfo != null && !selectedPaymentInfo.isEmpty()) {
+            try {
+                // Parse the selected payment info
+                String[] paymentInfo = selectedPaymentInfo.split("\\|");
+                if (paymentInfo.length == 5) {
+                    // Set payment details as request attributes
+                    request.setAttribute("selectedPaymentMethod", paymentInfo[1]);
+                    request.setAttribute("selectedExpiryDate", paymentInfo[2]);
+                    request.setAttribute("selectedPaymentCVC", paymentInfo[3]);
+                    request.setAttribute("selectedPaymentCardNumber", paymentInfo[4]);
+                }
+            } catch (Exception e) {
+                // Handle parsing error
+                System.out.println("Error parsing selected payment info: " + e.getMessage());
+            }
+        }
         
         String paymentMethod = request.getParameter("paymentMethod");
         //getting expiryDate string, and then converting to an integer.
@@ -56,54 +99,61 @@ public class createNewPaymentServlet extends HttpServlet{
         String errorMsgs="";
         
         if (paymentMethod.isEmpty()){
-            errorMsgs+="Your Payment Method is not filled in. \n";
+            errorMsgs+="Your Payment Method is not filled in. <br>";
         }
         
         try {
             long now = System.currentTimeMillis();
             Date nowDate = new Date(now);
             if (expiryDate.before(nowDate)){
-                errorMsgs+="Your expiry Date has reached. You are no longer able to use this payment Method.\n";
+                errorMsgs+="Your expiry Date has reached. You are no longer able to use this payment Method.<br>";
             }
         }
 
         catch (IllegalArgumentException e) {
             System.out.println(e);
-            errorMsgs+="The expiry date is empty. Please fill in this section.\n";
+            errorMsgs+="The expiry date is empty. Please fill in this section.<br>";
         }
         
 
         if (stringCVC.length()<3){
-            errorMsgs+="Your CVC must be at least 3 numbers.\n";
+            errorMsgs+="Your CVC must be at least 3 numbers.<br>";
         }
         if (stringCVC.isEmpty()){
-            errorMsgs+="Please fill in the CVC.\n";
+            errorMsgs+="Please fill in the CVC.<br>";
         }
         
         
         
         if (stringpaymentCardNumber.length()!=9){
-            errorMsgs+="You have not added your card number properly. Your Card Number should have 9 numbers.\n";
+            errorMsgs+="You have not added your card number properly. Your Card Number should have 9 numbers.<br>";
         }
         if(stringpaymentCardNumber.isEmpty()){
-            errorMsgs += "Please fill in the card number.\n";
+            errorMsgs += "Please fill in the card number.<br>";
         }
         
 
         if (!errorMsgs.isEmpty()) {
             session.setAttribute("errorMsgs", errorMsgs);
-            request.getRequestDispatcher("paymentForm.jsp").include(request,response);
+            response.sendRedirect("paymentForm.jsp");
+            //request.getRequestDispatcher("paymentForm.jsp").include(request,response);
         }
         else {
             try{
-                if (!paymentDAO.checkExists(paymentCardNumber)){
-                    paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
+                
+                if(user != null) {
+                    if (!paymentDAO.checkExists(paymentCardNumber)){
+                        paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
+                    }
+                    Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));
+                    session.setAttribute("payments", payments);
+                    
+                }
+                else {
+                    paymentDAO.createPaymentForAnonymousUser(paymentMethod, expiryDate, paymentCVC, paymentCardNumber);
                 }
                 
-                Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));
-                session.setAttribute("payments", payments);
-                
-                
+
                 
                 request.getRequestDispatcher("welcome.jsp").forward(request, response);
             } catch(SQLException e){
@@ -113,4 +163,3 @@ public class createNewPaymentServlet extends HttpServlet{
         
     }
 }
-

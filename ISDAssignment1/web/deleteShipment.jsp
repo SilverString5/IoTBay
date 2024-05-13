@@ -24,6 +24,19 @@
           User user = (User) session.getAttribute("user");
         %>
         
+        <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders</a></li>
+                <li><a href="./shipmentHistory" >Shipping</a></li>                 
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
+            </ul>                             
+        </div>
+        
         <%if(user != null && !user.getUserType().contentEquals("S")) {%>
          
             <% String shipmentID = request.getParameter("shippingID"); %>
@@ -36,10 +49,10 @@
                     <h1>Would you like to cancel your shipment?</h1>
                     <p>By clicking the button below, you are confirming that your shipment for this order will be cancelled</p>
                     
-                    <a href="./shipmentHistory.jsp"><button>Back to Shipment History</button></a>
                     <form method="POST" action="./deleteShipmentDetail?shippingID=<%=shipmentID%>">
                         <button type="submit">Delete</button>
                     </form>
+                    <a href="./shipmentHistory.jsp"><button>Back to Shipment History</button></a>
                 </div>
             </div>
                         

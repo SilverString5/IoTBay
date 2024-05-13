@@ -15,21 +15,50 @@
         
     <%User user = (User)session.getAttribute("user");
     String updateMsgs = (String)session.getAttribute("updateMsgs");
-    if (user!=null){ %>
+    if(user != null && user.getUserType().equals("S")){%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>
+                                
             </div>
-            <br><br><br>
+            <br>
+            <br>
+        <%}else if(user != null && user.getUserType().equals("C")){%>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders</a></li>
+                <li><a href="./shipmentHistory" >Shipping</a></li>                 
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
+            </ul>                             
+            </div>
+            <br>
+            <br>
+        <%}else{ %>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" >Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders </a></li>
+            </ul>              
+            </div>
+            <br>
+            <br>
+        <% } %>
+<% if (user!=null) { %>
 <div class="myFormdiv">
-    <form action="<%= request.getContextPath()%>/DeleteRegistrationServlet" method="post">
-        <button type="submit">Delete Your Account</button>
-    </form>
-    <form class=myForm action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">
+    <form class="myForm" action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">
                 <h1>Your Registration Details</h1>
         <input type="hidden" name="ID" value="<%=user.getUserID()%>"">
         <label for="email">Email:</label><br>
@@ -57,17 +86,13 @@
             <% if (updateMsgs!=null){%>
             <p><%=updateMsgs%></p>
            <% }%>
+        <br>
+        <button type="submit" formmethod="post"
+        formaction="<%= request.getContextPath()%>/DeleteRegistrationServlet">Delete Your Account</button>
     </form>
+>
     </div>
 <% } else { %>
-            <div class="menu">
-            <ul>
-                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-            </ul>
-            </div>
-            <br><br>
             <p>You are not logged in!</p>
 <% } %>
 </body>

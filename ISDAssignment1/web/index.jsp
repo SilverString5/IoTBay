@@ -38,8 +38,7 @@
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="./shipmentHistory" > Shipping </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
@@ -52,12 +51,12 @@
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="./shipmentHistory" > Shipping </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders</a></li>
+                <li><a href="./shipmentHistory" >Shipping</a></li>                 
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>                             
             </div>
@@ -67,10 +66,10 @@
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" >Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders </a></li>
             </ul>              
             </div>
             <br>

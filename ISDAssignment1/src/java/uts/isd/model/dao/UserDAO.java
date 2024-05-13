@@ -49,7 +49,7 @@ public class UserDAO {
 	}
 
 // Create Operation: create a user
-	public void createUser(String userEmail, String userFullName, String userPassword, String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
+	public void createUser(String userEmail, String userPassword, String userFullName,  String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
 		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender)";
 		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
                 + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "')";

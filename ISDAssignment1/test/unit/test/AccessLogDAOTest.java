@@ -38,7 +38,7 @@ public class AccessLogDAOTest {
 
         @Test
         public void testFilterAccessLog() throws SQLException {
-                ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2024-05-03");
+                ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2021-10-13");
                 assertEquals(filLogs.size(),1);
         }
          @Test
@@ -50,7 +50,7 @@ public class AccessLogDAOTest {
         @Test
         public void testFindMostRecent() throws SQLException {
                 UserAccessLog testLog = manager.findMostRecent(3);
-                assertEquals(testLog.getAccessLogID(),32);
+                assertEquals(testLog.getAccessLogID(),21);
         }
 
         @Test

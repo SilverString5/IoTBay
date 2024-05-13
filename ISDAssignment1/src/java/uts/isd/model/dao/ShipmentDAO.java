@@ -54,32 +54,28 @@ public class ShipmentDAO {
         createQuery.setString(4, shipmentStatus);
         createQuery.setDate(5, new java.sql.Date(calculateShipmentDate(shipmentDate).getTime()));
         
-        System.out.println(createQuery);
-        
         createQuery.executeUpdate();
+        System.out.println("Shipment Record Successfully Created!");
                 
     }
     
     public Date calculateShipmentDate(Date currentDate) {
         currentDate.setTime(currentDate.getTime() - 36000000);
         System.out.println(currentDate);
-        
-        /*
-        Calendar tempDate = Calendar.getInstance();
-        tempDate.setTime(currentDate);
-        tempDate.add(Calendar.DAY_OF_MONTH, 2);
-        System.out.println(tempDate + " " + currentDate);*/
         currentDate.setTime(currentDate.getTime() + 172800000);
         System.out.println(currentDate);
         
         return currentDate;
     }
     
-    //Read/Fetch - in general
-    public ArrayList<Shipment> fetchShipment() throws SQLException {
+    //get all shipments made by a specific customer
+    public ArrayList<Shipment> fetchShipmentFromACustomer(int customerID) throws SQLException {
         
-        ResultSet resultSet = statement.executeQuery(readQuery);
-        ArrayList<Shipment> shipmentRecord = new ArrayList<>();
+        PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=?");
+        readsQuery.setString(1, String.valueOf(customerID));
+        
+        ResultSet resultSet = readsQuery.executeQuery();
+        ArrayList<Shipment> shipmentRecords = new ArrayList<> ();
         
         while(resultSet.next()) {
             String shipmentAddress = resultSet.getString(2);
@@ -88,91 +84,83 @@ public class ShipmentDAO {
             Date shipmentEstDate = resultSet.getDate(5);
            
             int shipmentID = resultSet.getInt(1);
-            int customerID = resultSet.getInt(6);
+            int userID = resultSet.getInt(6);
             
-            Shipment shipment = new Shipment(shipmentID, customerID, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
+            Shipment shipment = new Shipment(shipmentID, userID, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
             
-            shipmentRecord.add(shipment);
-            
+            shipmentRecords.add(shipment);
         }
         
-        return shipmentRecord;
+        return shipmentRecords;
         
     }
     
-    //get all shipments made by a specific customer
-    public ArrayList<Shipment> fetchShipmentFromACustomer(int customerID) throws SQLException {
+    public ArrayList<Shipment> fetchShipmentByFilter(int customerID, int shipmentIDAsInput, String shipmentDate) throws SQLException {
         
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=? AND SHIPMENTID=? AND SHIPMENTDATE=?");
+        readQuery.setString(1, String.valueOf(customerID));
+        readQuery.setString(2, String.valueOf(shipmentIDAsInput));
+        readQuery.setString(3, shipmentDate);
+        
+        ResultSet resultSet = readQuery.executeQuery();
         ArrayList<Shipment> shipmentRecords = new ArrayList<> ();
         
-        for(Shipment shipment : fetchShipment()){
-            if(shipment.getCustomerID() == customerID){
-                shipmentRecords.add(shipment);
-            }
+        while(resultSet.next()) {
+            String shipmentAddress = resultSet.getString(2);
+            String shipmentMethod = resultSet.getString(3);
+            String shipmentStatus = resultSet.getString(4);
+            Date shipmentEstDate = resultSet.getDate(5);
+           
+            int shipmentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            
+            Shipment shipment = new Shipment(shipmentID, userID, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
+            
+            shipmentRecords.add(shipment);
         }
         
         return shipmentRecords;
     }
     
-    public ArrayList<Shipment> fetchShipmentByFilter(int customerID, int shipmentID, String shipmentDate) throws SQLException {
+    public Shipment fetchShipmentByFilter(int customerID, int shipmentIDAsInput) throws SQLException {
         
-        ArrayList<Shipment> shipmentRecords = new ArrayList<> ();
-        for(Shipment shipment : fetchShipmentFromACustomer(customerID)){
-            if(shipment.getShipmentID() == shipmentID && shipment.getShipmentEstTime().toString().equals(shipmentDate)){
-               
-                shipmentRecords.add(shipment);
-            }
-        }
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=? AND SHIPMENTID=?");
+        System.out.println(readQuery);
+        readQuery.setString(1, String.valueOf(customerID));
+        readQuery.setString(2, String.valueOf(shipmentIDAsInput));
+        System.out.println(readQuery);
+        ResultSet resultSet = readQuery.executeQuery();
         
-        return shipmentRecords;
+         if(resultSet.next()) {
+            String shipmentAddress = resultSet.getString(2);
+            String shipmentMethod = resultSet.getString(3);
+            String shipmentStatus = resultSet.getString(4);
+            Date shipmentEstDate = resultSet.getDate(5);
+           
+            int shipmentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            
+            Shipment shipment = new Shipment(shipmentID, userID, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
+            
+            return shipment;
+            
+        } 
+         
+        return null;
+        
+        
     }
     
-    public Shipment fetchShipmentByFilter(int customerID, int shipmentID) throws SQLException {
+    //update shipment details
+    public void updateShipmentAddressAndMethod(int shipmentID, String shipmentAddress, String shipmentMethod) throws SQLException {
         
-        Shipment shipment = new Shipment(); 
-        for(Shipment shipmentInRecord : fetchShipmentFromACustomer(customerID)){
-            if(shipmentInRecord.getShipmentID() == shipmentID){
-               
-                shipment = shipmentInRecord;
-            }
-        }
-        
-        return shipment;
-    }
-    
-    //&& shipment.getShipmentEstTime().getTime() == shipmentDate.getTime()
-    
-    
-    //update shipment - general 
-    public void updateShipment(int shipmentID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
-        
-        PreparedStatement updateQuery = connect.prepareStatement("UPDATE shipment SET SHIPMENTADDRESS=? , SHIPMENTMETHOD=? , SHIPMENTSTATUS=? , SHIPMENTDATE=? WHERE SHIPMENTID=?");
+        PreparedStatement updateQuery = connect.prepareStatement("UPDATE shipment SET SHIPMENTADDRESS=? , SHIPMENTMETHOD=? WHERE SHIPMENTID=?");
         updateQuery.setString(1, shipmentAddress);
         updateQuery.setString(2, shipmentMethod);
-        updateQuery.setString(3, shipmentStatus);
-        updateQuery.setDate(4, new java.sql.Date(shipmentDate.getTime()));
-        updateQuery.setInt(5, shipmentID);
-        
+        updateQuery.setString(3, String.valueOf(shipmentID));
         updateQuery.executeUpdate();
         
-        
-    }
-    
-    //Update - update the status of the shipment
-    public void updateShipmentAddress(int shipmentID, String shipmentAddress) throws SQLException {
-        
-
-        String updateQuery = "UPDATE shipment SET SHIPMENTADDRESS='" + shipmentAddress + "' WHERE SHIPMENTID=" + shipmentID;
-        statement.executeUpdate(updateQuery);
-        
-        
-    }
-    
-    //Update - update the status of the estimated date date
-    public void updateShipmentMethod(int shipmentID, String shipmentMethod) throws SQLException {
-        
-            String updateQuery = "UPDATE shipment SET SHIPMENTMETHOD='" + shipmentMethod + "' WHERE SHIPMENTID=" + shipmentID;
-            statement.executeUpdate(updateQuery);
+        System.out.println("Shipment record is successfully updated");
         
         
     }
@@ -182,22 +170,37 @@ public class ShipmentDAO {
             
             String deleteQuery = "DELETE FROM shipment WHERE SHIPMENTID=" + shipmentID;
             statement.executeUpdate(deleteQuery);
-        }
-    
-    
-    private Shipment findShipmentDetail (int shipmentID) throws SQLException {
-        
-        for(Shipment shipment : fetchShipment()){
-            if(shipment.getShipmentID() == shipmentID) {
-                
-                return shipment;
-                
-            }
-        }
-        
-        return null;
-        
+            
+            System.out.println("Shipment record is successfully deleted");
     }
+    
+    /*
+    private Shipment findShipmentDetail (int shipmentIDAsInput) throws SQLException {
+        
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE SHIPMENTID=?");
+        readQuery.setString(1, String.valueOf(shipmentIDAsInput));
+        
+        ResultSet resultSet = readQuery.executeQuery();
+        
+        if(!resultSet.next()){
+            return null;
+            
+        } else {
+            String shipmentAddress = resultSet.getString(2);
+            String shipmentMethod = resultSet.getString(3);
+            String shipmentStatus = resultSet.getString(4);
+            Date shipmentEstDate = resultSet.getDate(5);
+           
+            int shipmentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            
+            Shipment shipment = new Shipment(shipmentID, userID, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
+            
+            return shipment;
+        }
+
+        
+    }*/
 
     
 }

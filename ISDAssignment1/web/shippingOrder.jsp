@@ -40,7 +40,9 @@
            User user = (User) session.getAttribute("user");
         %>
         
-        <%if(user != null && !user.getUserType().contentEquals("S")) {%>
+        <%if(user == null || user.getUserType().contains("C")) {%>
+        
+            
             <div class="middle-container">   
                 <div class="shipping-container">
                     <h2>Shipping Address</h2>

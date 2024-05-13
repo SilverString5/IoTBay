@@ -28,9 +28,11 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
-
             </ul>
             </div>
+            <br>
+            <br>
+            <br>
         <% } else if (user!=null && user.getUserType().equals("C")){ %>
             <div class="menu">
             <ul>
@@ -45,18 +47,8 @@
             </ul>                             
             </div>
             <br>
-            <br>      
-            <p>Welcome, <%=user.getName()%></p>
-   
-            <form action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
-                <input type="hidden" id="origin" name="viewAll" value="viewAll">
-                <button type="submit">View Your Access Logs</button><br>   
-            </form>
-            <form action="<%= request.getContextPath()%>/ViewRegistrationServlet" method="post">
-                <button type="submit">Manage Your Account Details</button><br>
-            </form>
-
-            <%}  else {%>
+            <br>   
+        <%}  else {%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
@@ -68,9 +60,19 @@
             </div>
             <br>
             <br>
-            <div class="myFormdiv">
-            <form class="myForm">
-                
+            <%} if (user!=null) { %>
+            <p>Welcome, <%=user.getName()%></p>
+   
+            <form action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
+                <input type="hidden" id="origin" name="viewAll" value="viewAll">
+                <button type="submit">View Your Access Logs</button><br>   
+            </form>
+            <form action="<%= request.getContextPath()%>/ViewRegistrationServlet" method="post">
+                <button type="submit">Manage Your Account Details</button><br>
+            </form>
+        <%} else { %>
+        <div class="myFormdiv">
+        <form class="myForm">
         <h1> Hello Anonymous User, </h1>
         <br>
         <h2> Do you want to register? </h2>
@@ -78,6 +80,6 @@
         <a href="register.jsp">Register</a>
             </form>
             </div>
-        <% } %>
+        <% } %>         
     </body>
 </html>

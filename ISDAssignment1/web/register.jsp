@@ -16,7 +16,7 @@
         <title>Registration</title>
     </head>
 
-      <%
+      <% 
         String errorMsgs = (String) session.getAttribute("errorMsgs");
         User user = (User) session.getAttribute("user");
        if(user != null && user.getUserType().equals("S")){%>

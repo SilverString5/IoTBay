@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package uts.isd.dao;
+package isd.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,16 +12,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import uts.isd.model.*;
+import isd.model.*;
 
 public class PaymentDAO {
     private Connection connect;
     private Statement statement;
     private PreparedStatement readStatement;
+    private PreparedStatement checkSt;
    
     
 
     private String readQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment";
+    private String checkQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM payment WHERE PaymentCardNumber=?";
 
     
     public PaymentDAO(Connection connection) throws SQLException {
@@ -29,6 +31,7 @@ public class PaymentDAO {
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         readStatement = connection.prepareStatement(readQuery);
+        checkSt = connection.prepareStatement(checkQuery);
         
     }
     
@@ -139,6 +142,35 @@ public class PaymentDAO {
         return payment;
     }
     
+    
+    public Payment fetchPaymentByFilter(int customerID, int paymentID) throws SQLException {
+        Payment payment = new Payment();
+        for(Payment paymentInRecord : fetchPaymentsFromACustomer(customerID)){
+            if(paymentInRecord.getPaymentID() == paymentID){
+                payment = paymentInRecord;
+            }
+        }
+        return payment;
+    }
+    
+    
+    
+     //find ONE payment record by Card Number
+    //! THIS METHOD IS FOR TEST ONLY.
+    public Payment findPaymentRecordByCardNumber(int paymentCardNumber) throws SQLException {
+        String find = "SELECT * FROM Payment WHERE PaymentCardNumber=" + paymentCardNumber;
+        ResultSet result = readStatement.executeQuery(find);
+        int paymentID = result.getInt(1);
+        String paymentMethod = result.getString(2);
+        Date expiryDate = result.getDate(3);
+        int paymentCVC = result.getInt(4);
+        int userID = result.getInt(6);
+        Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+        return payment;
+    }
+    
+    
+    
     //getting all the payment records from a specific user/customerID
     public ArrayList<Payment> fetchPaymentsFromACustomer(int customerID) throws SQLException {
         ArrayList<Payment> payments = new ArrayList<> ();
@@ -149,5 +181,17 @@ public class PaymentDAO {
         }
         return payments;
     }
+    
+    //checking if a Payment Record already exists, depending on the Payment Id
+   public boolean checkExists(int paymentCardNumber) throws SQLException {
+       boolean exists = false;
+       checkSt.setInt(1, paymentCardNumber);
+       ResultSet rs = checkSt.executeQuery();
+       exists = rs.next();
+       rs.close();
+       checkSt.close();
+
+       return exists;
+   }
 
 }

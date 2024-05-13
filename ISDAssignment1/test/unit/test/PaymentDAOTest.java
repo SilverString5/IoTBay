@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
-import uts.isd.model.Payment;
-import uts.isd.dao.DBConnector;
-import uts.isd.dao.PaymentDAO;
+import isd.model.Payment;
+import isd.model.dao.DBConnector;
+import isd.model.dao.PaymentDAO;
+import java.util.*;
 
 
 public class PaymentDAOTest {
@@ -46,19 +47,19 @@ public class PaymentDAOTest {
     //updating the Payment Method of the payment and checking if all the updated values are correct.
     @Test
     public void testUpdatePayment() throws SQLException {
-        paymentDAO.updatePayment("VISA", "12-12-2030", 332, 28763024, 4 );
+        manager.updatePayment(4, "VISA", new java.sql.Date(new Date(2030, 12, 12).getTime()), 332, 4787987);
         Payment paymentex = manager.findPaymentRecord(4);
         assertEquals(paymentex.getPaymentMethod(), "VISA");
         assertEquals(paymentex.getExpiryDate(), "12-12-2030");
         assertEquals(paymentex.getPaymentCVC(), 332);
-        assertEquals(paymentex.getPaymentCardNumber(), 28763024);
+        assertEquals(paymentex.getPaymentCardNumber(), 4787987);
         
     }
     
     //updating only expiry date of payment
     @Test
     public void testUpdateExpiryDate() throws SQLException{
-        paymentDAO.updateExpiryDate(2, "12-02-2003");
+        manager.updateExpiryDate(2, new java.sql.Date(new Date(2003, 12, 12).getTime()));
         Payment paymentex = manager.findPaymentRecord(2);
         assertEquals(paymentex.getExpiryDate(), "12-12-2003");
     }
@@ -67,20 +68,23 @@ public class PaymentDAOTest {
     //deleting payment record
     @Test
     public void testDeletePayment() throws SQLException {
-        paymentDAO.deletePayment(3);
+        manager.deletePayment(3);
     }
     
     
     
     
     //Create a Payment and test if it worked.
+    //specific function for cardnumber created solely for this test to see if it works: findPaymentRecordByCardNumber
     @Test
     public void testCreateAPayment() throws SQLException {
-        Payment paymentex = manager.createPayment("VISA", "12-02-2025", 123, 12343322, 2);
+        
+        manager.createPayment("VISA", new java.sql.Date(new Date(2025, 12, 12).getTime()), 123, 12343321, 2);
+        Payment paymentex = manager.findPaymentRecordByCardNumber(12343321);
         assertEquals(paymentex.getPaymentMethod(), "VISA");
         assertEquals(paymentex.getExpiryDate(), "12-02-2025");
         assertEquals(paymentex.getPaymentCVC(), 123);
-        assertEquals(paymentex.getPaymentCardNumber(), 12343322);
+        assertEquals(paymentex.getPaymentCardNumber(), 12343321);
     }
             
             

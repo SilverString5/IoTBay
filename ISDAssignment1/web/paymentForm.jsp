@@ -21,12 +21,6 @@
     
     
     <% User user = (User)session.getAttribute("user"); 
-        String paymentID = (String) request.getAttribute("paymentID");
-        String paymentMethod = (String) request.getAttribute("paymentMethod");
-        String expiryDate = (String) request.getAttribute("expiryDate");
-        String paymentCVC = (String) request.getAttribute("paymentCVC");
-        String paymentCardNumber = (String) request.getAttribute("paymentCardNumber");
-        String userID = (String) request.getAttribute("userID");
     %>
     
     
@@ -55,7 +49,7 @@
         <%} %>
         
         <div>
-            <form class="myForm" action="<%= request.getContextPath()%>/RegisterServlet" method="post">
+            <form class="myForm" action="<%= request.getContextPath()%>/createNewPaymentServlet" method="post" onsubmit="return validateForm()">
                 <h1 class="myHeader">Add your Payment Details Here.</h1>
                 <label for="PaymentMethod">Payment Method:</label><br>
                 <select id="PaymentMethod">
@@ -66,24 +60,96 @@
                 </select>
             
                 <label for="ExpiryDate">Expiry Date</label><br>
-                <input type="date" name="ExpiryDate" id="ExpiryDate" required><br>
-
+                <input type="date" name="ExpiryDate" id="expiryDate" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/\d{2}" required><br>
+                <span id="expiryDateError" class="error-message"></span><br><br>
             
-                <label for="CVC">CVC</label><br>
-                <input type="text" name="CVC" id="CVC" placeholder="000" required/><br>
-
+                <label for="paymentCVC">CVC</label><br>
+                <input type="text" name="paymentCVC" id="paymentCVC" placeholder="CVC" pattern="\d{3}" required/><br>
+                <span id="paymentCVCError" class="error-message"></span><br><br>
            
-                <label for="paymentcardnumber">Card Number:</label><br>
-                <input type="number" name="paymentcardnumber" id="paymentcardnumber" placeholder="000000000" required><br>           
+                <label for="paymentCardNumber">Card Number:</label><br>
+                <input type="number" name="paymentCardnumber" id="paymentCardnumber" placeholder="Card Number" pattern="\d{9}" required><br>   
+                <span id="paymentCardNumberError" class="error-message"></span><br><br>
+                
+                
+                
+                <label for="previousPayments"> Previous Payments:</label>
+                <select id="previousPayments" name="previousPayments">
+                <!-- Options will be dynamically populated using JavaScript -->
+                </select><br><br>
             
                 <input type="hidden" name="submitted" id="submitted" value="true" /><br>
-                <button type="submit">Confirm</button>
-
+                <button type="submit">Submit</button>
             </form>
+                
+                <script>
+                    function validateForm(){
+                        //Reset error messahes
+                        document.getElementById("expiryDateError").innerHTML = "";
+                        document.getElementById("paymentCVCError").innerHTML = "";
+                        document.getElementById("paymentCardNumberError").innerHTML = "";
+                        
+                        var isValid = true;
+                        
+                        // Validate Expiry Date
+                        var expiryDate = document.getElementById("expiryDate").value;
+                        if (!expiryDate) {
+                            document.getElementById("expiryDateError").innerHTML = "Please fill in the expiry date.";
+                            isValid = false;
+                        }
+                        
+                        //Validate CVC
+                        var paymentCVC = document.getElementById("paymentCVC").value;
+                        if(!paymentCVC) {
+                            document.getElementById("paymentCVCError").innerHTML = "Please fill in the CVC";
+                            isValid = false;
+                        }
+                        
+                        var paymentCardNumber = document.getElementById("paymentCardNumber").value;
+                        if(!paymentCardNumber) {
+                            document.getElementById("paymentCardNumberError").innerHTML = "Please fill in the card number";
+                            isValid = false;
+                        }
+                        
+                        return isValid;
+
+                    }
+                    
+                    function populatePreviousPayments() {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "FetchPreviousPaymentServlet", true);
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                var previousPayments = JSON.parse(xhr.responseText);
+                                var dropdown = document.getElementById("previousPayments");
+                                dropdown.innerHTML = ""; // Clear previous options.
+                                
+                                for (var i = 0; i < previousPayments.length; i++) {
+                                    var payment = previousPayments[i];
+                                    var option = document.createElement("option");
+                                    option.text = payment.paymentMethod + " - " + payment.paymentCardNumber;
+                                    option.value = JSON.stringify(payment); //Storing the entire payment.
+                                    dropdown.appendChild(option);
+                                }        
+                            }
+                        };
+                        xhr.send();
+                    }
+                    
+                    //Calling the populatePreviousPayments function when the page loads.
+                    window.onload = function() {
+                        populatePreviousPayments();
+                    }
+                    
+                    
+                   
+                    
+                </script>
+                
+                
         </div>
         
-                <div>
-                    
-        </div>
+        
+      
     </body>
 </html>

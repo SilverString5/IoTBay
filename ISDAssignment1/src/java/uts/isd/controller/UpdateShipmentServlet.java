@@ -64,8 +64,7 @@ public class UpdateShipmentServlet extends HttpServlet{
             
             try {
                 //update shipment address and method of the record in the database
-                shipmentDAO.updateShipmentAddress(shipment.getShipmentID(), streetAddress);
-                shipmentDAO.updateShipmentMethod(shipment.getShipmentID(), deliveryMethod);
+                shipmentDAO.updateShipmentAddressAndMethod(shipment.getShipmentID(), streetAddress, deliveryMethod);
             
                 //updates the shipment records in the session
                 //if the user access the shipment history at any time, information is updated

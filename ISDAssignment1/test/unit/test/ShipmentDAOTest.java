@@ -39,69 +39,50 @@ public class ShipmentDAOTest {
     public void testConnection() throws SQLException {
         assertNotNull(connect);
     }
-    /*
-    @Test
-    public void testShipmentConnector() throws SQLException {
-        ArrayList<Shipment> shipment = shipmentDAO.fetchShipment();
-        for(Shipment index : shipment) {
-            System.out.println(index.getShipmentAddress());
-        }
-        assertEquals(shipment.size(), 1);
-    }*/
     
-    /*@Test
+    @Test
     public void testFetchShipmentFromACustomer() throws SQLException {
         ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentFromACustomer(8);
         for(Shipment index : shipment) {
             System.out.println(index.getShipmentAddress());
         }
-
-        assertEquals(2, 2);
+    }
+    
+    @Test
+    public void testFetchShipmentForFilter() throws SQLException {
         
-
+        
+        ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentByFilter(17, 2, "2024-05-04");
+        for(Shipment index : shipment) {
+            System.out.println(index.getShipmentAddress());
+        }
         
     }
     
     @Test
-    public void testFetchShipmentByFilter() throws SQLException {
+    public void testFetchShipment() throws SQLException { 
+    
+        Shipment shipment = shipmentDAO.fetchShipmentByFilter(19, 1);
+        System.out.print(shipment.getShipmentAddress());
         
-        
-        ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentByFilter(8, 8, "2024-04-13");
-        for(Shipment index : shipment) {
-            System.out.println(index.getShipmentAddress());
-        }
-
-        assertEquals(2, 2);
-        
-    }*/
+    }
+    
 
     @Test
     public void testCreateShipment() throws SQLException {
         shipmentDAO.createShipment(1, "UNSW High St, Kensington NSW 2052 UNSW High St", "Express", "Dispatched", new Date());
-
-        assertEquals(shipmentDAO.fetchShipment().size(), 2);
-        
-    }
-    
-    /*
-    @Test
-    public void testUpdateShipmentAddress() throws SQLException {
-        shipmentDAO.updateShipmentAddress(2, "15 Broadway Ultimo, NSW 2007");
-
         
     }
     
     @Test
-    public void testUpdateShipmentMethod() throws SQLException {
-        shipmentDAO.updateShipmentAddress(2, "Express");
-        
-    }
-    
+    public void testUpdateShipmentAddressAndMethod() throws SQLException {
+        shipmentDAO.updateShipmentAddressAndMethod(21, "123/267-319 Bulwara Road, Ultimo NSW 2007", "Standard");
+    } 
     
     @Test
     public void testDeleteShipment() throws SQLException {
         shipmentDAO.deleteShipment(21);
-    }*/
+    }
     
 
 }

@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
                      }
                      // Phone number validation
                         try {
-                        int intPhone = Integer.parseInt("phone");
+                        int intPhone = Integer.parseInt(phone);
                             if (phone.length()>10){
                         errorCount++;
                         errorMsgs+= "Phone numbers must not be longer than 10 characters.\n";
@@ -74,6 +74,7 @@ public class RegisterServlet extends HttpServlet {
                     
                     // Date validation
                     try {
+                    System.out.print("DOB: " + stringDOB);
                     Date DOB = Date.valueOf(stringDOB);
                     long now = System.currentTimeMillis();
                     Date nowDate = new Date(now);

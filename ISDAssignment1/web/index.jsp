@@ -1,3 +1,9 @@
+<%-- 
+    Document   : createProduct
+    Created on : 02/05/2024, 3:30:18 PM
+    Author     : jialan Guo
+--%>
+
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -8,6 +14,7 @@
 <%@page import="uts.isd.model.dao.*"%>
 <%@page import="uts.isd.controller.*"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,37 +34,47 @@
     %>
     <body>
         <!-- Nav Bar Block -->
-        <%if(user != null){%>
+        <%if(user != null && user.getUserType().equals("S")){%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="./shipmentHistory" > Shipping </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
             </ul>
                                 
             </div>
             <br>
             <br>
-        <%}else{%>
+        <%}else if(user != null && user.getUserType().equals("C")){%>
             <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" > Login</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
-            </ul>
-               
-                
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders</a></li>
+                <li><a href="./shipmentHistory" >Shipping</a></li>                 
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
+            </ul>                             
             </div>
             <br>
             <br>
-        <%} %>
+        <%}else{ %>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" >Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders </a></li>
+            </ul>              
+            </div>
+            <br>
+            <br>
+        <% } %>
         
         
         <!-- Device Searching Block -->

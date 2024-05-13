@@ -24,12 +24,10 @@ public class OrderHistoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
-//        System.out.println("HEY " + user);
         OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         ArrayList<Order> orderList = new ArrayList();
         if(user != null){
-            try {  
-//                System.out.println("UserID " + user.getUserID());               
+            try {                
                 orderList = orderDAO.readOrderHistory(user.getUserID());
                 session.setAttribute("orderList", orderList);
                 request.getRequestDispatcher("orders.jsp").include(request, response);
@@ -40,8 +38,6 @@ public class OrderHistoryServlet extends HttpServlet {
            request.getRequestDispatcher("orders.jsp").include(request, response); 
         }
         
-//        session.setAttribute("orderList", orderList);
-//        request.getRequestDispatcher("orders.jsp").include(request, response);
     }
 
     @Override

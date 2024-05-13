@@ -110,3 +110,15 @@ th{
     margin-right: 10px;
     flex: 1;
 }
+
+/*Summary page*/
+
+.flexbox {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.first-column, .second-column {
+    width: 50%;
+}

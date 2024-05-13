@@ -29,7 +29,6 @@ public class SearchOrderServlet extends HttpServlet{
         OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         
             String orderIdStr = request.getParameter("orderID");
-//            int orderID = Integer.parseInt(request.getParameter("orderID"));
             String orderDate = request.getParameter("orderDate");
             StringBuilder errorMsg = new StringBuilder();
             boolean validInput = true;
@@ -38,7 +37,7 @@ public class SearchOrderServlet extends HttpServlet{
                 errorMsg.append("Invalid order number format. ");
             }
                        
-            if(orderDate.trim().isEmpty() || !(orderDate.matches("\\d{4}-\\d{2}-\\d{2}"))){
+            if(orderDate.trim().isEmpty() || !(orderDate.matches("\\d{4}-\\d{2}-\\d{2}"))){  //check the date format matches (YYYY-MM-DD)
                 validInput = false;
                 errorMsg.append("Invalid date format. Use this format:(YYYY-MM-DD).");
             }
@@ -57,7 +56,7 @@ public class SearchOrderServlet extends HttpServlet{
                     Logger.getLogger(SearchOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try{
-                    System.out.println("Date: " + sqlOrderDate);
+//                    System.out.println("Date: " + sqlOrderDate);
                     Order order = orderDAO.searchOrder(orderID, sqlOrderDate);
                     if(order != null){
                         request.setAttribute("searchedOrder", order);

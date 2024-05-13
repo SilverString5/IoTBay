@@ -13,6 +13,11 @@ public class Payment implements Serializable{
     private int paymentCardNumber;
     private int paymentCVC;
     
+    
+    public Payment() {
+        
+    }
+    
     public Payment(int paymentID, String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber, int customerID){
         this.paymentID = paymentID;
         this.customerID = customerID;

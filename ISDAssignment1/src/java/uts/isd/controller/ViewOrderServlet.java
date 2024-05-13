@@ -45,18 +45,18 @@ public class ViewOrderServlet extends HttpServlet{
         }
         session.setAttribute("productList", productList);
         session.setAttribute("quantityMap", map);
-        if(function.equals("View")){
+        if(function.equals("View")){  //when user click view button
             session.setAttribute("orderID", orderID);
             request.getRequestDispatcher("orderdetail.jsp").include(request, response);        
-        }else if(function.equals("Update")){
-//            session.setAttribute("orderID", orderID);
+        }else if(function.equals("Update")){   //when user click update button
             session.setAttribute("orderID", orderID);
             session.setAttribute("originalQuantity", unchanged);
             request.getRequestDispatcher("updateorder.jsp").include(request, response);
-        }else if(function.equals("Cancel")){
+        }else if(function.equals("Cancel")){    //when user click cancel button 
             try{
                 orderDAO.cancelOrder(orderID);
                 HashMap<Integer, Integer> products = productDAO.fetchStock();
+                //this implements adding the stock of products back in the database when the user cancel the order
                 for(Map.Entry<Integer, Integer> entry : map.entrySet()){
                     Integer id = entry.getKey();
                     Integer quantity = entry.getValue();
@@ -68,7 +68,6 @@ public class ViewOrderServlet extends HttpServlet{
             }catch(SQLException e){
                 System.out.print(e);
             }
-//            request.setAttribute("")
             request.getRequestDispatcher("OrderHistoryServlet").forward(request, response);
         }
     }

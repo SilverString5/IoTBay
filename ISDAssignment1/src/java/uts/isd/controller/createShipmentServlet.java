@@ -104,7 +104,7 @@ public class createShipmentServlet extends HttpServlet {
             
             String shipmentStatus = "Pending";
             Date shipmentDate = new Date();
-
+            
             try {
                 //Creates a shipment record and adds to the database
                 shipmentDAO.createShipment(user.getUserID(), shipmentAddress , shipmentMethod, shipmentStatus, shipmentDate);
@@ -113,8 +113,9 @@ public class createShipmentServlet extends HttpServlet {
                 //Therefore when user is 'redirected' to the shipment history web page, their shipment records are updated
                 Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
                 session.setAttribute("shipments", shipments);
-
-                request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
+                request.setAttribute("shipmentAddress", shipmentAddress);  //code added
+                request.setAttribute("shipmentMethod", shipmentMethod);     //code added
+                request.getRequestDispatcher("orderSummary.jsp").forward(request, response);
 
 
 

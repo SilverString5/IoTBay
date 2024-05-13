@@ -27,18 +27,38 @@
         }
     %>
     <body>
-        <div class="menu">
+       
+        <% if(user != null){%>
+            <div class="menu">
             <ul>
                 <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" > Register</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" > You</a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" > Orders </a></li>
-                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet"> Shopping Cart</a></li>
-            </ul>                            
-        </div>
-        <br> 
-        <br> 
-        <br> 
+                <li><a href="http://localhost:8080/ISDAssignment1/welcome.jsp" >You</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/viewAccessLogs.jsp" >Your Access Logs</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/manageRegistration.jsp" >Manage Account Details</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders</a></li>
+                <li><a href="./shipmentHistory" >Shipping</a></li>                 
+                <li><a href="http://localhost:8080/ISDAssignment1/logout.jsp" >Logout</a></li>
+            </ul>                             
+            </div>
+            <br>
+            <br>
+            <br>
+        <%}else{ %>
+            <div class="menu">
+            <ul>
+                <li><a href="http://localhost:8080/ISDAssignment1/">Home</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/login.jsp" >Login</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" >Register</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
+                <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders </a></li>
+            </ul>              
+            </div>
+            <br>
+            <br>
+            <br>
+        <% } %>
+ 
         <%  String errorMessage = ""; %>
         <%    if(request.getAttribute("errorMessage") != null){
                 errorMessage = (String) request.getAttribute("errorMessage");
@@ -76,48 +96,55 @@
                     <th>Update Order</th>
                     <th>Cancel Order</th>
                 </tr>
-        <% if(submitted == null && user != null){ %>        
-                <%
-                    for(Order order : orderList) {
-                %>
-                <tr>
-                    <td><%= order.getOrderID() %></td>
-                    <td><%= order.getOrderDate() %></td>
-                    <td><%= order.getOrderStatus() %></td> 
-                    <td>$<%= order.getTotalAmount() %></td> 
-                    <td><%= order.getShipmentID() %></td>
-                    <td>
-                        <form method="GET" action="./ViewOrderServlet">
-                            <input type="hidden" name="function" value="View"/>
-                            <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <input class="editBtn" type="submit" value="View"/>
-                        </form>
-                    </td>
-                    
-                    <td>
-                        <form method="GET" action="./ViewOrderServlet">
-                            <input type="hidden" name="function" value="Update"/>
-                            <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <% if(order.getOrderStatus().equals("Cancelled")){ %>
-                                <input class="disBtn" type="submit" value="Update" disabled/>
-                            <% }else{ %>
-                                <input class="editBtn" type="submit" value="Update"/>
-                            <% } %> 
-                        </form>
-                    </td>
-                    
-                    <td>
-                        <form method="GET" action="./ViewOrderServlet">
-                            <input type="hidden" name="function" value="Cancel"/>
-                            <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
-                            <% if(order.getOrderStatus().equals("Cancelled")){ %>
-                                <input class="disBtn" type="submit" value="Cancel" disabled/>
-                            <% }else{ %>
-                                <input class="editBtn" type="submit" value="Cancel"/>
-                            <% } %>
-                        </form>
-                    </td>
-                </tr>
+        <% if(submitted == null && user != null){ %>
+                <% if(!orderList.isEmpty()){ %>
+                    <%
+                        for(Order order : orderList) {
+                    %>
+                    <tr>
+                        <td><%= order.getOrderID() %></td>
+                        <td><%= order.getOrderDate() %></td>
+                        <td><%= order.getOrderStatus() %></td> 
+                        <td>$<%= order.getTotalAmount() %></td> 
+                        <td><%= order.getShipmentID() %></td>
+                        <td>
+                            <form method="GET" action="./ViewOrderServlet">
+                                <input type="hidden" name="function" value="View"/>
+                                <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
+                                <input class="editBtn" type="submit" value="View"/>
+                            </form>
+                        </td>
+
+                        <td>
+                            <form method="GET" action="./ViewOrderServlet">
+                                <input type="hidden" name="function" value="Update"/>
+                                <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
+                                <% if(order.getOrderStatus().equals("Cancelled") || order.getOrderStatus().equals("Completed")){ %>
+                                    <input class="disBtn" type="submit" value="Update" disabled/>
+                                <% }else{ %>
+                                    <input class="editBtn" type="submit" value="Update"/>
+                                <% } %> 
+                            </form>
+                        </td>
+
+                        <td>
+                            <form method="GET" action="./ViewOrderServlet">
+                                <input type="hidden" name="function" value="Cancel"/>
+                                <input type="hidden" name="orderID" value="<%= order.getOrderID() %>"/>
+                                <% if(order.getOrderStatus().equals("Cancelled") || order.getOrderStatus().equals("Completed")){ %>
+                                    <input class="disBtn" type="submit" value="Cancel" disabled/>
+                                <% }else{ %>
+                                    <input class="editBtn" type="submit" value="Cancel"/>
+                                <% } %>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+                <% }else{%>
+                    <tr height="200px">
+                        <td colspan="8">You don't have any previous order.</td>
+
+                    </tr>
                 <% } %>
         <% }else if(submitted != null && submitted.equals("yes")){ %>
                 
@@ -169,6 +196,10 @@
 
                     </tr>
                 <% } %>
+            <% }else if(submitted == null && user == null){ %>
+                <tr height="200px">
+                    <td colspan="8">Anonymous user can only view the order by using the search bar.</td>
+                </tr>
             <% } %>
                          
             </table>

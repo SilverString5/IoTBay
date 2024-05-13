@@ -171,7 +171,7 @@
                         <td><img src="css/<%=device.getProductImg()%>"></td>
                         <td><%= device.getProductName() %></td>
                         <td><%= device.getProductType() %></td>
-                        <td><%= device.getProductUnitPrice() %></td>
+                        <td>$<%= device.getProductUnitPrice() %></td>
                         <td><%= device.getProductDetails() %></td>
                         <td>
                             <form method="GET" action="/ISDAssignment1/ShoppingCartServlet">

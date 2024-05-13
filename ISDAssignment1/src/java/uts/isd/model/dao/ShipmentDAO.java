@@ -44,11 +44,6 @@ public class ShipmentDAO {
     //Create - Create Shipment Detail
     public void createShipment(int customerID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
         
-        /*
-        String insertLine = "INSERT INTO shipment(UserID, ShipmentAddress, ShipmentMethod, ShipmentStatus, ShipmentDate)";
-        String valuesLine = "VALUES('" + customerID + "','" + shipmentAddress + "','" + shipmentMethod + "','" + shipmentStatus + "','" + new java.sql.Date(shipmentEstDate.getTime()) + "')";
-        String valuesLine = "VALUES(?,?,?,?,?)"; */
-        
         
         PreparedStatement createQuery = connect.prepareStatement("INSERT INTO shipment(UserID, ShipmentAddress, ShipmentMethod, ShipmentStatus, ShipmentDate) VALUES(?,?,?,?,?)");
         createQuery.setInt(1, customerID);
@@ -56,6 +51,20 @@ public class ShipmentDAO {
         createQuery.setString(3, shipmentMethod);
         createQuery.setString(4, shipmentStatus);
         createQuery.setDate(5, new java.sql.Date(calculateShipmentDate(shipmentDate).getTime()));
+        
+        createQuery.executeUpdate();
+        System.out.println("Shipment Record Successfully Created!");
+                
+    }
+    
+    public void createShipmentForAnonymousUser(String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
+        
+        
+        PreparedStatement createQuery = connect.prepareStatement("INSERT INTO shipment(ShipmentAddress, ShipmentMethod, ShipmentStatus, ShipmentDate) VALUES(?,?,?,?)");
+        createQuery.setString(1, shipmentAddress);
+        createQuery.setString(2, shipmentMethod);
+        createQuery.setString(3, shipmentStatus);
+        createQuery.setDate(4, new java.sql.Date(calculateShipmentDate(shipmentDate).getTime()));
         
         createQuery.executeUpdate();
         System.out.println("Shipment Record Successfully Created!");

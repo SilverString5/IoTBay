@@ -1,4 +1,4 @@
-package uts.isd.model;
+package isd.model;
 
 import java.util.*;
 import java.time.*;
@@ -12,6 +12,11 @@ public class Payment implements Serializable{
     private Date expiryDate;
     private int paymentCardNumber;
     private int paymentCVC;
+    
+    
+    public Payment() {
+        
+    }
     
     public Payment(int paymentID, String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber, int customerID){
         this.paymentID = paymentID;

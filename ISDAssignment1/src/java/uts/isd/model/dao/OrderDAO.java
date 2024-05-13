@@ -50,8 +50,8 @@ public class OrderDAO {
     
     public String updateStatus = "UPDATE `Order` SET OrderStatus='Cancelled' WHERE UserID=?";
     public String updateStatus2 = "UPDATE `Order` SET OrderStatus='Cancelled' WHERE OrderID=?";
-    private String submitOrder = "INSERT INTO `Order` (UserID,OrderDate,OrderStatus,TotalAmount) VALUES (?, ?, ?, ?)";
-    private String anonymousOrder = "INSERT INTO `Order` (OrderDate,OrderStatus,TotalAmount) VALUES (?, ?, ?)";
+    private String submitOrder = "INSERT INTO `Order` (UserID,OrderDate,OrderStatus,TotalAmount,ShipmentID) VALUES (?, ?, ?, ?, ?)";
+    private String anonymousOrder = "INSERT INTO `Order` (OrderDate,OrderStatus,TotalAmount,ShipmentID) VALUES (?, ?, ?, ?)";
     private String fetchRecentOrder = "Select OrderID FROM `Order` ORDER BY OrderID DESC LIMIT 1";
     private String updateOrder = "UPDATE `Order` SET OrderDate=?, TotalAmount=? WHERE OrderID=?";
             
@@ -74,13 +74,14 @@ public class OrderDAO {
     }
         
     //Create Operation - Create and Submit the order
-    public void SubmitOrder (int customerID, double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList) throws SQLException { 
+    public void SubmitOrder (int customerID, double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { 
         submitOrderSt.setInt(1, customerID);
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
         submitOrderSt.setDate(2, sqlDate);
         submitOrderSt.setString(3, "Processing");
         submitOrderSt.setDouble(4, totalAmount);
+        submitOrderSt.setInt(5, shipmentID);
         submitOrderSt.executeUpdate();
         
         int i = 0;
@@ -101,13 +102,14 @@ public class OrderDAO {
        
     }
     
-    public void anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList) throws SQLException { //just add orderID? (TBD) 
+    public void anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { //just add orderID? (TBD) 
 //        submitOrderSt.setInt(1, customerID);
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
         anonymousOrderSt.setDate(1, sqlDate);
         anonymousOrderSt.setString(2, "Processing");
         anonymousOrderSt.setDouble(3, totalAmount);
+        anonymousOrderSt.setInt(4, shipmentID);
         anonymousOrderSt.executeUpdate();
         
         int i = 0;

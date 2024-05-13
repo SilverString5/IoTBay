@@ -1,4 +1,4 @@
-package isd.model;
+package uts.isd.model;
 
 import java.util.*;
 import java.time.*;

@@ -49,10 +49,10 @@
         <%} %>
         
         <div>
-            <form class="myForm" action="<%= request.getContextPath()%>/createNewPaymentServlet" method="post" onsubmit="return validateForm()">
+            <form class="myForm" action="./createNewPaymentServlet" method="post" onsubmit="return validateForm()">
                 <h1 class="myHeader">Add your Payment Details Here.</h1>
-                <label for="PaymentMethod">Payment Method:</label><br>
-                <select id="PaymentMethod">
+                <label for="paymentMethod">Payment Method:</label><br>
+                <select name="paymentMethod" id="PaymentMethod">
                     <option value="Visa">Visa</option>
                     <option value="Mastercard">Mastercard</option>
                     <option value="Paypal">Paypal</option>
@@ -68,7 +68,7 @@
                 <span id="paymentCVCError" class="error-message"></span><br><br>
            
                 <label for="paymentCardNumber">Card Number:</label><br>
-                <input type="number" name="paymentCardnumber" id="paymentCardnumber" placeholder="Card Number" pattern="\d{9}" required><br>   
+                <input type="number" name="paymentCardNumber" id="paymentCardnumber" placeholder="Card Number" pattern="\d{9}" required><br>   
                 <span id="paymentCardNumberError" class="error-message"></span><br><br>
                 
                 

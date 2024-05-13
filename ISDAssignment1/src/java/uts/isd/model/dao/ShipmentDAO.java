@@ -25,8 +25,10 @@ public class ShipmentDAO {
     private Connection connect;
     private Statement statement;
     private PreparedStatement readStatement;
+    private PreparedStatement fetchCreatedShipmentSt;
     //private String readQuery = "SELECT * FROM shipment WHERE customerID=?"; //Change table name depending on name from database
     private String readQuery = "SELECT * FROM shipment";
+    String fetchCreatedShipment = "SELECT ShipmentID FROM Shipment ORDER BY ShipmentID DESC LIMIT 1";
     //private String deleteQuery = "DELETE FROM shipment WHERE SHIPMENTID=?";
     
     public ShipmentDAO (Connection connection) throws SQLException {
@@ -35,6 +37,7 @@ public class ShipmentDAO {
         connection.setAutoCommit(true);
         statement = connection.createStatement();
         readStatement = connection.prepareStatement(readQuery);
+        fetchCreatedShipmentSt = connection.prepareStatement(fetchCreatedShipment);
         
     }
     
@@ -201,6 +204,15 @@ public class ShipmentDAO {
 
         
     }*/
+    public int fetchShipmentID() throws SQLException {       
+        ResultSet rs = fetchCreatedShipmentSt.executeQuery();
+        int shipmentID = 0;
+        if(rs.next()){
+            shipmentID = rs.getInt(1);
+        }
+        System.out.println("ShipmentID fetched sucessfully");  
+        return shipmentID;
+    }
 
     
 }

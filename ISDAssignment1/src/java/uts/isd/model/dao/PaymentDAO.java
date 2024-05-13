@@ -23,7 +23,7 @@ public class PaymentDAO {
     
 
     private String readQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment";
-    private String checkQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM payment WHERE PaymentCardNumber=?";
+    private String checkQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment WHERE PaymentCardNumber=?";  //had to fix it
 
     
     public PaymentDAO(Connection connection) throws SQLException {

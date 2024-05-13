@@ -44,14 +44,17 @@ public class createNewPaymentServlet extends HttpServlet{
         
         String paymentMethod = request.getParameter("paymentMethod");
         //getting expiryDate string, and then converting to an integer.
-        String stringexpiryDate = request.getParameter("expiryDate");
+        String stringexpiryDate = request.getParameter("ExpiryDate");
+        System.out.println(stringexpiryDate);
         Date expiryDate = Date.valueOf(stringexpiryDate);
         //Getting the CVC as a string, and then converting it to an integer.
         String stringCVC = request.getParameter("paymentCVC");
         int paymentCVC = Integer.parseInt(stringCVC);
         //getting paymentCardNumber string, and then converting to an integer.
         String stringpaymentCardNumber = request.getParameter("paymentCardNumber");
+//        System.out.println("CardNum: " + stringpaymentCardNumber);
         int paymentCardNumber = Integer.parseInt(stringpaymentCardNumber);
+//        System.out.println("CardNUM: " + paymentCardNumber);
         
         String errorMsgs="";
         
@@ -89,14 +92,14 @@ public class createNewPaymentServlet extends HttpServlet{
             errorMsgs += "Please fill in the card number.\n";
         }
         
-
+        System.out.println("Entered Before if");
         if (!errorMsgs.isEmpty()) {
             session.setAttribute("errorMsgs", errorMsgs);
             request.getRequestDispatcher("paymentForm.jsp").include(request,response);
         }
         else {
             try{
-                if (!paymentDAO.checkExists(paymentCardNumber)){
+                if (!paymentDAO.checkExists(paymentCardNumber)){  
                     paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
                 }
                 
@@ -104,8 +107,12 @@ public class createNewPaymentServlet extends HttpServlet{
                 session.setAttribute("payments", payments);
                 
                 
-                
-                request.getRequestDispatcher("welcome.jsp").forward(request, response);
+//                System.out.println("Entered");
+                session.setAttribute("paymentMethod", paymentMethod);
+                session.setAttribute("expiryDate", stringexpiryDate);
+                session.setAttribute("cardNumber", paymentCardNumber);
+                session.setAttribute("cvc", paymentCVC);
+                request.getRequestDispatcher("shippingOrder.jsp").forward(request, response);
             } catch(SQLException e){
                 System.out.println(e);
             }

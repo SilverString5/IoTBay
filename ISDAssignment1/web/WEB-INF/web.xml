@@ -150,6 +150,12 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-class>uts.isd.controller.RemoveCartItemServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
+  
+  <servlet>
+    <servlet-name>createNewPaymentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.createNewPaymentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
 
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
@@ -287,6 +293,11 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <servlet-mapping>
     <servlet-name>RemoveCartItemServlet</servlet-name>
     <url-pattern>/RemoveCartItemServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>createNewPaymentServlet</servlet-name>
+    <url-pattern>/createNewPaymentServlet</url-pattern>
   </servlet-mapping>
 
   <session-config>

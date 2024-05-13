@@ -126,12 +126,12 @@
                         </form>
                     </td>
                     <td colspan="3">
-                        <form method="GET" action="/ISDAssignment1/SubmitOrderServlet">
+                        <form method="GET" action="/ISDAssignment1/paymentForm.jsp">
                             <input type="hidden" name="totalAmount" value="<%= totalAmount %>"/>
                             <% if(shoppingCart != null && !shoppingCart.isEmpty()){ %>
-                                <button class="availBtn" type="submit">Submit the Order</button>
+                                <button class="availBtn" type="submit">Proceed the Order</button>
                             <% }else{ %>
-                                <button class="disBtn" disabled> Submit the Order</button>
+                                <button class="disBtn" disabled> Proceed the Order</button>
                             <% } %>
                         </form>
                     </td>

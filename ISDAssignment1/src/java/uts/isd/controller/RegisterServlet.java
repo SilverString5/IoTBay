@@ -74,6 +74,7 @@ public class RegisterServlet extends HttpServlet {
                     
                     // Date validation
                     try {
+                    System.out.print("DOB: " + stringDOB);
                     Date DOB = Date.valueOf(stringDOB);
                     long now = System.currentTimeMillis();
                     Date nowDate = new Date(now);

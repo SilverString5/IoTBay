@@ -16,6 +16,7 @@ import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.OrderDAO;
 import uts.isd.model.dao.ProductDAO;
+import uts.isd.model.dao.ShipmentDAO;
 
 /**
  *
@@ -24,12 +25,14 @@ import uts.isd.model.dao.ProductDAO;
 public class SubmitOrderServlet extends HttpServlet{
     private OrderDAO orderDAO; 
     private ProductDAO productDAO;
+    private ShipmentDAO shipmentDAO;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
        HttpSession session = request.getSession();
 
        orderDAO = (OrderDAO)session.getAttribute("orderDAO");
        productDAO = (ProductDAO)session.getAttribute("productDAO");
+       shipmentDAO = (ShipmentDAO)session.getAttribute("shipmentDAO");
        HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
        ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartList");
        User user = (User) session.getAttribute("user");
@@ -43,12 +46,13 @@ public class SubmitOrderServlet extends HttpServlet{
         }
 
        try {
+            int shipmentID = shipmentDAO.fetchShipmentID();
             if(user != null){  //registered user
-                orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList);
+                orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList, shipmentID);
             }else{  //anonymouse
-                orderDAO.anonymousOrder(totalAmount, quantityList, cartList);  //userid is 0 (null) for all anonymous users
+                orderDAO.anonymousOrder(totalAmount, quantityList, cartList, shipmentID);  //userid is 0 (null) for all anonymous users
             }
-            
+
             HashMap<Integer, Integer> products = productDAO.fetchStock();
             //update the product stock in the database accordingly when the user submit the order
             for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()){
@@ -58,10 +62,14 @@ public class SubmitOrderServlet extends HttpServlet{
                     int newStock = products.get(productID) - quantity;
                     productDAO.updateStock(productID, newStock);
                 }
+                
             }
+            //Clear the shopping cart since the user has submiited the order
+                shoppingCart.clear();
+                session.setAttribute("shoppingCart", shoppingCart);
        } catch(SQLException e) {
            System.out.print(e);
         }
-       request.getRequestDispatcher("shoppingcart.jsp").include(request, response); 
+       request.getRequestDispatcher("index.jsp").include(request, response); 
     }
 }

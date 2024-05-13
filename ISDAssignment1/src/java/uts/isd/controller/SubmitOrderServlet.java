@@ -15,6 +15,7 @@ import uts.isd.model.Product;
 import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.OrderDAO;
+import uts.isd.model.dao.PaymentDAO;
 import uts.isd.model.dao.ProductDAO;
 import uts.isd.model.dao.ShipmentDAO;
 
@@ -26,6 +27,7 @@ public class SubmitOrderServlet extends HttpServlet{
     private OrderDAO orderDAO; 
     private ProductDAO productDAO;
     private ShipmentDAO shipmentDAO;
+    private PaymentDAO paymentDAO;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
        HttpSession session = request.getSession();
@@ -33,6 +35,7 @@ public class SubmitOrderServlet extends HttpServlet{
        orderDAO = (OrderDAO)session.getAttribute("orderDAO");
        productDAO = (ProductDAO)session.getAttribute("productDAO");
        shipmentDAO = (ShipmentDAO)session.getAttribute("shipmentDAO");
+       paymentDAO = (PaymentDAO)session.getAttribute("paymentDAO");
        HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>) session.getAttribute("shoppingCart");
        ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartList");
        User user = (User) session.getAttribute("user");
@@ -47,10 +50,13 @@ public class SubmitOrderServlet extends HttpServlet{
 
        try {
             int shipmentID = shipmentDAO.fetchShipmentID();
+            int paymentID = paymentDAO.fetchPaymentID();
             if(user != null){  //registered user
-                orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList, shipmentID);
+                int orderID = orderDAO.SubmitOrder(user.getUserID(), totalAmount, quantityList, cartList, shipmentID);
+                orderDAO.updateOrderPayment(orderID, paymentID);
             }else{  //anonymouse
-                orderDAO.anonymousOrder(totalAmount, quantityList, cartList, shipmentID);  //userid is 0 (null) for all anonymous users
+                int orderID = orderDAO.anonymousOrder(totalAmount, quantityList, cartList, shipmentID);  //userid is 0 (null) for all anonymous users
+                orderDAO.updateOrderPayment(orderID, paymentID);
             }
 
             HashMap<Integer, Integer> products = productDAO.fetchStock();

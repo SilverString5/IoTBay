@@ -19,12 +19,13 @@ public class PaymentDAO {
     private Statement statement;
     private PreparedStatement readStatement;
     private PreparedStatement checkSt;
+    private PreparedStatement fetchCreatedPaymentSt;
    
     
 
     private String readQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment";
     private String checkQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment WHERE PaymentCardNumber=?";  //had to fix it
-
+    private String fetchCreatedPayment = "SELECT PaymentID FROM Payment ORDER BY PaymentID DESC LIMIT 1";
     
     public PaymentDAO(Connection connection) throws SQLException {
         this.connect = connection;
@@ -32,6 +33,7 @@ public class PaymentDAO {
         statement = connection.createStatement();
         readStatement = connection.prepareStatement(readQuery);
         checkSt = connection.prepareStatement(checkQuery);
+        fetchCreatedPaymentSt = connection.prepareStatement(fetchCreatedPayment);
         
     }
     
@@ -192,6 +194,15 @@ public class PaymentDAO {
        checkSt.close();
 
        return exists;
+   }
+   
+   public int fetchPaymentID() throws SQLException {
+       ResultSet rs = fetchCreatedPaymentSt.executeQuery();
+       int paymentID = 0;
+       if(rs.next()){
+           paymentID = rs.getInt(1);
+       }
+       return paymentID;
    }
 
 }

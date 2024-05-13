@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
@@ -39,6 +41,7 @@ public class OrderDAO {
     private PreparedStatement fetchRecentOrderSt;
     private PreparedStatement updateOrderSt;
     private PreparedStatement anonymousOrderSt;
+    private PreparedStatement orderPaymentSt;
     
     private String readQuery = "SELECT * FROM `Order` WHERE UserID=?";
     private String readSpecificOrder = "SELECT * FROM `Order` WHERE OrderID=? AND OrderDate=?";
@@ -54,6 +57,7 @@ public class OrderDAO {
     private String anonymousOrder = "INSERT INTO `Order` (OrderDate,OrderStatus,TotalAmount,ShipmentID) VALUES (?, ?, ?, ?)";
     private String fetchRecentOrder = "Select OrderID FROM `Order` ORDER BY OrderID DESC LIMIT 1";
     private String updateOrder = "UPDATE `Order` SET OrderDate=?, TotalAmount=? WHERE OrderID=?";
+    private String orderPayment = "INSERT INTO `Order_Payment` (PaymentID,OrderID,PaymentDate,PaymentTime) VALUES (?,?,?,?)";
             
     public OrderDAO(Connection connection) throws SQLException {
         connection.setAutoCommit(true);
@@ -70,11 +74,12 @@ public class OrderDAO {
         fetchRecentOrderSt = connection.prepareStatement(fetchRecentOrder);
         updateOrderSt = connection.prepareStatement(updateOrder);
         anonymousOrderSt = connection.prepareStatement(anonymousOrder);
+        orderPaymentSt = connection.prepareStatement(orderPayment);
         
     }
         
     //Create Operation - Create and Submit the order
-    public void SubmitOrder (int customerID, double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { 
+    public int SubmitOrder (int customerID, double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { 
         submitOrderSt.setInt(1, customerID);
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
@@ -86,8 +91,9 @@ public class OrderDAO {
         
         int i = 0;
         ResultSet rs = fetchRecentOrderSt.executeQuery();
+        int orderID = 0;
         while(rs.next()){
-            int orderID = rs.getInt(1);
+            orderID = rs.getInt(1);
             for (Product product : cartList){
                   orderLineItemSt.setInt(1, product.getProductID());
                   orderLineItemSt.setInt(2, orderID);
@@ -99,10 +105,11 @@ public class OrderDAO {
                   orderLineItemSt.executeUpdate();
               }
         }
+        return orderID;
        
     }
     
-    public void anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { //just add orderID? (TBD) 
+    public int anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { //just add orderID? (TBD) 
 //        submitOrderSt.setInt(1, customerID);
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
@@ -112,10 +119,11 @@ public class OrderDAO {
         anonymousOrderSt.setInt(4, shipmentID);
         anonymousOrderSt.executeUpdate();
         
+        int orderID = 0;
         int i = 0;
         ResultSet rs = fetchRecentOrderSt.executeQuery();
         while(rs.next()){
-            int orderID = rs.getInt(1);
+            orderID = rs.getInt(1);
             for (Product product : cartList){
                   orderLineItemSt.setInt(1, product.getProductID());
                   orderLineItemSt.setInt(2, orderID);
@@ -127,7 +135,7 @@ public class OrderDAO {
                   orderLineItemSt.executeUpdate();
               }
         }
-       
+    return orderID; 
     }
     
     public void updateOrder (int orderID, double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> productList) throws SQLException{
@@ -240,6 +248,18 @@ public class OrderDAO {
     public void cancelOrder (int orderID) throws SQLException{
         updateStatusSt2.setInt(1, orderID);
         updateStatusSt2.executeUpdate();
+    }
+    
+    public void updateOrderPayment (int orderID, int paymentID) throws SQLException{
+        orderPaymentSt.setInt(1, paymentID);
+        orderPaymentSt.setInt(2, orderID);
+        LocalDate date = LocalDate.now();
+        Date sqlDate = Date.valueOf(date);
+        orderPaymentSt.setDate(3, sqlDate);
+        LocalTime time = LocalTime.now();
+        Time sqlTime = Time.valueOf(time);
+        orderPaymentSt.setTime(4, sqlTime);
+        orderPaymentSt.executeUpdate();
     }
     
 }

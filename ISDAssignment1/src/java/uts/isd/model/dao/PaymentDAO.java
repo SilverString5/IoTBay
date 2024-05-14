@@ -105,8 +105,11 @@ public class PaymentDAO {
     }
     
     public void updatePaymentMethod(int paymentID, String paymentMethod) throws SQLException{
-        String updateQuery = "UPDATE payment SET PaymentMethod='" + paymentMethod + "' WHERE PaymentID=" + paymentID;
-        statement.executeUpdate(updateQuery);
+        
+        PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET PaymentMethod=?  WHERE PaymentID=?");
+        updateQuery.setString(1, paymentMethod);
+        updateQuery.setString(2, String.valueOf(paymentID));
+        updateQuery.executeUpdate();
     }
     public void updateExpiryDate(int paymentID, Date expiryDate) throws SQLException{
         PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET ExpiryDate=? WHERE PaymentID=?");
@@ -118,41 +121,68 @@ public class PaymentDAO {
     
     //update PaymentCVC from one Payment Record
     public void updatePaymentCVC(int paymentID, int paymentCVC) throws SQLException{
-        String updateQuery = "UPDATE payment SET PaymentCVC='" + paymentCVC + "' WHERE PaymentID=" + paymentID;
-        statement.executeUpdate(updateQuery);
+ 
+        PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET PaymentCVC=?  WHERE PaymentID=?");
+        updateQuery.setString(1, String.valueOf(paymentCVC));
+        updateQuery.setString(2, String.valueOf(paymentID));
+        updateQuery.executeUpdate();
     }
     
     
     
     //update PaymentCardNumber from one Payment Record
     public void updateCardNumber(int paymentID, int paymentCardNumber) throws SQLException{
-        String updateQuery = "UPDATE payment SET PaymentCardNumber='" + paymentCardNumber + "' WHERE PaymentID=" + paymentID;
-        statement.executeUpdate(updateQuery);
+        PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET PaymentCardNumber=?  WHERE PaymentID=?");
+        updateQuery.setString(1, String.valueOf(paymentCardNumber));
+        updateQuery.setString(2, String.valueOf(paymentID));
+        updateQuery.executeUpdate();
     }
     
     
     //find ONE payment record by paymentID
-    public Payment findPaymentRecord(int paymentID) throws SQLException {
-        String find = "SELECT * FROM Payment WHERE PaymentID=" + paymentID;
-        ResultSet result = readStatement.executeQuery(find);
-        String paymentMethod = result.getString(2);
-        Date expiryDate = result.getDate(3);
-        int paymentCVC = result.getInt(4);
-        int paymentCardNumber = result.getInt(5);
-        int userID = result.getInt(6);
-        Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
-        return payment;
+    public Payment findPaymentRecord(int paymentIDasInput) throws SQLException {
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM Payment WHERE PaymentID=?");
+        readQuery.setString(1, String.valueOf(paymentIDasInput));
+        ResultSet resultSet = readQuery.executeQuery();
+        
+        if(resultSet.next()){
+            String paymentMethod = resultSet.getString(2);
+            Date expiryDate = resultSet.getDate(3);
+            int paymentCVC = resultSet.getInt(4);
+            int paymentCardNumber = resultSet.getInt(5);
+            
+            
+            int paymentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+            return payment;
+        }
+        return null;
     }
     
     
-    public Payment fetchPaymentByFilter(int customerID, int paymentID) throws SQLException {
-        Payment payment = new Payment();
-        for(Payment paymentInRecord : fetchPaymentsFromACustomer(customerID)){
-            if(paymentInRecord.getPaymentID() == paymentID){
-                payment = paymentInRecord;
-            }
-        }
-        return payment;
+    public Payment fetchPaymentByFilter(int customerID, int paymentIDasInput) throws SQLException {
+        
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM payment WHERE UserID=? AND PaymentID=?");
+        readQuery.setString(1, String.valueOf(customerID));
+        readQuery.setString(2, String.valueOf(paymentIDasInput));
+        ResultSet resultSet = readQuery.executeQuery();
+        
+        
+        if(resultSet.next()) {
+            
+            String paymentMethod = resultSet.getString(2);
+            Date expiryDate = resultSet.getDate(3);
+            int paymentCVC = resultSet.getInt(4);
+            int paymentCardNumber = resultSet.getInt(5);
+            
+            int paymentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            
+            Payment paymentRecord = new Payment (paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+            return paymentRecord;
+        }   
+        return null;
     }
     
     
@@ -160,28 +190,44 @@ public class PaymentDAO {
      //find ONE payment record by Card Number
     //! THIS METHOD IS FOR TEST ONLY.
     public Payment findPaymentRecordByCardNumber(int paymentCardNumber) throws SQLException {
-        String find = "SELECT * FROM Payment WHERE PaymentCardNumber=" + paymentCardNumber;
-        ResultSet result = readStatement.executeQuery(find);
-        int paymentID = result.getInt(1);
-        String paymentMethod = result.getString(2);
-        Date expiryDate = result.getDate(3);
-        int paymentCVC = result.getInt(4);
-        int userID = result.getInt(6);
-        Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
-        return payment;
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM Payment WHERE PaymentCardNumber=?");
+        readQuery.setString(1, String.valueOf(paymentCardNumber));
+        ResultSet resultSet = readQuery.executeQuery();
+        
+        if(resultSet.next()) {
+            int paymentID = resultSet.getInt(1);
+            String paymentMethod = resultSet.getString(2);
+            Date expiryDate = resultSet.getDate(3);
+            int paymentCVC = resultSet.getInt(4);
+            int userID = resultSet.getInt(6);
+            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+            return payment;
+        }
+        return null;
     }
     
     
     
     //getting all the payment records from a specific user/customerID
     public ArrayList<Payment> fetchPaymentsFromACustomer(int customerID) throws SQLException {
-        ArrayList<Payment> payments = new ArrayList<> ();
-        for(Payment payment : fetchPayment()){
-            if(payment.getCustomerID() == customerID) {
-                payments.add(payment);
-            }
+        PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM payment WHERE UserID=?");
+        readsQuery.setString(1, String.valueOf(customerID));
+        ResultSet resultSet = readsQuery.executeQuery();
+        
+        ArrayList <Payment> paymentRecords = new ArrayList<> ();
+        while(resultSet.next()) {
+            
+            String paymentMethod = resultSet.getString(2);
+            Date expiryDate = resultSet.getDate(3);
+            int paymentCVC = resultSet.getInt(4);
+            int paymentCardNumber = resultSet.getInt(5);
+            int paymentID = resultSet.getInt(1);
+            int userID = resultSet.getInt(6);
+            
+            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
+            paymentRecords.add(payment);
         }
-        return payments;
+        return paymentRecords;     
     }
     
     //checking if a Payment Record already exists, depending on the Payment Id
@@ -189,10 +235,12 @@ public class PaymentDAO {
        boolean exists = false;
        checkSt.setInt(1, paymentCardNumber);
        ResultSet rs = checkSt.executeQuery();
-       exists = rs.next();
-       rs.close();
-       checkSt.close();
-
+       while (rs.next()){
+            exists = rs.next();
+            rs.close();
+            checkSt.close();
+       }
+       
        return exists;
    }
    

@@ -53,9 +53,10 @@
                         <img class="tracking-image" src="./css/Dispatched.png">
                 <% } else if(shipment.getShipmentStatus().equals("On Route")){ %>
                         <img class="tracking-image" src="./css/OnRoute.png">
-                <% } else { %>
+                <% } else if(shipment.getShipmentStatus().equals("Delivered")){ %>
                         <img class="tracking-image" src="./css/Delivered.png">
-
+                <% } else { %>
+                        <p> Shipment was Cancelled</p>
                 <% } %>
 
 
@@ -74,15 +75,25 @@
                 </div>
 
                 <div class="flexbox">
-                    <div class="first-column">
-                        <button><a href="./shipmentHistory.jsp">Back To Shipments</a></button>
-                    </div>
-
+                    <%if(user == null) { %>
+                        <div class="first-column">
+                            <button><a href="./index.jsp">Back to Home Page</a></button>
+                        </div>
+                        <div class="second-column align-right"/>         
+                        
+                    <% } else { %>
+                        <div class="first-column">
+                            <button><a href="./shipmentHistory.jsp">Back To Shipments</a></button>
+                        </div>
+                    <% } %>
+                    
+                    <% if(user != null) {%>
                     <div class="second-column align-right">
                         <%if (shipment.getShipmentStatus().equals("Pending")) {%>
                             <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
                         <% } %>
                     </div>
+                    <% } %>
                 </div>
 
             </div>

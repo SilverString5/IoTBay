@@ -84,5 +84,9 @@ public class ShipmentDAOTest {
         shipmentDAO.deleteShipment(21);
     }
     
+    @Test
+    public void testUpdateShipmentStatus() throws SQLException {
+        shipmentDAO.updateShipmentStatus(2);
+    }
 
 }

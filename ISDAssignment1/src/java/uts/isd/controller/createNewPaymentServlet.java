@@ -39,8 +39,7 @@ public class createNewPaymentServlet extends HttpServlet{
         User user = (User) session.getAttribute("user");
         Payment payment = (Payment) session.getAttribute("payment");
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
-
-        session.removeAttribute("errorMsgs");        
+     
 
 
         if (user != null) {
@@ -68,7 +67,7 @@ public class createNewPaymentServlet extends HttpServlet{
         String selectedPaymentInfo = request.getParameter("previousPayments");
 
 
-        session.removeAttribute("errorMsgs");
+        session.removeAttribute("errorMsgs1");
 
         if (selectedPaymentInfo != null && !selectedPaymentInfo.isEmpty()) {
             try {
@@ -107,45 +106,45 @@ public class createNewPaymentServlet extends HttpServlet{
         int paymentCardNumber = Integer.parseInt(stringpaymentCardNumber);
 //        System.out.println("CardNUM: " + paymentCardNumber);
         
-        String errorMsgs="";
+        String errorMsgs1="";
         
         if (paymentMethod.isEmpty()){
-            errorMsgs+="Your Payment Method is not filled in. \n";
+            errorMsgs1+="Your Payment Method is not filled in. \n";
         }
         
         try {
             long now = System.currentTimeMillis();
             Date nowDate = new Date(now);
             if (expiryDate.before(nowDate)){
-                errorMsgs+="Your expiry Date has reached. You are no longer able to use this payment Method.\n";
+                errorMsgs1+="Your expiry Date has reached. You are no longer able to use this payment Method.\n";
             }
         }
 
         catch (IllegalArgumentException e) {
             System.out.println(e);
-            errorMsgs+="The expiry date is empty. Please fill in this section.\n";
+            errorMsgs1+="The expiry date is empty. Please fill in this section.\n";
         }
         
 
         if (stringCVC.length()<3){
-            errorMsgs+="Your CVC must be at least 3 numbers.\n";
+            errorMsgs1+="Your CVC must be at least 3 numbers.\n";
         }
         if (stringCVC.isEmpty()){
-            errorMsgs+="Please fill in the CVC.\n";
+            errorMsgs1+="Please fill in the CVC.\n";
         }
         
         
         
         if (stringpaymentCardNumber.length()!=9){
-            errorMsgs+="You have not added your card number properly. Your Card Number should have 9 numbers.\n";
+            errorMsgs1+="You have not added your card number properly. Your Card Number should have 9 numbers.\n";
         }
         if(stringpaymentCardNumber.isEmpty()){
-            errorMsgs += "Please fill in the card number.\n";
+            errorMsgs1 += "Please fill in the card number.\n";
         }
         
         System.out.println("Entered Before if");
-        if (!errorMsgs.isEmpty()) {
-            session.setAttribute("errorMsgs", errorMsgs);
+        if (!errorMsgs1.isEmpty()) {
+            session.setAttribute("errorMsgs1", errorMsgs1);
             request.getRequestDispatcher("paymentForm.jsp").include(request,response);
         }
         else {

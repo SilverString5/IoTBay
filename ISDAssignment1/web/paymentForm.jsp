@@ -87,9 +87,9 @@
 
         <div style="color:red;">
             <%
-                String errorMsgs = (String) session.getAttribute("errorMsgs");
-                if (errorMsgs != null && !errorMsgs.isEmpty()) {
-                    out.println(errorMsgs);
+                String errorMsgs1 = (String) session.getAttribute("errorMsgs1");
+                if (errorMsgs1 != null && !errorMsgs1.isEmpty()) {
+                    out.println(errorMsgs1);
                 }
             %>
         </div>

@@ -80,6 +80,49 @@ public class ShipmentDAO {
         return currentDate;
     }
     
+    public int fetchShipment(String shipmentAddressInput, String ShipmentMethodInput, String shipmentStatusInput, Date shipmentDateInput) throws SQLException {
+        PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE SHIPMENTADDRESS=? AND SHIPMENTMETHOD=? AND SHIPMENTSTATUS=? AND SHIPMENTDATE=?");
+        readsQuery.setString(1, shipmentAddressInput);
+        readsQuery.setString(2, ShipmentMethodInput);
+        readsQuery.setString(3, shipmentStatusInput);
+        readsQuery.setDate(4, new java.sql.Date(shipmentDateInput.getTime()));
+        
+        
+        ResultSet resultSet = readsQuery.executeQuery();
+        
+        if(resultSet.next()) {
+           
+            int shipmentID = resultSet.getInt(1);
+            
+            return shipmentID;
+            
+        } 
+         
+        return 0;
+    }
+    
+    public Shipment fetchShipmentByID(int shipmentID) throws SQLException {
+        PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE SHIPMENTID=?");
+        readsQuery.setInt(1, shipmentID);
+        
+        ResultSet resultSet = readsQuery.executeQuery();
+        
+        if(resultSet.next()) {
+            String shipmentAddress = resultSet.getString(2);
+            String shipmentMethod = resultSet.getString(3);
+            String shipmentStatus = resultSet.getString(4);
+            Date shipmentEstDate = resultSet.getDate(5);
+            
+            
+            Shipment shipment = new Shipment(shipmentID, 0, shipmentAddress, shipmentMethod, shipmentStatus, shipmentEstDate);
+            
+            return shipment;
+        }
+        
+        return null;
+        
+    }
+    
     //get all shipments made by a specific customer
     public ArrayList<Shipment> fetchShipmentFromACustomer(int customerID) throws SQLException {
         

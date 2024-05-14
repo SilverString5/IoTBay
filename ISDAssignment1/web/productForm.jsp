@@ -1,7 +1,7 @@
 <%-- 
     Document   : createProduct
     Created on : 02/05/2024, 3:30:18 PM
-    Author     : jialan Guo
+    Author     : jialan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,6 +43,7 @@
     </div>
     <br>
     <br>
+        
 
     <!-- Device management block for staff-->
     <div>
@@ -160,3 +161,4 @@
     </div>   
 </body>
 </html>
+

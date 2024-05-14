@@ -49,19 +49,19 @@ public class OrderDAOTest {
         ArrayList<Product> cartList = new ArrayList();
         cartList.add(product);
         
-        int orderID = orderDAO.SubmitOrder(1, 8, quantityList, cartList, 114); 
+        int orderID = orderDAO.SubmitOrder(10, 8, quantityList, cartList, 50); 
         System.out.println("Order submitted suceessfully");
         //Test
         ArrayList<Order> orders = new ArrayList();
-        orders = orderDAO.readOrderHistory(1); 
+        orders = orderDAO.readOrderHistory(10); 
         int lastIndex = orders.size() - 1;
         Order order = orders.get(lastIndex);
         
         assertEquals(order.getOrderID(), orderID);
         assertEquals(order.getOrderStatus(), "Processing");
         assertEquals(order.getTotalAmount(),8.0,0.001);
-        assertEquals(order.getCustomerID(), 1);
-        assertEquals(order.getShipmentID(), 114);                               
+        assertEquals(order.getCustomerID(), 10);
+        assertEquals(order.getShipmentID(), 50);                               
     }
     
  
@@ -74,7 +74,7 @@ public class OrderDAOTest {
         ArrayList<Product> cartList = new ArrayList();
         cartList.add(product);
         
-        int orderID = orderDAO.anonymousOrder(8, quantityList, cartList, 114); 
+        int orderID = orderDAO.anonymousOrder(8, quantityList, cartList, 38); 
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
         System.out.println("AnonymousOrder submitted suceessfully");
@@ -89,7 +89,7 @@ public class OrderDAOTest {
         assertEquals(order.getTotalAmount(),8.0,0.001);
         System.out.println("ID: " + order.getCustomerID());
         assertEquals(order.getCustomerID(), 0);  //since the user is anonymous, the userID is 0 (null)
-        assertEquals(order.getShipmentID(), 114);                               
+        assertEquals(order.getShipmentID(), 38);                               
     }
     
     @Test

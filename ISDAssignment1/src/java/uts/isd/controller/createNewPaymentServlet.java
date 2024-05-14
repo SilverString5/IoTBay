@@ -151,6 +151,7 @@ public class createNewPaymentServlet extends HttpServlet{
             try{
                 if(user != null) {
                     if (!paymentDAO.checkExists(paymentCardNumber)){
+                         System.out.println("Entered");
                         paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
                     }
                     Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));

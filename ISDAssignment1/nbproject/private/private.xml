@@ -3,29 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/DeleteShipmentServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/model/dao/UserDAO.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/test/unit/test/UserDAOTest.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/test/unit/test/ShipmentDAOTest.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/model/Order.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/orders.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/test/unit/test/DAOTest.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/UpdateOrderServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/shipmentHistory.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/shipmentDetail.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/model/dao/PaymentDAO.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/manageRegistration.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/SearchOrderServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/test/unit/test/OrderDAOTest.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/updateorder.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/test/unit/test/TestRunner.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/createNewPaymentServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/index.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/FetchPreviousPaymentsServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/OrderHistoryServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/DeleteRegistrationServlet.java</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/web/deleteShipment.jsp</file>
-            <file>file:/Users/pyaephyozaw/Documents/GitHub/IoT/ISDAssignment1/src/java/uts/isd/controller/DisplayCartServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/index.jsp</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/paymentListServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/ProductDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/model/dao/AccessLogDAO.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/ShipmentDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/OrderDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/AccessLogDAOTest.java</file>
         </group>
     </open-files>
 </project-private>

@@ -237,8 +237,8 @@ public class PaymentDAO {
        ResultSet rs = checkSt.executeQuery();
        while (rs.next()){
             exists = rs.next();
-            rs.close();
-            checkSt.close();
+            
+            
        }
        
        return exists;

@@ -38,7 +38,7 @@ public class AccessLogDAOTest {
 
         @Test
         public void testFilterAccessLog() throws SQLException {
-                ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(3, "2021-10-13");
+                ArrayList<UserAccessLog> filLogs = manager.filterAccessLogDate(20, "2021-10-13");
                 assertEquals(filLogs.size(),1);
         }
          @Test

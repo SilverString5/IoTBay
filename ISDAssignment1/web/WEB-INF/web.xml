@@ -217,7 +217,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   </servlet-mapping>
    <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/ConnServlet</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>

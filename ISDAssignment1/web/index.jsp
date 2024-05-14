@@ -27,7 +27,13 @@
     <% User user = (User)session.getAttribute("user"); 
 
         ArrayList<Product> deviceList = (ArrayList<Product>) session.getAttribute("listDevice");
-
+        
+        Integer shippingIDInteger = (Integer) session.getAttribute("shippingID");
+        String shippingID = null;
+        if (shippingIDInteger != null) {
+            shippingID = String.valueOf(shippingIDInteger); 
+        }
+        
         if(session.getAttribute("shoppingCart") != null){
             HashMap<Integer, Integer> shoppingCart = (HashMap<Integer, Integer>)session.getAttribute("shoppingCart");
         }
@@ -70,6 +76,9 @@
                 <li><a href="http://localhost:8080/ISDAssignment1/register.jsp" >Register</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/DisplayCartServlet">Shopping Cart</a></li>
                 <li><a href="http://localhost:8080/ISDAssignment1/OrderHistoryServlet" >Orders </a></li>
+                <%if(shippingID != null) { %>
+                    <li><a href="./shipmentDetail?shippingID=<%=shippingID%>">Shipping Detail </a></li>
+                <% } %>
             </ul>              
             </div>
             <br>

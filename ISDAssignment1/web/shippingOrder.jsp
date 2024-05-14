@@ -66,7 +66,7 @@
                     <% if(errorMsg != null) {
                         for(String errorLine : errorMsg){ %>
 
-                        <p><%=errorLine %></p>
+                        <p class="errorMessage"><%=errorLine %></p>
 
                     <%  } %>
                 <% } %>

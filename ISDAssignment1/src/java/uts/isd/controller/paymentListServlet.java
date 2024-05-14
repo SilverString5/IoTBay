@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isd.controller;
+package uts.isd.controller;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.sql.Date;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import isd.model.Payment;
-import isd.model.Payments;
-import isd.model.dao.*;
+import uts.isd.model.Payment;
+import uts.isd.model.Payments;
+import uts.isd.model.dao.*;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
-import isd.model.dao.PaymentDAO;
+import uts.isd.model.dao.PaymentDAO;
 import java.util.*;
 import uts.isd.model.User;
 /**

@@ -39,7 +39,10 @@ public class createNewPaymentServlet extends HttpServlet{
         User user = (User) session.getAttribute("user");
         Payment payment = (Payment) session.getAttribute("payment");
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
-        
+
+        session.removeAttribute("errorMsgs");        
+
+
         if (user != null) {
             try {
                 ArrayList<Payment> previousPayments = paymentDAO.fetchPaymentsFromACustomer(user.getUserID());
@@ -76,7 +79,7 @@ public class createNewPaymentServlet extends HttpServlet{
                     String selectedPaymentMethod = paymentInfo[1];
                     // Set the selected payment method attribute
                     request.setAttribute("selectedPaymentMethod", selectedPaymentMethod);
-                    
+
                     request.setAttribute("selectedExpiryDate", paymentInfo[2]);
                     request.setAttribute("selectedPaymentCVC", paymentInfo[3]);
                     request.setAttribute("selectedPaymentCardNumber", paymentInfo[4]);

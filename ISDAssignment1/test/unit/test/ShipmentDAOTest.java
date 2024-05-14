@@ -40,6 +40,7 @@ public class ShipmentDAOTest {
         assertNotNull(connect);
     }
     
+    
     @Test
     public void testFetchShipmentFromACustomer() throws SQLException {
         ArrayList<Shipment> shipment = shipmentDAO.fetchShipmentFromACustomer(8);
@@ -67,6 +68,19 @@ public class ShipmentDAOTest {
         
     }
     
+    @Test
+    public void testFetchShipmentID() throws SQLException {
+        Date shipmentTestDate = new Date(2024 - 1900, 5 - 1, 7);
+        int shipmentID = shipmentDAO.fetchShipment("24 Shirley Street, Maudsland QLD 4210", "Express", "Dispatched", shipmentTestDate);
+        System.out.println("The shipment ID for this should be 1. The shipment ID received is " + shipmentID);
+    }
+    
+    @Test
+    public void testFetchShipmentByID() throws SQLException {
+        Shipment shipment = shipmentDAO.fetchShipmentByID(1);
+        System.out.println("For ShipmentID 1, the Shipment Address " + shipment.getShipmentAddress());
+    }
+    
 
     @Test
     public void testCreateShipment() throws SQLException {
@@ -76,17 +90,17 @@ public class ShipmentDAOTest {
     
     @Test
     public void testUpdateShipmentAddressAndMethod() throws SQLException {
-        shipmentDAO.updateShipmentAddressAndMethod(21, "123/267-319 Bulwara Road, Ultimo NSW 2007", "Standard");
+        shipmentDAO.updateShipmentAddressAndMethod(25, "123/267-319 Bulwara Road, Ultimo NSW 2007", "Standard");
     } 
     
     @Test
     public void testDeleteShipment() throws SQLException {
-        shipmentDAO.deleteShipment(21);
+        shipmentDAO.deleteShipment(25);
     }
     
     @Test
     public void testUpdateShipmentStatus() throws SQLException {
-        shipmentDAO.updateShipmentStatus(2);
+        shipmentDAO.updateShipmentStatus(25);
     }
 
 }

@@ -73,9 +73,7 @@ public class ShipmentDAO {
     
     public Date calculateShipmentDate(Date currentDate) {
         currentDate.setTime(currentDate.getTime() - 36000000);
-        System.out.println(currentDate);
         currentDate.setTime(currentDate.getTime() + 172800000);
-        System.out.println(currentDate);
         
         return currentDate;
     }
@@ -85,8 +83,8 @@ public class ShipmentDAO {
         readsQuery.setString(1, shipmentAddressInput);
         readsQuery.setString(2, ShipmentMethodInput);
         readsQuery.setString(3, shipmentStatusInput);
-        readsQuery.setDate(4, new java.sql.Date(shipmentDateInput.getTime()));
         
+        readsQuery.setDate(4, new java.sql.Date(shipmentDateInput.getTime()));
         
         ResultSet resultSet = readsQuery.executeQuery();
         
@@ -180,10 +178,8 @@ public class ShipmentDAO {
     public Shipment fetchShipmentByFilter(int customerID, int shipmentIDAsInput) throws SQLException {
         
         PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=? AND SHIPMENTID=?");
-        System.out.println(readQuery);
         readQuery.setString(1, String.valueOf(customerID));
         readQuery.setString(2, String.valueOf(shipmentIDAsInput));
-        System.out.println(readQuery);
         ResultSet resultSet = readQuery.executeQuery();
         
          if(resultSet.next()) {

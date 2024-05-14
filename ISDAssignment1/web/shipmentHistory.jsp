@@ -65,7 +65,7 @@
                 </form>
             
                 <%if(shipmentFilterError != null) {%> 
-                    <p><%=shipmentFilterError%></p> 
+                    <p class="errorMessage"><%=shipmentFilterError%></p> 
                 <% } %>
 
         
@@ -77,7 +77,7 @@
                         <th>Method: </th>
                         <th>Status: </th>
                         <th>Date: </th>
-                        <th></th>
+                        <th>View or Delete Shipment</th>
                     </tr>
             
             <!-- For Loop That Finds All Shipment Records Based On Prompt -->

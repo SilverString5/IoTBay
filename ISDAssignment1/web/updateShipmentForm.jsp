@@ -49,6 +49,17 @@
                 <div class="middle-container">    
                     <div class="shipping-container">
                         <h2>Shipping Address</h2>
+                        
+                        <% if(invalidAddress != null){ %>
+                                <p class="errorMessage"><%=invalidAddress%></p>
+                            <% } %>
+
+                            <% if(errorMsg != null){ 
+                                for(String error : errorMsg){%>
+                                    <p class="errorMessage"><%=error%></p>
+                                <%}%>
+
+                            <% } %>
 
 
                         <form method="POST" action="./updateShipmentDetail">
@@ -71,23 +82,8 @@
 
                                 <% } %>
                                 </select>
-
-
-                            </div> 
-
-                            <% if(invalidAddress != null){ %>
-                                <p><%=invalidAddress%></p>
-                            <% } %>
-
-                            <% if(errorMsg != null){ 
-                                for(String error : errorMsg){%>
-                                    <p><%=error%></p>
-                                <%}%>
-
-                            <% } %>
-
-                            
-                            <div class="flexbox">
+                                
+                                <div class="flexbox">
                                 <div class="first-column">
                                     <button><a href="./shipmentDetail.jsp">Back to Shipment Detail</a></button>
                                 </div>
@@ -96,6 +92,14 @@
                                     <button type="submit"> Submit </button>
                                 </div>
                             </div>
+
+
+                            </div> 
+
+                            
+
+                            
+                            
                             
                             
                         </form>

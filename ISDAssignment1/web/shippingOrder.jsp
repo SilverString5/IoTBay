@@ -99,13 +99,25 @@
                                 <option value="Express">Express</option>
                             </select>
 
-
+                             
                         </div> 
-
-                        <button class="submit-button" type="submit" name="orderSubmit" value="true"> Submit </button>
+                        
+                        <div class="flexbox">
+                            <div class="first-column">
+                                <button  type="submit" name="orderSubmit" value="true"> Submit </button>
+                            </div>
+                            <div class="second-column align-right"/>
+                        </div>
+                            
+                        
+                        
+                        
+                        
+                        
+                        
 
                     </form>
-                </div>
+                
             </div>
          
             <% } else { 

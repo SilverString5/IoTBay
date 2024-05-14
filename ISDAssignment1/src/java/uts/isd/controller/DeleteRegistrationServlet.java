@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.UserDAO;
+import uts.isd.model.dao.OrderDAO;
 
 /**
  *
@@ -25,9 +26,11 @@ public class DeleteRegistrationServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         UserDAO userDAO = (UserDAO)session.getAttribute("userDAO");
+OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         User user = (User)session.getAttribute("user");
         if (user!=null){
         try{
+        orderDAO.changeOrderStatus(user.getUserID());
         userDAO.delete(user.getUserID());
         request.getRequestDispatcher("logout.jsp").include(request, response);
         }

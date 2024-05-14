@@ -32,6 +32,29 @@ import uts.isd.model.User;
 //Change string variables...
 
 public class createNewPaymentServlet extends HttpServlet{
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Payment payment = (Payment) session.getAttribute("payment");
+        PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
+        
+        if (user != null) {
+            try {
+                ArrayList<Payment> previousPayments = paymentDAO.fetchPaymentsFromACustomer(user.getUserID());
+                request.setAttribute("previousPayments", previousPayments);
+            }
+            catch (SQLException e){
+                request.setAttribute("error", "Error fetching previous payments: ");
+            }
+        } else {
+            request.setAttribute("error", "No previous payments found.");
+        }
+        
+        request.getRequestDispatcher("PaymentForm.jsp").forward(request, response);
+    }
+
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -39,7 +62,32 @@ public class createNewPaymentServlet extends HttpServlet{
         Payment payment = (Payment) session.getAttribute("payment");
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
         
+        String selectedPaymentInfo = request.getParameter("previousPayments");
+
+
         session.removeAttribute("errorMsgs");
+
+        if (selectedPaymentInfo != null && !selectedPaymentInfo.isEmpty()) {
+            try {
+                // Parse the selected payment info
+                String[] paymentInfo = selectedPaymentInfo.split("\\|");
+                if (paymentInfo.length == 5) {
+                    // Set payment details as request attributes
+                    String selectedPaymentMethod = paymentInfo[1];
+                    // Set the selected payment method attribute
+                    request.setAttribute("selectedPaymentMethod", selectedPaymentMethod);
+                    
+                    request.setAttribute("selectedExpiryDate", paymentInfo[2]);
+                    request.setAttribute("selectedPaymentCVC", paymentInfo[3]);
+                    request.setAttribute("selectedPaymentCardNumber", paymentInfo[4]);
+                }
+            } catch (Exception e) {
+                // Handle parsing error
+                System.out.println("Error parsing selected payment info: " + e.getMessage());
+            }
+        }
+
+
         
         
         String paymentMethod = request.getParameter("paymentMethod");
@@ -99,12 +147,17 @@ public class createNewPaymentServlet extends HttpServlet{
         }
         else {
             try{
-                if (!paymentDAO.checkExists(paymentCardNumber)){  
-                    paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
+                if(user != null) {
+                    if (!paymentDAO.checkExists(paymentCardNumber)){
+                        paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
+                    }
+                    Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));
+                    session.setAttribute("payments", payments);
+                    
                 }
-                
-                Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));
-                session.setAttribute("payments", payments);
+                else {
+                    paymentDAO.createPaymentForAnonymousUser(paymentMethod, expiryDate, paymentCVC, paymentCardNumber);
+                }
                 
                 
 //                System.out.println("Entered");

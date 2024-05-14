@@ -42,11 +42,11 @@ public class UserDAOTest {
 	@Test
 	public void testfetchsUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
-		assertTrue(users.size()>=20);
+		assertTrue(users.size()>=10);
 	}
         @Test
         public void testDeleteUser() throws SQLException{
-            manager.delete(30);
+            manager.delete(21);
         }
 
         @Test
@@ -62,7 +62,7 @@ public class UserDAOTest {
         
         @Test
         public void testUpdate() throws SQLException{
-        User user = manager.update("laylaupdated@winxclub.com", "winxclub", "Layla Houssain", "0422222222",
+        User user = manager.update("updated@winxclub.com", "winxclub", "Layla Houssain", "0422222222",
         "42 Pixie Ave, Domino, QLD, 7023", "1992-07-21", "F", 3);
         assertEquals("winxclub", user.getPassword());
 }

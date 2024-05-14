@@ -88,7 +88,7 @@
                                             </select>
                                         </div>
                                     </td>
-                                    <td><input type= "text" id = "postcode" name = "postcode"></td>
+                                    <td><input type= "number" id = "postcode" name = "postcode"></td>
                                 </tr>
                             </table>
 

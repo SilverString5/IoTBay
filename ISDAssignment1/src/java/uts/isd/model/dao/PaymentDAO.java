@@ -252,6 +252,18 @@ public class PaymentDAO {
        }
        return paymentID;
    }
+   
+   public void createPaymentForAnonymousUser(String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber) throws SQLException {
+        PreparedStatement createQuery = connect.prepareStatement("INSERT INTO Payment(PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber) VALUES(?,?,?,?)");
+        createQuery.setString(1, paymentMethod);
+        createQuery.setDate(2, new java.sql.Date(expiryDate.getTime()));
+        createQuery.setInt(3, paymentCVC);
+        createQuery.setInt(4, paymentCardNumber);
+        
+        createQuery.executeUpdate();
+        System.out.println("Anonymous Record Successfully Created.");
+
+   }
 
 
    public void createPaymentForAnonymousUser(String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber) throws SQLException {

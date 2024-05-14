@@ -37,7 +37,7 @@
           User user = (User) session.getAttribute("user");
         %>
         
-        <%if(user != null) {%>
+        <%if(user == null || user.getUserType().contains("C")) {%>
             <div class="middle-container">        
         
         

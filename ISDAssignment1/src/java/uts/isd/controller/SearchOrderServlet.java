@@ -32,15 +32,22 @@ public class SearchOrderServlet extends HttpServlet{
             String orderDate = request.getParameter("orderDate");
             StringBuilder errorMsg = new StringBuilder();
             boolean validInput = true;
-            if(orderIdStr == null || orderIdStr.trim().isEmpty() || !(orderIdStr.matches("[0-9]+"))){
+            if(orderIdStr == null || orderIdStr.trim().isEmpty()){
                 validInput = false;
-                errorMsg.append("Invalid order number format. ");
+                errorMsg.append("Please fill in order number. ");
+            }else if(!(orderIdStr.matches("[0-9]+"))){
+                validInput = false;
+                errorMsg.append("Order number cannot be non-numeric or negative. ");
             }
                        
-            if(orderDate.trim().isEmpty() || !(orderDate.matches("\\d{4}-\\d{2}-\\d{2}"))){  //check the date format matches (YYYY-MM-DD)
+            if(orderDate == null || orderDate.trim().isEmpty()){  //check the date format matches (YYYY-MM-DD)
+                validInput = false;
+                errorMsg.append("Please fill in order date. ");
+            }else if(!(orderDate.matches("\\d{4}-\\d{2}-\\d{2}"))){
                 validInput = false;
                 errorMsg.append("Invalid date format. Use this format:(YYYY-MM-DD).");
             }
+            
             if(!validInput){
                 request.setAttribute("errorMessage", errorMsg.toString());
                 request.getRequestDispatcher("orders.jsp").forward(request, response);

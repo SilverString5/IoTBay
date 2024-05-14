@@ -49,7 +49,7 @@
                 
                     <div class="search-bar">
                         <label for="shipmentID">Shipment ID: </label>
-                        <input type="text" id = "shipmentID" name = "shipmentID">
+                        <input type="number" id = "shipmentID" name = "shipmentID">
                
 
                         <label for="date">Date: </label>
@@ -59,7 +59,7 @@
                         <button type="submit">Search</button>
 
                         <input type="hidden" name="resetButton" value="true">
-                        <button type="submit"><a href="./shipmentHistory.jsp">Reset</a></button>
+                        <button><a href="./shipmentHistory.jsp">Reset</a></button>
                     </div>
                 
                 </form>

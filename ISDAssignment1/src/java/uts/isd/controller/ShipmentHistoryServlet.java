@@ -81,13 +81,13 @@ public class ShipmentHistoryServlet extends HttpServlet{
         
         //if the shipment ID or date input box is empty, an error message should appear asking to fill in the information
         if((request.getParameter("shipmentID").equals("") || date.length()==0)){
-            
+            System.out.println("pass");
             session.setAttribute("shipmentFilterError", "Please fill in both shipment ID and date");
             request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);
             
         } else {
             //prevent the error messages from the last time user filter the list
-            session.setAttribute("shipmentFilterError", null);
+            session.removeAttribute("shipmentFilterError");
             String shipmentID = request.getParameter("shipmentID");
  
             ShipmentDAO shipmentDAO = (ShipmentDAO) session.getAttribute("shipmentDAO");
@@ -112,6 +112,8 @@ public class ShipmentHistoryServlet extends HttpServlet{
                 
                 //set the shipment records in the current session to contain all shipments made rather than one created from the filter
                 try {
+                    System.out.println("pass");
+                    
                     Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
                     session.setAttribute("shipments", shipments);
                     request.getRequestDispatcher("shipmentHistory.jsp").forward(request, response);

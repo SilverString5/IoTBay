@@ -32,9 +32,12 @@ public class UpdateOrderServlet extends HttpServlet{
         if(request.getParameter("saved") == null){
 //            System.out.println("Entered Here");
             String quantityStr = request.getParameter("productQuantity");
-            if(quantityStr == null || quantityStr.trim().isEmpty() || !(quantityStr.matches("[1-9]+"))){ 
+            if(quantityStr == null || quantityStr.trim().isEmpty()){ 
 //                System.out.println("entered");
-                request.setAttribute("quantityError", "Quantity can't be empty or non-numeric or negative numbers.");
+                request.setAttribute("quantityError", "Quantity can't be empty or non-numeric");
+                
+            }else if(!(quantityStr.matches("[1-9]+"))){
+                request.setAttribute("quantityError", "Quantity cannot be less than 1");
                 
             }else{               
                 int productID = Integer.parseInt(request.getParameter("productID"));

@@ -45,6 +45,52 @@ public class createShipmentServlet extends HttpServlet {
         String postcode = request.getParameter("postcode");
         String shipmentMethod = request.getParameter("shipmentMethod");
         
+        ArrayList<String> errorMsg = validateUserInput(streetAddress, city, state, postcode, shipmentMethod);
+
+        //If there are no error with the input user place in
+        if(errorMsg.isEmpty()){
+            
+            String shipmentAddress = streetAddress + ", " + city + " " + state + " " + postcode;
+            
+            String shipmentStatus = "Pending";
+            Date shipmentDate = new Date();
+            
+            try {
+                //Creates a shipment record and adds to the database
+                if(user != null) {
+                    shipmentDAO.createShipment(user.getUserID(), shipmentAddress , shipmentMethod, shipmentStatus, shipmentDate);
+                    Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
+                    session.setAttribute("shipments", shipments);
+                }
+                else {
+                    shipmentDAO.createShipmentForAnonymousUser(shipmentAddress, shipmentMethod, shipmentStatus, shipmentDate);
+                    int anonymousShipmentID = shipmentDAO.fetchShipment(shipmentAddress, shipmentMethod, shipmentStatus, shipmentDate);
+                    session.setAttribute("shippingID", anonymousShipmentID);
+                }
+                
+                
+                //Fetch all the shipments made from the customer 
+                //Therefore when user is 'redirected' to the shipment history web page, their shipment records are updated
+                
+                request.setAttribute("shipmentAddress", shipmentAddress);  //code added
+                request.setAttribute("shipmentMethod", shipmentMethod);     //code added
+                request.getRequestDispatcher("orderSummary.jsp").forward(request, response);
+
+
+
+            } catch(SQLException e) {
+                System.out.println(e);
+            }
+        
+        //If there are error with the user input, web page should 'refresh' and the error messages should be displayed 
+        } else {
+            session.setAttribute("errorMessage", errorMsg);
+            request.getRequestDispatcher("shippingOrder.jsp").forward(request, response);
+        }
+        
+    }
+    
+    public ArrayList<String> validateUserInput(String streetAddress, String city, String state, String postcode, String shipmentMethod) {
         ArrayList<String> errorMsg = new ArrayList<>();
         
         //Checks if the streetAddress is null   
@@ -96,46 +142,8 @@ public class createShipmentServlet extends HttpServlet {
         if(shipmentMethod.equals("")) {
             errorMsg.add("Please select a shipment method");
         }
-
-        //If there are no error with the input user place in
-        if(errorMsg.isEmpty()){
-            
-            String shipmentAddress = streetAddress + ", " + city + " " + state + " " + postcode;
-            
-            String shipmentStatus = "Pending";
-            Date shipmentDate = new Date();
-            
-            try {
-                //Creates a shipment record and adds to the database
-                if(user != null) {
-                    shipmentDAO.createShipment(user.getUserID(), shipmentAddress , shipmentMethod, shipmentStatus, shipmentDate);
-                    Shipments shipments = new Shipments(shipmentDAO.fetchShipmentFromACustomer(user.getUserID()));
-                    session.setAttribute("shipments", shipments);
-                }
-                else {
-                    shipmentDAO.createShipmentForAnonymousUser(shipmentAddress, shipmentMethod, shipmentStatus, shipmentDate);
-                }
-                
-                
-                //Fetch all the shipments made from the customer 
-                //Therefore when user is 'redirected' to the shipment history web page, their shipment records are updated
-                
-                request.setAttribute("shipmentAddress", shipmentAddress);  //code added
-                request.setAttribute("shipmentMethod", shipmentMethod);     //code added
-                request.getRequestDispatcher("orderSummary.jsp").forward(request, response);
-
-
-
-            } catch(SQLException e) {
-                System.out.println(e);
-            }
         
-        //If there are error with the user input, web page should 'refresh' and the error messages should be displayed 
-        } else {
-            session.setAttribute("errorMessage", errorMsg);
-            request.getRequestDispatcher("shippingOrder.jsp").forward(request, response);
-        }
-        
+        return errorMsg;
     }
     
     //Method to check if there is a house number in the street address

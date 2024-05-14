@@ -42,27 +42,43 @@ public class ViewShipmentDetailServlet extends HttpServlet{
         }
         
         //if the user is not signed in
-        else if(user == null || user.getUserType().contains("S")){
-            
-            //redirect them to a warning page
-            response.sendRedirect("./unregisteredWarning.jsp");
-            
-        } else {
+        else if(user == null || user.getUserType().contains("C")){
             
             try {
-                //find the shipment by the user ID
-                Shipment shipment = shipmentDAO.fetchShipmentByFilter(user.getUserID(), Integer.parseInt(shipmentID));
                 
-                //set this shipment record in the session 
-                // in order for the shipmentDetail.jsp to access details about this specific shipment record
-                session.setAttribute("shipment", shipment);
+                if(user == null){
+                    Shipment shipment = shipmentDAO.fetchShipmentByID(Integer.parseInt(shipmentID));
+                    //set this shipment record in the session 
+                    // in order for the shipmentDetail.jsp to access details about this specific shipment record
+                    session.setAttribute("shipment", shipment);
+
+                    //'redirect' the user to the shipmentDetail page
+                    request.getRequestDispatcher("shipmentDetail.jsp").forward(request, response);
+                    
+                } else {
+                    //find the shipment by the user ID
+                    Shipment shipment = shipmentDAO.fetchShipmentByFilter(user.getUserID(), Integer.parseInt(shipmentID));
+                    //set this shipment record in the session 
+                    // in order for the shipmentDetail.jsp to access details about this specific shipment record
+                    session.setAttribute("shipment", shipment);
+
+                    //'redirect' the user to the shipmentDetail page
+                    request.getRequestDispatcher("shipmentDetail.jsp").forward(request, response);
+                }
                 
-                //'redirect' the user to the shipmentDetail page
-                request.getRequestDispatcher("shipmentDetail.jsp").forward(request, response);
+                
+                
             
             } catch(SQLException e) {
                 System.out.println(e);
             }
+            
+        } else {
+            
+            //redirect them to a warning page
+            response.sendRedirect("./unregisteredWarning.jsp");
+            
+            
         }
  
         

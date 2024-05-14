@@ -16,6 +16,9 @@ body {
     padding-right: 100px; */
 }
 
+h2 {
+    font-size: 35px;
+}
 
 button {
     background-color: #7A9E05;
@@ -87,6 +90,16 @@ button:hover{
 
 form a {
     text-decoration: none;
+    color: white;
+}
+
+p.errorMessage  {
+    font-weight: bold;
+    font-style: italic;
+}
+
+th {
+    background-color: #7A9E05;
     color: white;
 }
 

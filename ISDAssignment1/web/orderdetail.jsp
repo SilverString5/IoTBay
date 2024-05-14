@@ -94,5 +94,11 @@
                 </tr>
             </table>
         </div>
+                <br> 
+                <div id="updateForm">
+                    <form method="GET" action="/ISDAssignment1/OrderHistoryServlet">
+                        <input id="updateBtn" type="submit" value="Back to Orders"/>
+                    </form>
+                </div>
     </body>
 </html>

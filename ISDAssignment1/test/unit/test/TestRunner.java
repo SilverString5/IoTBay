@@ -72,7 +72,19 @@ public class TestRunner {
         System.out.println(" Number of Tests Ignored = " + result.getIgnoreCount());
         System.out.println(" Number of Tests Failed = " + result.getFailureCount());
         System.out.println(" Time = " + result.getRunTime() / 1000.0 + "s");
+        
+        //Test OrderDAO
+        System.out.println("- Testing Order: ");
+        Result orderResult = JUnitCore.runClasses(OrderDAOTest.class);
+        for(Failure failure : orderResult.getFailures()){
+            System.out.println(failure.toString());
+        }
+        String orderStatus = orderResult.wasSuccessful() ? "Passed" : "Failed";
+        System.out.println(" Test status = " + orderStatus);
+        System.out.println(" Number of Tests Passed = " + orderResult.getRunCount());
+        System.out.println(" Number of Tests Ignored = " + orderResult.getIgnoreCount());
+        System.out.println(" Number of Tests Failed = " + orderResult.getFailureCount());
+        System.out.println(" Time = " + orderResult.getRunTime() / 1000.0 + "s");
     }
-
 
 }

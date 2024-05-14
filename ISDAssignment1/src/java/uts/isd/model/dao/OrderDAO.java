@@ -33,7 +33,7 @@ public class OrderDAO {
     private PreparedStatement orderLineItemSt;
     private PreparedStatement fetchPendingOrderSt;
     private PreparedStatement updateSt;
-    private PreparedStatement deleteSt;
+//    private PreparedStatement deleteSt;
     private PreparedStatement fetchProductIdSt;
     private PreparedStatement searchOrderSt;
     private PreparedStatement updateStatusSt;
@@ -46,7 +46,7 @@ public class OrderDAO {
     private String readQuery = "SELECT * FROM `Order` WHERE UserID=?";
     private String readSpecificOrder = "SELECT * FROM `Order` WHERE OrderID=? AND OrderDate=?";
     private String fetchPendingOrder = "SELECT OrderID FROM `Order` WHERE UserID=? AND OrderStatus='Pending'";
-    private String deleteOrder = "DELETE FROM `Order` WHERE OrderID=?";
+//    private String deleteOrder = "DELETE FROM `Order` WHERE OrderID=?";
     private String orderLineItem = "INSERT INTO `OrderLineItem` (ProductID, OrderID, ProductQuantity, SubTotal) VALUES (?, ?, ?, ?) "
                                     + "ON DUPLICATE KEY UPDATE ProductQuantity = VALUES(ProductQuantity), SubTotal = VALUES(SubTotal)";
     private String fetchProductID = "SELECT * FROM `OrderLineItem` WHERE OrderID=?";
@@ -67,7 +67,7 @@ public class OrderDAO {
         submitOrderSt = connection.prepareStatement(submitOrder);
         orderLineItemSt = connection.prepareStatement(orderLineItem);
         fetchPendingOrderSt = connection.prepareStatement(fetchPendingOrder);
-        deleteSt = connection.prepareStatement(deleteOrder);
+//        deleteSt = connection.prepareStatement(deleteOrder);
         fetchProductIdSt = connection.prepareStatement(fetchProductID);
         updateStatusSt = connection.prepareStatement(updateStatus);
         updateStatusSt2 = connection.prepareStatement(updateStatus2);
@@ -180,7 +180,7 @@ public class OrderDAO {
        }
        return orderList; 
     }  
-    // Read - Get OrderID of the pending order (shopping cart)
+    // Read - Get OrderID of the pending order (shopping cart) Delete?
     public int getOrderID (int customerID) throws SQLException {
         fetchPendingOrderSt.setInt(1, customerID);
         ResultSet rs = fetchPendingOrderSt.executeQuery();
@@ -233,11 +233,11 @@ public class OrderDAO {
         return order;
     }
     //Delete Operation
-    public void deleteOrder (int orderID) throws SQLException{
-        deleteSt.setInt(1, orderID);
-        int row = deleteSt.executeUpdate();
-        System.out.println(row + " rows deleted");
-    }
+//    public void deleteOrder (int orderID) throws SQLException{
+//        deleteSt.setInt(1, orderID);
+//        int row = deleteSt.executeUpdate();
+//        System.out.println(row + " rows deleted");
+//    }
     
     public void changeOrderStatus (int userID) throws SQLException{
         updateStatusSt.setInt(1, userID);
@@ -245,6 +245,7 @@ public class OrderDAO {
         
     }
     
+    //Delete Operation: when the user cancel the order, change the order status to "Cancelled" 
     public void cancelOrder (int orderID) throws SQLException{
         updateStatusSt2.setInt(1, orderID);
         updateStatusSt2.executeUpdate();

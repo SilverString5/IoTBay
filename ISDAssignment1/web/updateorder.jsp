@@ -108,7 +108,7 @@
         </div>
         <br>
         <div id="updateForm">
-            <form method="POST" action="/ISDAssignment1/OrderHistoryServlet">
+            <form method="GET" action="/ISDAssignment1/OrderHistoryServlet">
                 <input id="updateBtn" type="submit" value="Back to Orders"/>
             </form>
             <form method="POST" action="/ISDAssignment1/UpdateOrderServlet">

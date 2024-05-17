@@ -33,7 +33,6 @@ public class OrderDAO {
     private PreparedStatement orderLineItemSt;
     private PreparedStatement fetchPendingOrderSt;
     private PreparedStatement updateSt;
-//    private PreparedStatement deleteSt;
     private PreparedStatement fetchProductIdSt;
     private PreparedStatement searchOrderSt;
     private PreparedStatement updateStatusSt;
@@ -46,7 +45,6 @@ public class OrderDAO {
     private String readQuery = "SELECT * FROM `Order` WHERE UserID=?";
     private String readSpecificOrder = "SELECT * FROM `Order` WHERE OrderID=? AND OrderDate=?";
     private String fetchPendingOrder = "SELECT OrderID FROM `Order` WHERE UserID=? AND OrderStatus='Pending'";
-//    private String deleteOrder = "DELETE FROM `Order` WHERE OrderID=?";
     private String orderLineItem = "INSERT INTO `OrderLineItem` (ProductID, OrderID, ProductQuantity, SubTotal) VALUES (?, ?, ?, ?) "
                                     + "ON DUPLICATE KEY UPDATE ProductQuantity = VALUES(ProductQuantity), SubTotal = VALUES(SubTotal)";
     private String fetchProductID = "SELECT * FROM `OrderLineItem` WHERE OrderID=?";
@@ -67,7 +65,6 @@ public class OrderDAO {
         submitOrderSt = connection.prepareStatement(submitOrder);
         orderLineItemSt = connection.prepareStatement(orderLineItem);
         fetchPendingOrderSt = connection.prepareStatement(fetchPendingOrder);
-//        deleteSt = connection.prepareStatement(deleteOrder);
         fetchProductIdSt = connection.prepareStatement(fetchProductID);
         updateStatusSt = connection.prepareStatement(updateStatus);
         updateStatusSt2 = connection.prepareStatement(updateStatus2);
@@ -109,8 +106,7 @@ public class OrderDAO {
        
     }
     
-    public int anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { //just add orderID? (TBD) 
-//        submitOrderSt.setInt(1, customerID);
+    public int anonymousOrder (double totalAmount, ArrayList<Integer> quantityList, ArrayList<Product> cartList, int shipmentID) throws SQLException { 
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
         anonymousOrderSt.setDate(1, sqlDate);
@@ -168,7 +164,6 @@ public class OrderDAO {
            Date orderDate = rs.getDate(2);
            String orderStatus = rs.getString(3);
            double totalAmount = rs.getDouble(4);
-//           int customerID = Integer.parseInt(rs.getString(7));
            int shipmentID = 0; //Default shipmentID
            String ShipmentIDString = rs.getString(5);
            if(ShipmentIDString != null){
@@ -180,6 +175,7 @@ public class OrderDAO {
        }
        return orderList; 
     }  
+    
     // Read - Get OrderID of the pending order (shopping cart) Delete?
     public int getOrderID (int customerID) throws SQLException {
         fetchPendingOrderSt.setInt(1, customerID);
@@ -203,7 +199,6 @@ public class OrderDAO {
     }
     
     public HashMap<Integer, Integer> getQuantity(int orderID) throws SQLException {
-//        ArrayList<Integer> productIDList = new ArrayList();
         HashMap<Integer, Integer> map = new HashMap();
         fetchProductIdSt.setInt(1, orderID);
         ResultSet rs = fetchProductIdSt.executeQuery();
@@ -232,12 +227,6 @@ public class OrderDAO {
         }
         return order;
     }
-    //Delete Operation
-//    public void deleteOrder (int orderID) throws SQLException{
-//        deleteSt.setInt(1, orderID);
-//        int row = deleteSt.executeUpdate();
-//        System.out.println(row + " rows deleted");
-//    }
     
     public void changeOrderStatus (int userID) throws SQLException{
         updateStatusSt.setInt(1, userID);
@@ -251,6 +240,7 @@ public class OrderDAO {
         updateStatusSt2.executeUpdate();
     }
     
+    //Add a row in order_payment table when the user submits the order
     public void updateOrderPayment (int orderID, int paymentID) throws SQLException{
         orderPaymentSt.setInt(1, paymentID);
         orderPaymentSt.setInt(2, orderID);

@@ -63,7 +63,6 @@ public class SearchOrderServlet extends HttpServlet{
                     Logger.getLogger(SearchOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try{
-//                    System.out.println("Date: " + sqlOrderDate);
                     Order order = orderDAO.searchOrder(orderID, sqlOrderDate);
                     if(order != null){
                         request.setAttribute("searchedOrder", order);

@@ -78,10 +78,6 @@ public class OrderDAOTest {
         LocalDate date = LocalDate.now();
         Date sqlDate = Date.valueOf(date);
         System.out.println("AnonymousOrder submitted suceessfully");
-        //Test
-//        ArrayList<Order> orders = new ArrayList();
-//        orders = orderDAO.readOrderHistory(1); 
-//        int lastIndex = orders.size() - 1;
         Order order = orderDAO.searchOrder(orderID, sqlDate);
         
         assertEquals(order.getOrderID(), orderID);
@@ -100,8 +96,6 @@ public class OrderDAOTest {
     
     @Test
     public void testSearchOrder() throws SQLException, ParseException{
-//        String dateString = "2022-02-02";
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date orderDate = Date.valueOf("2024-04-21");
         Order order = orderDAO.searchOrder(16, orderDate);
         

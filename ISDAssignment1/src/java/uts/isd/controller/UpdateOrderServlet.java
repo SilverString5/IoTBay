@@ -30,10 +30,8 @@ public class UpdateOrderServlet extends HttpServlet{
         HashMap<Integer, Integer> quantityMap = (HashMap<Integer, Integer>)session.getAttribute("quantityMap");
 
         if(request.getParameter("saved") == null){
-//            System.out.println("Entered Here");
             String quantityStr = request.getParameter("productQuantity");
             if(quantityStr == null || quantityStr.trim().isEmpty()){ 
-//                System.out.println("entered");
                 request.setAttribute("quantityError", "Quantity can't be empty or non-numeric");
                 
             }else if(!(quantityStr.matches("[1-9]+"))){
@@ -46,7 +44,7 @@ public class UpdateOrderServlet extends HttpServlet{
                     int stockInDB = productDAO.fetchSingleStock(productID);  
                     if(stockInDB >= productQuantity){ //check if the quantity exceeds the actual stock in the database 
                         if(request.getParameter("cartUpdate") == null){ // this will be met when the user is updating the order
-//                            System.out.println("ENTERED FIRST IF");
+
                             if(quantityMap.containsKey(productID)){
                                 quantityMap.put(productID, productQuantity);
                             }
@@ -65,12 +63,12 @@ public class UpdateOrderServlet extends HttpServlet{
                     System.out.print(e);
                 }              
             }
-            if(request.getParameter("cartUpdate") == null){
+            if(request.getParameter("cartUpdate") == null){  //updating the submitted order
                 request.getRequestDispatcher("updateorder.jsp").include(request, response);
-            }else{
+            }else{  //updating the shopping cart
                 request.getRequestDispatcher("DisplayCartServlet").forward(request, response);
             }                  
-        }else if(request.getParameter("saved") != null && request.getParameter("saved").equals("yes")){
+        }else if(request.getParameter("saved") != null && request.getParameter("saved").equals("yes")){  //when the user clicks "Save" button in updateorder.jsp
             ArrayList<Integer> updatedQuantityList = new ArrayList();
             for(Map.Entry<Integer, Integer> entry : quantityMap.entrySet()){
                 Integer quantity = entry.getValue();
@@ -87,8 +85,6 @@ public class UpdateOrderServlet extends HttpServlet{
                 int productid = product.getProductID();
                 int originalQuan = original.get(productid);
                 int updatedQuan = quantityMap.get(productid);
-//                System.out.println("Original " + originalQuan);
-//                System.out.println("Updated " + updatedQuan);
                 
                 if(updatedQuan > originalQuan){   
                     //when the updated quantity is larger than the original quantity, reduce the stock accordingly in the database
@@ -109,10 +105,8 @@ public class UpdateOrderServlet extends HttpServlet{
                     Integer id = entry.getKey();
                     Integer quantity = entry.getValue();
                     if(products.containsKey(id)){
-//                        System.out.println("ID: " + id + " Quantity: " + quantity);
                         //update the product stock in the database
                         int newStock = products.get(id) - quantity;
-//                        System.out.println("New: " + newStock);
                         productDAO.updateStock(id, newStock);
                     }
                 }               

@@ -28,7 +28,6 @@ public class DisplayCartServlet extends HttpServlet {
           HttpSession session = request.getSession();
           
           HashMap<Integer, Integer> shoppingCart;
-//          HashMap<Integer, Integer> shoppingCart = new HashMap();
           ArrayList<Product> productList = new ArrayList();
           ProductDAO productDAO = (ProductDAO)session.getAttribute("productDAO");
           OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
@@ -47,7 +46,7 @@ public class DisplayCartServlet extends HttpServlet {
           } catch (SQLException e){
               System.out.print(e);
           }
-          session.setAttribute("cartList", productList);
+          session.setAttribute("cartList", productList);  //cartList stores product objects associated with product IDs in the shopping cart
           request.getRequestDispatcher("shoppingcart.jsp").include(request, response);       
     }
     

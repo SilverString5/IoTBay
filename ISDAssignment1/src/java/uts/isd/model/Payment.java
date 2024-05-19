@@ -13,7 +13,7 @@ public class Payment implements Serializable{
     private int paymentCardNumber;
     private int paymentCVC;
     
-    
+    //default constructor to initialise.
     public Payment() {
         
     }
@@ -49,6 +49,7 @@ public class Payment implements Serializable{
         this.paymentCVC = paymentCVC;
     }
     
+    //for getting the paymentID.
     public int getPaymentID(){
         return this.paymentID;
     }
@@ -69,6 +70,7 @@ public class Payment implements Serializable{
         return this.paymentCVC;
     }
     
+    //used for parameter for the PaymentDAO creation and deletion, as well as fetching methods.
     public int getCustomerID() {
         return customerID;
     }

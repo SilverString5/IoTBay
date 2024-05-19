@@ -156,6 +156,20 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet-class>uts.isd.controller.createNewPaymentServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>  
+  
+   <servlet>
+    <servlet-name>paymentListServlet</servlet-name>
+    <servlet-class>uts.isd.controller.paymentListServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
+  
+  <servlet>
+    <servlet-name>deletePaymentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.deletePaymentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
+  
+  
 
   <servlet-mapping>
     <servlet-name>ConnServlet</servlet-name>
@@ -217,7 +231,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   </servlet-mapping>
    <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/ConnServlet</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
@@ -298,6 +312,16 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <servlet-mapping>
     <servlet-name>createNewPaymentServlet</servlet-name>
     <url-pattern>/createNewPaymentServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>paymentListServlet</servlet-name>
+    <url-pattern>/paymentListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>deletePaymentServlet</servlet-name>
+    <url-pattern>/deletePaymentServlet</url-pattern>
   </servlet-mapping>
 
   <session-config>

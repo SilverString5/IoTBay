@@ -34,63 +34,20 @@ import uts.isd.model.User;
 public class createNewPaymentServlet extends HttpServlet{
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Payment payment = (Payment) session.getAttribute("payment");
-        PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
-
-        session.removeAttribute("errorMsgs");        
-
-
-        if (user != null) {
-            try {
-                ArrayList<Payment> previousPayments = paymentDAO.fetchPaymentsFromACustomer(user.getUserID());
-                request.setAttribute("previousPayments", previousPayments);
-            }
-            catch (SQLException e){
-                request.setAttribute("error", "Error fetching previous payments: ");
-            }
-        } else {
-            request.setAttribute("error", "No previous payments found.");
-        }
-        
-        request.getRequestDispatcher("PaymentForm.jsp").forward(request, response);
-    }
-
-    @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        //getting required attributes from session.
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        //getting payment attribute from session.
         Payment payment = (Payment) session.getAttribute("payment");
+        //declaring the paymentDAO from the session.
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
         
-        String selectedPaymentInfo = request.getParameter("previousPayments");
 
-
-        session.removeAttribute("errorMsgs");
-
-        if (selectedPaymentInfo != null && !selectedPaymentInfo.isEmpty()) {
-            try {
-                // Parse the selected payment info
-                String[] paymentInfo = selectedPaymentInfo.split("\\|");
-                if (paymentInfo.length == 5) {
-                    // Set payment details as request attributes
-                    String selectedPaymentMethod = paymentInfo[1];
-                    // Set the selected payment method attribute
-                    request.setAttribute("selectedPaymentMethod", selectedPaymentMethod);
-
-                    request.setAttribute("selectedExpiryDate", paymentInfo[2]);
-                    request.setAttribute("selectedPaymentCVC", paymentInfo[3]);
-                    request.setAttribute("selectedPaymentCardNumber", paymentInfo[4]);
-                }
-            } catch (Exception e) {
-                // Handle parsing error
-                System.out.println("Error parsing selected payment info: " + e.getMessage());
-            }
-        }
-
-
+        //resetting the error messages so it doesn't show up when the page is reset.
+        session.removeAttribute("errorMsgs1");
+        
         
         
         String paymentMethod = request.getParameter("paymentMethod");
@@ -106,52 +63,63 @@ public class createNewPaymentServlet extends HttpServlet{
 //        System.out.println("CardNum: " + stringpaymentCardNumber);
         int paymentCardNumber = Integer.parseInt(stringpaymentCardNumber);
 //        System.out.println("CardNUM: " + paymentCardNumber);
+        //declaring the error messages.
+        String errorMsgs1="";
         
-        String errorMsgs="";
-        
+        //Test case if the paymentMethod is empty/ not filled in.
         if (paymentMethod.isEmpty()){
-            errorMsgs+="Your Payment Method is not filled in. \n";
+            //adding to error message.
+            errorMsgs1+="Your Payment Method is not filled in. \n";
         }
         
         try {
+            //making a date for current date to compare to the date the user inserted into the form. If the expiry date is before the current date,
+            //the appropriate error message will be made into the error Message string for the session.
             long now = System.currentTimeMillis();
             Date nowDate = new Date(now);
             if (expiryDate.before(nowDate)){
-                errorMsgs+="Your expiry Date has reached. You are no longer able to use this payment Method.\n";
+                errorMsgs1+="Your expiry Date has reached. You are no longer able to use this payment Method.\n";
             }
         }
-
+        //catching the case if the expiry date is empty.
         catch (IllegalArgumentException e) {
             System.out.println(e);
-            errorMsgs+="The expiry date is empty. Please fill in this section.\n";
+            errorMsgs1+="The expiry date is empty. Please fill in this section.\n";
         }
         
-
+        // catching the case if the CVC is at least 3 numbers.
         if (stringCVC.length()<3){
-            errorMsgs+="Your CVC must be at least 3 numbers.\n";
+            errorMsgs1+="Your CVC must be at least 3 numbers.\n";
         }
+        //catching the case if the CVC is empty/ not filled in.
         if (stringCVC.isEmpty()){
-            errorMsgs+="Please fill in the CVC.\n";
+            errorMsgs1+="Please fill in the CVC.\n";
         }
         
         
-        
+        //testing if the payment card number length is not equal to 9. If that is the case, error message gets added to with approproate message.
         if (stringpaymentCardNumber.length()!=9){
-            errorMsgs+="You have not added your card number properly. Your Card Number should have 9 numbers.\n";
+            errorMsgs1+="You have not added your card number properly. Your Card Number should have 9 numbers.\n";
         }
+        // testing case if the payment Card Number is empty.
         if(stringpaymentCardNumber.isEmpty()){
-            errorMsgs += "Please fill in the card number.\n";
+            errorMsgs1 += "Please fill in the card number.\n";
         }
         
         System.out.println("Entered Before if");
-        if (!errorMsgs.isEmpty()) {
-            session.setAttribute("errorMsgs", errorMsgs);
+        
+        //If there any error messages, it will set the attribute of error messages to the payments form, and will direct the user back to payment Form again, displaying the errors.
+        if (!errorMsgs1.isEmpty()) {
+            session.setAttribute("errorMsgs1", errorMsgs1);
             request.getRequestDispatcher("paymentForm.jsp").include(request,response);
         }
         else {
             try{
                 if(user != null) {
+                    //calling the paymentDAO exists function to check if the paymentCardNumber already exists. If it does, it will not add to create the payment, but will still redirect the values to the next page.
                     if (!paymentDAO.checkExists(paymentCardNumber)){
+                         System.out.println("Entered");
+                         //Creating a payment using the session attributes.
                         paymentDAO.createPayment(paymentMethod, expiryDate, paymentCVC, paymentCardNumber, user.getUserID());
                     }
                     Payments payments = new Payments(paymentDAO.fetchPaymentsFromACustomer(user.getUserID()));
@@ -159,15 +127,18 @@ public class createNewPaymentServlet extends HttpServlet{
                     
                 }
                 else {
+                    //if the user is null, it will create the a Payment with the UserID set to null, calling the required function from paymentDAO.
                     paymentDAO.createPaymentForAnonymousUser(paymentMethod, expiryDate, paymentCVC, paymentCardNumber);
                 }
                 
                 
 //                System.out.println("Entered");
+//setting the required attributes to the session to pass on to the other page.
                 session.setAttribute("paymentMethod", paymentMethod);
                 session.setAttribute("expiryDate", stringexpiryDate);
                 session.setAttribute("cardNumber", paymentCardNumber);
                 session.setAttribute("cvc", paymentCVC);
+                //sending the user to the shipping order page when they submit.
                 request.getRequestDispatcher("shippingOrder.jsp").forward(request, response);
             } catch(SQLException e){
                 System.out.println(e);

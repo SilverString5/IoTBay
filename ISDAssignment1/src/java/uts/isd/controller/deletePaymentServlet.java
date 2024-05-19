@@ -17,6 +17,8 @@ import uts.isd.model.Payment;
 import uts.isd.model.Payments;
 import uts.isd.model.dao.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 /**
  *
@@ -26,43 +28,48 @@ import javax.servlet.RequestDispatcher;
 
 
 public class deletePaymentServlet extends HttpServlet{
-    //draft
+    
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        int paymentID = Integer.parseInt(request.getParameter("paymentID"));
+        //getting the paymentID parameter from selecting the delete function in paymentsList. getting it in both string and int.
+        String paymentIDstring = request.getParameter("paymentID");
+        int paymentID = Integer.parseInt(paymentIDstring);
         
+        
+        //getting the session.
         HttpSession session = request.getSession();
         
+        //getting the paymentdao attribute from the session.
         PaymentDAO paymentDAO = (PaymentDAO) session.getAttribute("paymentDAO");
+        //initialising paymentList to be of a newArray List .
+        ArrayList<Payment> paymentList = new ArrayList();
         
         try{
-            //calling delete Payment function from paymentDAO.
+            //calling delete Payment function from paymentDAO; deleting the payment variable that has the selected paymentID from the session.
             paymentDAO.deletePayment(paymentID);
             
-            //gets all the oayment records made by the user that is stored in the session.
-            Payments payments = (Payments) session.getAttribute("payments");
-            
-            //delete the payment record currently stored in the session.
-            for (Payment currentPayment : payments.getListOfCustomerPayments()) {
-            
-                //if the payment record in the loop matches the payment ID
-                if(currentPayment.getPaymentID() == paymentID){
-                //remove the payment record in the session.
-                payments.getListOfCustomerPayments().remove(currentPayment);
-                break;
-                }
+            //gets all the payment records made by the user that is stored in the session.
+            paymentList = (ArrayList <Payment>) session.getAttribute("paymentList");
+
+            //if the payment List is not equal to null, it will traverse through the payment list to find the paymentID that metches the selected payment ID from the session.
+            //It will then deletd the payment variable from the session.
+            if (paymentList != null) {
+                paymentList.removeIf(payment -> payment.getPaymentID() == (paymentID));
+                //stores the remove change into the paymentList.
+                session.setAttribute("paymentList", paymentList);
             }
             
-            
-            request.getRequestDispatcher("/ConnServlet").forward(request, response);
-            response.sendRedirect("userPaymentRecordList.jsp");
-        }
-        
-        
-        catch(SQLException e){
+            //Redirects the results to paymentsList.
+
+            response.sendRedirect("paymentsList.jsp");
+        } catch(SQLException e){
             System.out.println(e);
         }
 
     }
 }
+
+
+

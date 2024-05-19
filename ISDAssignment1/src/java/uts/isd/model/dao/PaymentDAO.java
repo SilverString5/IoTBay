@@ -22,11 +22,12 @@ public class PaymentDAO {
     private PreparedStatement fetchCreatedPaymentSt;
    
     
-
+    //declaring the Query statements by string.
     private String readQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment";
     private String checkQuery = "SELECT PaymentID, PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID FROM Payment WHERE PaymentCardNumber=?";  //had to fix it
     private String fetchCreatedPayment = "SELECT PaymentID FROM Payment ORDER BY PaymentID DESC LIMIT 1";
     
+    //setting up a connection with the String Queries and the Prepared Statements, connecting them to the database.
     public PaymentDAO(Connection connection) throws SQLException {
         this.connect = connection;
         connection.setAutoCommit(true);
@@ -37,7 +38,7 @@ public class PaymentDAO {
         
     }
     
-    //Create Operation: Create a payment
+    //Create Operation: Create a payment.
     public void createPayment(String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber,  int userID) throws SQLException {
         PreparedStatement createQuery = connect.prepareStatement("INSERT INTO payment(PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber, UserID) VALUES(?,?,?,?,?)");
         createQuery.setString(1, paymentMethod);
@@ -83,7 +84,7 @@ public class PaymentDAO {
     }
     
     
-    
+    //fetch all the payments records from the database.
     public ArrayList<Payment> fetchPayment() throws SQLException {
         ResultSet resultSet = readStatement.executeQuery(readQuery);
         ArrayList<Payment> payments = new ArrayList<>();
@@ -104,6 +105,38 @@ public class PaymentDAO {
         return payments;
     }
     
+    
+    //paymentCardNumber
+    //paymentID
+    
+    //fetch a payment/ payment with the input being the PaymentID and the Payment Card Number for the user. Used to display result in search function in PaymentsList.
+    public ArrayList<Payment> fetchPaymentByFilter(int customerID, int paymentIDasInput, int paymentCardNumber) throws SQLException {
+        PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM payment WHERE UserID=? AND PaymentID=? AND PaymentCardNumber=?");
+        readQuery.setString(1, String.valueOf(customerID));
+        readQuery.setString(2, String.valueOf(paymentIDasInput));
+        readQuery.setString(3, String.valueOf(paymentCardNumber));
+        
+        ResultSet resultSet = readQuery.executeQuery();
+        ArrayList<Payment> paymentRecords = new ArrayList<> ();
+        
+        while(resultSet.next()) {
+            int paymentID = resultSet.getInt(1);
+            String paymentMethod = resultSet.getString(2);
+            Date expiryDate = resultSet.getDate(3);
+            int paymentCVC = resultSet.getInt(4);
+            int paymentCardNumberEstInt = resultSet.getInt(5);
+            int userID = resultSet.getInt(6);
+            
+            
+            Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumberEstInt, userID);
+            paymentRecords.add(payment);
+            
+        }
+        return paymentRecords;
+    }
+    
+    
+    //update Payment Method from one Payment Record
     public void updatePaymentMethod(int paymentID, String paymentMethod) throws SQLException{
         
         PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET PaymentMethod=?  WHERE PaymentID=?");
@@ -111,6 +144,8 @@ public class PaymentDAO {
         updateQuery.setString(2, String.valueOf(paymentID));
         updateQuery.executeUpdate();
     }
+    
+    //update ExpiryDate from one Payment Record
     public void updateExpiryDate(int paymentID, Date expiryDate) throws SQLException{
         PreparedStatement updateQuery = connect.prepareStatement("UPDATE payment SET ExpiryDate=? WHERE PaymentID=?");
         updateQuery.setDate(1, new java.sql.Date(expiryDate.getTime()));
@@ -160,7 +195,7 @@ public class PaymentDAO {
         return null;
     }
     
-    
+    //fetches a payment with PaymentID as the input.
     public Payment fetchPaymentByFilter(int customerID, int paymentIDasInput) throws SQLException {
         
         PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM payment WHERE UserID=? AND PaymentID=?");
@@ -223,27 +258,25 @@ public class PaymentDAO {
             int paymentCardNumber = resultSet.getInt(5);
             int paymentID = resultSet.getInt(1);
             int userID = resultSet.getInt(6);
-            
+            //saving the query into a payment object and adding it to the array.
             Payment payment = new Payment(paymentID, paymentMethod, expiryDate, paymentCVC, paymentCardNumber, userID);
             paymentRecords.add(payment);
         }
         return paymentRecords;     
     }
     
-    //checking if a Payment Record already exists, depending on the Payment Id
+    //checking if a Payment Record already exists, depending on the Payment Id.
    public boolean checkExists(int paymentCardNumber) throws SQLException {
        boolean exists = false;
        checkSt.setInt(1, paymentCardNumber);
        ResultSet rs = checkSt.executeQuery();
        while (rs.next()){
             exists = rs.next();
-            rs.close();
-            checkSt.close();
        }
-       
        return exists;
    }
    
+   //fetch a paymentID from a particular record if it exists.
    public int fetchPaymentID() throws SQLException {
        ResultSet rs = fetchCreatedPaymentSt.executeQuery();
        int paymentID = 0;
@@ -253,6 +286,7 @@ public class PaymentDAO {
        return paymentID;
    }
    
+   //In order for an anonymous user to create a payment, it will set their UserID to be null in the database.
    public void createPaymentForAnonymousUser(String paymentMethod, Date expiryDate, int paymentCVC, int paymentCardNumber) throws SQLException {
         PreparedStatement createQuery = connect.prepareStatement("INSERT INTO Payment(PaymentMethod, ExpiryDate, PaymentCVC, PaymentCardNumber) VALUES(?,?,?,?)");
         createQuery.setString(1, paymentMethod);

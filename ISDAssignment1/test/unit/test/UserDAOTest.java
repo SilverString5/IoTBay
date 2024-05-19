@@ -40,7 +40,7 @@ public class UserDAOTest {
 	}
 
 	@Test
-	public void testfetchsUsers() throws SQLException {
+	public void testfetchUsers() throws SQLException {
 		ArrayList<User> users = manager.fetchUsers();
 		assertTrue(users.size()>=10);
 	}
@@ -53,12 +53,6 @@ public class UserDAOTest {
         public void testCreateUser() throws SQLException{
                 manager.createUser("ladygaga@testemail.com", "Lady Gaga", "test", "0444444445", "Fame St",Date.valueOf("1994-02-02"), "F");
             }
-  /*      @Test
-        public void testfindUser() throws SQLException{
-                int userID = manager.findUser("apples@gmail.com");
-                assertEquals(1, userID);
-            }
-    */    
         
         @Test
         public void testUpdate() throws SQLException{

@@ -34,8 +34,10 @@ public class LoginServlet extends HttpServlet {
                 AccessLogDAO accessLogDAO = (AccessLogDAO) session.getAttribute("accessLogDAO");
                 String invalidLogin = "";
                 try {
+                // Logs user in. The variable user will be null if login is unsuccessful
                 User user = userDAO.login(email, password);
                     if (user!=null){
+                        // Creates an user access log and sets it in the session
                         accessLogDAO.createUserAccessLog(user.getUserID());
                         UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                         session.setAttribute("user", user);
@@ -47,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 
                         }
                     else {
+                        // Allows an error message to be displayed later if login details are wrong
                         invalidLogin+="Your login details are incorrect. Please try again or register.";
                         session.setAttribute("invalidLogin", invalidLogin);
                         request.getRequestDispatcher("login.jsp").include(request, response);

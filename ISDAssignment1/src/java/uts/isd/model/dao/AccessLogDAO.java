@@ -60,7 +60,7 @@ public class AccessLogDAO {
                 Date accessLogDate = rs.getDate(3);
                 Time loginTime = rs.getTime(4);
                 Time logoutTime = rs.getTime(5);
-                UserAccessLog accessLog = new UserAccessLog(userID, accessLogID, 
+                UserAccessLog accessLog = new UserAccessLog(accessLogID, userID,  
                 accessLogDate, loginTime, logoutTime);
                 myAccessLogs.add(accessLog);
                              }
@@ -68,7 +68,7 @@ public class AccessLogDAO {
 		
 }
 
-// Update operation: update logoutTime
+        // Update operation: update logoutTime
         public UserAccessLog updateLogoutTime(Time logoutTime, int accessLogID) throws SQLException {
             updateSt.setTime(1, logoutTime);
             updateSt.setInt(2, accessLogID);
@@ -88,7 +88,7 @@ public class AccessLogDAO {
 
 
 
-//Find most recently created access logs
+        //Find most recently created access logs
         public UserAccessLog findMostRecent(int userID) throws SQLException{
             findSt.setInt(1, userID);
             ResultSet rs = findSt.executeQuery();

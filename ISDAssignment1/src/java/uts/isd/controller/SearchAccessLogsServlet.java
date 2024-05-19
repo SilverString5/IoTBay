@@ -31,13 +31,15 @@ public class SearchAccessLogsServlet extends HttpServlet {
                 User user = (User)session.getAttribute("user");
                 String enteredDate = request.getParameter("logdate");
                 String dateError="";
-
+                // Check whether user is logged in
                 if (user==null){
                 String anonError = "You must log in to see your access logs.";
                 session.setAttribute("anonError", anonError);
                                 } else {
+                // Validates the search date entered
                 try{
                     Date date = Date.valueOf(enteredDate);
+                    //Searches the access logss
                     ArrayList<UserAccessLog> accessLogs = accessLogDAO.filterAccessLogDate(user.getUserID(), enteredDate);
                     session.setAttribute("accessLogs", accessLogs);
                 }

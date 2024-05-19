@@ -30,8 +30,11 @@ public class DeleteRegistrationServlet extends HttpServlet {
         OrderDAO orderDAO = (OrderDAO)session.getAttribute("orderDAO");
         ShipmentDAO shipmentDAO = (ShipmentDAO)session.getAttribute("shipmentDAO");
         User user = (User)session.getAttribute("user");
+
+        // Check whether user is logged in
         if (user!=null){
         try{
+        //Sets the order and payment status associated with user to null before deletion
         orderDAO.changeOrderStatus(user.getUserID());
         shipmentDAO.updateShipmentStatus(user.getUserID());
         userDAO.delete(user.getUserID());

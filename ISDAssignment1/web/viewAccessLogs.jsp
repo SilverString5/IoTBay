@@ -13,6 +13,7 @@
 
 <%long now = System.currentTimeMillis();
 String dateError=(String)session.getAttribute("dateError");
+// An error will be displayed if the date entered is invalid
 String anonError = (String)session.getAttribute("anonError");
 User user = (User)session.getAttribute("user");
 %>
@@ -67,11 +68,12 @@ User user = (User)session.getAttribute("user");
             <br>
             <br>
         <% } %>
-     
+            <!--Will reset the searched access logs to all access logs if selected -->
             <form class="myForm" action="<%= request.getContextPath()%>/ViewAccessLogsServlet" method="post">
             <h1>Access Logs</h1>
             <button type="submit">View All Your Access Logs</button><br>  
             </form>
+            <!--Will redirect user to SearchAccessLogsServlet to fetch search results-->
             <form action="<%= request.getContextPath()%>/SearchAccessLogsServlet" method="post">
                 <label for="logdate"> Date: </label>
                 <input type="date" id="logdate" name="logdate">
@@ -91,12 +93,13 @@ User user = (User)session.getAttribute("user");
         <div align="center">
             <table border="1", cellpadding="5">
                 <tr>
-                    <th>User ID></th>
+                    <th>User ID</th>
                     <th>Log ID</th>
                     <th>Date (YYYY-MM-DD)</th>
                     <th>Login Time</th>
                     <th>Logout Time</th>       
                 </tr>
+            <!--Uses JSTL tag library to display the access logs-->
             <c:forEach var="log" items="${accessLogs}">
                 <tr>
                     <td><c:out value="${log.userID}" /></td>

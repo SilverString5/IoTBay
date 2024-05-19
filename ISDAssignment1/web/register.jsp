@@ -16,7 +16,7 @@
         <title>Registration</title>
     </head>
 
-      <% 
+      <% //Error messages will display if the form input is invalid
         String errorMsgs = (String) session.getAttribute("errorMsgs");
         User user = (User) session.getAttribute("user");
        if(user != null && user.getUserType().equals("S")){%>
@@ -65,9 +65,10 @@
     <body>
     <br>
     <br>
+    <!--Registration form only appears if user is not already logged in -->
         <% if (user==null) { %>
         <div class="myFormdiv">
-            
+        <!--Form submission will redirect the user to RegisterServlet for validation-->
         <form class="myForm" action="<%= request.getContextPath()%>/RegisterServlet" method="post">
             <h1 class="myHeader">Register Here!</h1>
             

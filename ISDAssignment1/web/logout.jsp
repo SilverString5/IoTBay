@@ -17,7 +17,7 @@
        logoutTimeUpdated = (String)session.getAttribute("logoutTimeUpdated");%>
     <body>
 
-        <% 
+        <%  //This if statement checks if the user has been redirected to LogoutServlet previously
             if (logoutTimeUpdated!=null){
             session.invalidate(); %>
              <div class="window">
@@ -30,16 +30,13 @@
           <%  }  else { %>
         <div class="window">
             <h1>Please confirm you wish to log out</h1>
+            <!--Registered and logged in users will have their logout times updated in the
+            current access log after visiting LogoutServlet-->
         <form action="<%= request.getContextPath()%>/LogoutServlet" method="post">
             <button type="submit">Confirm Logout</button>
         </form>
-        </div>
+        </div> 
           
-          
-          
-          <% } %>
-        
-        
-       
+          <% } %>    
     </body>
 </html>

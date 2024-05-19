@@ -42,12 +42,13 @@ public class RegisterServlet extends HttpServlet {
                 String errorMsgs="";
                 
 
-
+                    //Series of if statements to check whether entered registration input is valid
+                    //Email validation
                     if ((!email.contains("@")) || !email.contains(".com") || email.isEmpty()){
                             errorCount++;
                             errorMsgs+=" The entered email address is invalid.\n";
                     }
-
+                    //Password validation
                     if (password.length()<7){
                             errorCount++;
                             errorMsgs+=" Your password must be at least 7 characters long.\n" ;
@@ -66,7 +67,7 @@ public class RegisterServlet extends HttpServlet {
                         errorMsgs+="A phone number cannot have non-numeric characters";
                         }
 
-
+                    // Address validation
                     if (address.length()<5){
                         errorCount++;
                         errorMsgs+=" The address entered must be at least 5 characters.\n";
@@ -89,7 +90,7 @@ public class RegisterServlet extends HttpServlet {
                     errorCount++;
                     errorMsgs+="The date entered must be a non-empty date";
 }
-
+                    // Checks if an email address is already taken
                     try{
                     if (userDAO.checkExists(email)){
                             errorCount++;
@@ -98,12 +99,13 @@ public class RegisterServlet extends HttpServlet {
                     } catch (SQLException e){
                             System.out.println(e);
                                             }
-
+                // Will allow error messgage to be displayed for incorrect input
 		if (errorCount>0) {
 			session.setAttribute("errorMsgs", errorMsgs);
 			request.getRequestDispatcher("register.jsp").include(request, response);
 		} else {
 			try {
+                                //Create user in database and set in session
 				userDAO.createUser(email, password, name, phone, address, Date.valueOf(stringDOB), gender);
 				User user = new User();
                                 user.setUserID(userDAO.retrieveUserID(email));
@@ -116,9 +118,11 @@ public class RegisterServlet extends HttpServlet {
                                 user.setAddress(address);
                                 user.setUserType("C");
                                 session.setAttribute("user", user);
+                                // Create user access log in database and set in session
                                 accessLogDAO.createUserAccessLog(user.getUserID());
                                 UserAccessLog accessLog = accessLogDAO.findMostRecent(user.getUserID());
                                 session.setAttribute("accessLog",accessLog);
+                                // Fetches user access logs from database in an ArrayList
                                 ArrayList<UserAccessLog> accessLogs = accessLogDAO.viewAccessLogs(user.getUserID());
                                 session.setAttribute("accessLogs", accessLogs);
 

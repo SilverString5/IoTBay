@@ -38,16 +38,19 @@ public class UpdateRegistrationServlet extends HttpServlet {
                 int errorCount = 0;
                 String updateMsgs="";
                 
-                
+                   // Validates the updated registration inputs
+                    //Email validation
                    if ((!email.contains("@")) || !email.contains(".com") || email.isEmpty()){
                             errorCount++;
                             updateMsgs+=" The entered email address is invalid.\n";
                     }
 
+                    // Password validation
                     if (password.length()<7){
                             errorCount++;
                             updateMsgs+=" Your password must be at least 7 characters long.\n" ;
                      }
+
                      // Phone number validation
                         try {
                         int intPhone = Integer.parseInt(phoneNumber);
@@ -62,7 +65,7 @@ public class UpdateRegistrationServlet extends HttpServlet {
                         updateMsgs+="A phone number cannot have non-numeric characters. \n";
                         }
 
-
+                    // Address validation
                     if (address.length()<5){
                         errorCount++;
                         updateMsgs+=" The address entered must be at least 5 characters. \n";

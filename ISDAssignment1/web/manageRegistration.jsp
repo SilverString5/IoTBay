@@ -56,6 +56,8 @@
             <br>
             <br>
         <% } %>
+        <!--This form will be prefilled with the user's current account details, 
+        and allows the user to update or delete their account -->
 <% if (user!=null) { %>
 <div class="myFormdiv">
     <form class="myForm" action="<%= request.getContextPath()%>/UpdateRegistrationServlet" method="post">

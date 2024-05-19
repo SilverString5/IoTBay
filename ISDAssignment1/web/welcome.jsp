@@ -60,6 +60,8 @@
             </div>
             <br>
             <br>
+            <!--These are only displayed if the user is logged in -->
+            <!-- Allows users to view their access logs or manage their registration details via link-->
             <%} if (user!=null) { %>
             <p>Welcome, <%=user.getName()%></p>
    

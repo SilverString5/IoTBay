@@ -22,6 +22,7 @@ import java.sql.Date;
  */
 public class UserDAO {
     private Connection con; 
+    //Initialising statements here so they can be used later  
     private Statement st;
     private PreparedStatement readSt;
     private PreparedStatement updateSt;
@@ -29,6 +30,8 @@ public class UserDAO {
     private PreparedStatement checkSt;
     private PreparedStatement retrieveSt;
     private PreparedStatement findSt;
+
+    // SQL statements
     private String readQuery = "SELECT * FROM users WHERE userEmail=? AND userPassword=?";
     private String updateQuery = "UPDATE users SET userEmail=?, userPassword=?, userFullName=?, userPhone=?, userAddress=?, userDOB=?, userGender=? WHERE userID=?";
     private String deleteQuery = "DELETE FROM users WHERE userID=?";
@@ -48,19 +51,19 @@ public class UserDAO {
                 findSt = connection.prepareStatement(findQuery);
 	}
 
-// Create Operation: create a user
+        // Create Operation: create a user
 	public void createUser(String userEmail, String userPassword, String userFullName,  String userPhone, String userAddress, Date userDOB, String userGender) throws SQLException {
 		String columns = "INSERT INTO users(userEmail, userFullName,userPassword,userPhone,userAddress, userDOB, userGender)";
 		String values = "VALUES('" + userEmail + "','" + userFullName + "','" + userPassword + "','" 
                 + userPhone + "','" + userAddress + "','" + userDOB + "','"+ userGender + "')";
 		st.executeUpdate(columns + values);
 	}
-//Check if user already exists to prevent re-registration
+
+        //Check if user already exists to prevent re-registration
         public boolean checkExists(String userEmail) throws SQLException{
             boolean exists = false;
             checkSt.setString(1, userEmail);
             ResultSet rs = checkSt.executeQuery();
-            ArrayList<User> results = new ArrayList<>();
             while (rs.next()){
                 String email = rs.getString(2);
                 if (userEmail.equals(email)){
@@ -71,7 +74,7 @@ public class UserDAO {
                 return exists;
             }
 
- //Retrieve userID based on email
+        //Retrieve userID based on email
         public int retrieveUserID(String userEmail) throws SQLException{
             retrieveSt.setString(1, userEmail);
             ResultSet rs = retrieveSt.executeQuery();
@@ -80,7 +83,7 @@ public class UserDAO {
             return ID;
 }
 
- //Find a user based on userID
+        //Find a user based on userID
         public int findUser(String userEmail) throws SQLException{
             retrieveSt.setString(1,userEmail);
             ResultSet rs = retrieveSt.executeQuery();

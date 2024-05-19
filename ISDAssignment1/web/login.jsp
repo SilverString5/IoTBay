@@ -10,9 +10,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         <title>Login</title>
     </head>
-    <%
+    <% 
+        // invalidLogin will display an error message if the login details are not correct
         String invalidLogin = (String) session.getAttribute("invalidLogin");
         User user = (User) session.getAttribute("user");
+        
+        // The navigation bar will change depending on what type of user you are
         if(user != null && user.getUserType().equals("S")){%>
             <div class="menu">
             <ul>
@@ -56,9 +59,11 @@
         <% } %>
    
     <body>
+        
         <% if (user==null) { %>
         <div class="myFormdiv">
-        
+        <!-- Form placed in div so CSS will centre the login form.
+        This form will direct to the LoginServlet so that inputs can be verified -->
         <form class="myForm" method="post" action="<%= request.getContextPath()%>/LoginServlet">
             <h1 class="myHeader">Login Here!</h1>
             <label for="email1">Email: </label><br>

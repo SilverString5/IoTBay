@@ -32,13 +32,12 @@ public class LogoutServlet extends HttpServlet {
         long now = System.currentTimeMillis();
         Time logoutTime = new Time(now);
 
-        try { accessLog = accessLogDAO.updateLogoutTime(logoutTime, accessLog.getAccessLogID());
-                session.setAttribute("accessLog", accessLog);
-                logoutTimeUpdated = "yes";
+        try { 
+            // Update latest access log logoutTime to now
+            accessLog = accessLogDAO.updateLogoutTime(logoutTime, accessLog.getAccessLogID());
+            session.setAttribute("accessLog", accessLog);
+            logoutTimeUpdated = "yes";
                 
-                
-
-
         } catch (SQLException e) {
                 System.out.println(e);
 

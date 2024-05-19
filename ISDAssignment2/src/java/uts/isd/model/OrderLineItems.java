@@ -16,9 +16,6 @@ public class OrderLineItems {
     private int productQuantity;
     private int subTotal;
     
-    public OrderLineItems(){
-    }
-    
     public OrderLineItems(int orderID, int productID, int productQuantity, int subTotal){
         this.orderID = orderID;
         this.productID = productID;

@@ -1,21 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package uts.isd.model.dao;
-
 import java.sql.Connection;
 
 /**
- * Super class of DAO classes that stores the database information
- * 
+ *
+ * @author notba
+IotBay
  */
-
 public abstract class DB {
-
     protected String URL = "jdbc:mysql://localhost:3306/";
-    protected String db = "IoTBay";// name of the database
-    protected String dbuser = "root";// db root user
-    protected String dbpass = "233334555"; // db root password
+    protected String db = "iotbay";
+//    protected String db = "IoTBay";
+    protected String dbuser = "root";
+    protected String dbpass = "password";
+//    protected String dbpass = "mysql117@";
     protected String params = "?useSSL=false&allowPublicKeyRetrieval=true";
-    protected String driver = "com.mysql.cj.jdbc.Driver"; // jdbc
-    // client driver - built in with NetBeans
-    protected Connection conn; // connection null-instance to be initialized in sub-classes
+    protected String driver = "com.mysql.cj.jdbc.Driver";
+    protected Connection conn;
 
+    
 }

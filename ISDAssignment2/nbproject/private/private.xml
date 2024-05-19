@@ -3,12 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/src/java/uts/isd/model/dao/ProductDAO.java</file>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/src/java/uts/isd/controller/updateExistingDeviceServlet.java</file>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/src/java/uts/isd/controller/createNewProductServlet.java</file>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/web/productForm.jsp</file>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/web/index.jsp</file>
-            <file>file:/Users/jijianlan/NetBeansProjects/ISDAssignment1jlcheckzip/ISDAssignment2/test/unit/test/ProductDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/DeleteRegistrationServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/ConnServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/index.jsp</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/addDeviceFormServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/updateExistingDeviceServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/model/dao/UserDAO.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/UpdateRegistrationServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/AccessLogDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/paymentForm.jsp</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/model/dao/DB.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/model/dao/PaymentDAO.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/manageRegistration.jsp</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/model/dao/OrderDAO.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/src/java/uts/isd/controller/LoginServlet.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/UserDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/test/unit/test/OrderDAOTest.java</file>
+            <file>file:/C:/Users/notba/Documents/GitHub/IoTBay/ISDAssignment1/web/shippingOrder.jsp</file>
         </group>
     </open-files>
 </project-private>

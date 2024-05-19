@@ -29,54 +29,72 @@ public class createNewProductServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ProductDAO productDAO = (ProductDAO) session.getAttribute("productDAO");
         
+        //get the product data from request object 
         String productName = request.getParameter("productName");
         String productType = request.getParameter("productType");
         String productDetails = request.getParameter("productDetails");
         double productPrice = 0;
         int productInStock = 0;
         
+        
+        //create testing variables, check valid numbers, input length and empty input
+        boolean isProductUnitPrice = isDouble(request.getParameter("productUnitPrice"));
+        boolean isProductInStock = isInteger(request.getParameter("productInStock"));
         String str[] = productDetails.split(" ");
         String productUnitPriceTest = request.getParameter("productUnitPrice");
         String productInStockTest = request.getParameter("productInStock");
         
+        //check empty name
         if(productName == null||productName.equals(""))
         {
             request.setAttribute("productNameErr", "Device name can't be empty!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
-        
+        //check empty type
         if(productType == null || productType.equals(""))
         {
             request.setAttribute("productTypeErr", "Device type can't be empty!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
-        
+        //check empty or 0 price
         if(productUnitPriceTest.equals("")||productUnitPriceTest == null||productUnitPriceTest.equals("0"))
         {
             
             request.setAttribute("productUnitPriceErr", "Device price can't be 0 or empty!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
-        
+        //check if price input is not a number
+        if(!isProductUnitPrice)
+        {
+            request.setAttribute("productUnitPriceErr", "Invalid device price input!");
+            request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
+        }
+        //check empty details
         if(productDetails == null || productDetails.equals("")){
             
             request.setAttribute("productDetailsErr", "Device details can't be empty!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
-        
+        //check invalid details length
         if(str.length < 3){
             request.setAttribute("productDetailsErr", "Device details should be at least 3 words!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
-        
+        //check empty stock
         if(productInStockTest.equals("")||productInStockTest == null){
             request.setAttribute("productInStockErr", "Device stock can't be empty!");
+            request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
+        }
+        //check if stock input is not a number
+        if(!isProductInStock){
+            request.setAttribute("productInStockErr", "Invalid stock value!");
             request.getRequestDispatcher("/addDeviceFormServlet").include(request, response);
         }
         
         else{
             
             try{
+                //Finish creating operation and redirect staff back to the list of devices
                 productPrice = Double.parseDouble(request.getParameter("productUnitPrice"));
                 productInStock = Integer.parseInt(request.getParameter("productInStock"));
                 productDAO.createProduct(productName, productType, productPrice, productDetails, productInStock);
@@ -90,5 +108,26 @@ public class createNewProductServlet extends HttpServlet {
         }
     }
     
+    //Number checking method for price
+    private static boolean isDouble(String str) { 
+      try {  
+        Double.parseDouble(str);  
+        return true;
+      } catch(NumberFormatException e){  
+        return false;  
+      }  
+    }
+    
+    //Number checking method for stock
+    private static boolean isInteger(String str){
+      try {  
+        Integer.parseInt(str);  
+        return true;
+      } catch(NumberFormatException e){  
+        return false;  
+      }  
+    }
+    
     
 }
+

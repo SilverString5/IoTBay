@@ -1,5 +1,6 @@
 package uts.isd.model;
 import java.util.*;
+import java.time.*;
 import java.io.Serializable;
 
 public class Invoice implements Serializable {
@@ -7,9 +8,6 @@ public class Invoice implements Serializable {
     private int invoiceID;
     private Date invoiceDate;
     private boolean paymentStatus;
-    
-    public Invoice(){
-    }
     
     public Invoice(int invoiceID, Date invoiceDate, boolean paymentStatus){
         this.invoiceID = invoiceID;

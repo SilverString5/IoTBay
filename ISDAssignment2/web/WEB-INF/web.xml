@@ -1,15 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+<web-app version="3.1" 
+xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
     <welcome-file-list>
         <welcome-file>index</welcome-file>
-    </welcome-file-list>
+   </welcome-file-list>
     <servlet>
-        <servlet-name>ConnServlet</servlet-name>
-        <servlet-class>uts.isd.controller.ConnServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
+    <servlet-name>ConnServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ConnServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ShipmentHistoryServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ShipmentHistoryServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>ViewShipmentDetailServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewShipmentDetailServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DeleteShipmentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DeleteShipmentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>UpdateShipmentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateShipmentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+   <servlet>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
+  </servlet>
+
+     <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>uts.isd.controller.LogoutServlet</servlet-class>
+  </servlet>
+       <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ViewRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewRegistrationServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>UpdateRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateRegistrationServlet</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DeleteRegistrationServlet</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>ViewAccessLogsServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewAccessLogsServlet</servlet-class>
+  </servlet>
+      <servlet>
+        <servlet-name>SearchAccessLogsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.SearchAccessLogsServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>deviceSearchServlet</servlet-name>
+    
+  <servlet>
+<servlet-name>deviceSearchServlet</servlet-name>
         <servlet-class>uts.isd.controller.deviceSearchServlet</servlet-class>
     </servlet>
     <servlet>
@@ -34,15 +98,126 @@
         <servlet-class>uts.isd.controller.updateExistingDeviceServlet</servlet-class>
     </servlet>
     
+    <servlet>
+        <servlet-name>createShipmentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.createShipmentServlet</servlet-class>
+    </servlet>
     
+    <servlet>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ShoppingCartServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DisplayCartServlet</servlet-name>
+    <servlet-class>uts.isd.controller.DisplayCartServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
+  
+  <servlet>
+    <servlet-name>SubmitOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.SubmitOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <servlet-class>uts.isd.controller.OrderHistoryServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SearchOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.SearchOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ViewOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.ViewOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <servlet-class>uts.isd.controller.UpdateOrderServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <servlet-class>uts.isd.controller.RemoveCartItemServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>createNewPaymentServlet</servlet-name>
+    <servlet-class>uts.isd.controller.createNewPaymentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>  
+
+  <servlet-mapping>
+    <servlet-name>ConnServlet</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+
+  
+  <servlet-mapping>
+    <servlet-name>ShipmentHistoryServlet</servlet-name>
+    <url-pattern>/shipmentHistory</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ViewShipmentDetailServlet</servlet-name>
+    <url-pattern>/shipmentDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteShipmentServlet</servlet-name>
+    <url-pattern>/deleteShipmentDetail</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UpdateShipmentServlet</servlet-name>
+    <url-pattern>/updateShipmentDetail</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/RegisterServlet</url-pattern>
+  </servlet-mapping>
+     <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
+  </servlet-mapping>
+       <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+<servlet-mapping>
+    <servlet-name>ViewRegistrationServlet</servlet-name>
+    <url-pattern>/ViewRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateRegistrationServlet</servlet-name>
+    <url-pattern>/UpdateRegistrationServlet</url-pattern>
+  </servlet-mapping>
     <servlet-mapping>
+    <servlet-name>DeleteRegistrationServlet</servlet-name>
+    <url-pattern>/DeleteRegistrationServlet</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>ViewAccessLogsServlet</servlet-name>
+    <url-pattern>/ViewAccessLogsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchAccessLogsServlet</servlet-name>
+    <url-pattern>/SearchAccessLogsServlet</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>ConnServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
@@ -75,7 +250,57 @@
         <url-pattern>/updateExistingDeviceServlet</url-pattern>
     </servlet-mapping>
     
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
+    <servlet-mapping>
+        <servlet-name>createShipmentServlet</servlet-name>
+        <url-pattern>/createShipment</url-pattern>
+    </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>ShoppingCartServlet</servlet-name>
+    <url-pattern>/ShoppingCartServlet</url-pattern>
+  </servlet-mapping>  
+  
+  <servlet-mapping>
+    <servlet-name>DisplayCartServlet</servlet-name>
+    <url-pattern>/DisplayCartServlet</url-pattern>
+  </servlet-mapping>  
+  
+  <servlet-mapping>
+    <servlet-name>SubmitOrderServlet</servlet-name>
+    <url-pattern>/SubmitOrderServlet</url-pattern>
+  </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>OrderHistoryServlet</servlet-name>
+    <url-pattern>/OrderHistoryServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SearchOrderServlet</servlet-name>
+    <url-pattern>/SearchOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ViewOrderServlet</servlet-name>
+    <url-pattern>/ViewOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UpdateOrderServlet</servlet-name>
+    <url-pattern>/UpdateOrderServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>RemoveCartItemServlet</servlet-name>
+    <url-pattern>/RemoveCartItemServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>createNewPaymentServlet</servlet-name>
+    <url-pattern>/createNewPaymentServlet</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
 </web-app>

@@ -66,10 +66,10 @@
                     <% if(errorMsg != null) {
                         for(String errorLine : errorMsg){ %>
 
-                        <p class="errorMessage"><%=errorLine %></p>
+                            <p class="errorMessage"><%=errorLine %></p>
 
-                    <%  } %>
-                <% } %>
+                        <%  } %>
+                    <% } %>
 
 
                     <form method="POST" action="./createShipment">
@@ -114,7 +114,6 @@
                                 <option value="Express">Express</option>
                             </select>
 
-                             
                         </div> 
                         
                         <div class="flexbox">
@@ -123,12 +122,6 @@
                             </div>
                             <div class="second-column align-right"/>
                         </div>
-                            
-                        
-                        
-                        
-                        
-                        
                         
 
                     </form>

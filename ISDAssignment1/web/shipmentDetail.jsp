@@ -103,11 +103,11 @@
                     <% } %>
                     
                     <% if(user != null) {%>
-                    <div class="second-column align-right">
-                        <%if (shipment.getShipmentStatus().equals("Pending")) {%>
-                            <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
-                        <% } %>
-                    </div>
+                        <div class="second-column align-right">
+                            <%if (shipment.getShipmentStatus().equals("Pending")) {%>
+                                <button type="submit"><a href="./updateShipmentForm.jsp">Update</a></button>
+                            <% } %>
+                        </div>
                     <% } %>
                 </div>
 

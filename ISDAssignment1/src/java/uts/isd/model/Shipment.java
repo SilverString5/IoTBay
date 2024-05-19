@@ -20,7 +20,7 @@ public class Shipment implements Serializable {
     private String shipmentMethod;
     
     private String shipmentStatus;
-    private Date shipmentEstTime;
+    private Date shipmentEstTime; //refers to when the shipment was dispatched
 
     
     public Shipment() {
@@ -96,10 +96,12 @@ public class Shipment implements Serializable {
         this.shipmentStatus = shipmentStatus;
     }
 
+    //Gets the shipment date - refers to when the shipment was dispatched
     public Date getShipmentEstTime() {
         return shipmentEstTime;
     }
-
+    
+    //Set the shipment date - refers to when the shipment was dispatched
     public void setShipmentEstTime(Date shipmentEstTime) {
         this.shipmentEstTime = shipmentEstTime;
     }

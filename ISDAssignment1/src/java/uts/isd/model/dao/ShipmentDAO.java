@@ -12,9 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import uts.isd.model.Shipment;
-import java.text.SimpleDateFormat;
-
-import java.time.*;
 
 /**
  *
@@ -26,10 +23,8 @@ public class ShipmentDAO {
     private Statement statement;
     private PreparedStatement readStatement;
     private PreparedStatement fetchCreatedShipmentSt;
-    //private String readQuery = "SELECT * FROM shipment WHERE customerID=?"; //Change table name depending on name from database
     private String readQuery = "SELECT * FROM shipment";
     String fetchCreatedShipment = "SELECT ShipmentID FROM Shipment ORDER BY ShipmentID DESC LIMIT 1";
-    //private String deleteQuery = "DELETE FROM shipment WHERE SHIPMENTID=?";
     
     public ShipmentDAO (Connection connection) throws SQLException {
         
@@ -41,7 +36,7 @@ public class ShipmentDAO {
         
     }
     
-    //Create - Create Shipment Detail
+    //Create - Create Shipment Record for Registered User
     public void createShipment(int customerID, String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
         
         
@@ -57,6 +52,7 @@ public class ShipmentDAO {
                 
     }
     
+    //Create - Create Shipment Record for Anonymous User
     public void createShipmentForAnonymousUser(String shipmentAddress, String shipmentMethod, String shipmentStatus, Date shipmentDate) throws SQLException {
         
         
@@ -71,13 +67,15 @@ public class ShipmentDAO {
                 
     }
     
+    //Calculates the Shipment Date (Date that Order is Dispatched)
     public Date calculateShipmentDate(Date currentDate) {
-        currentDate.setTime(currentDate.getTime() - 36000000);
-        currentDate.setTime(currentDate.getTime() + 172800000);
+        currentDate.setTime(currentDate.getTime() - 36000000); //converts from UTC to AEST
+        currentDate.setTime(currentDate.getTime() + 172800000); //Adds two days from the current date
         
         return currentDate;
     }
     
+    //Fetch - Fetch the Shipment ID of the record that matches the address, method, status and date
     public int fetchShipment(String shipmentAddressInput, String ShipmentMethodInput, String shipmentStatusInput, Date shipmentDateInput) throws SQLException {
         PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE SHIPMENTADDRESS=? AND SHIPMENTMETHOD=? AND SHIPMENTSTATUS=? AND SHIPMENTDATE=?");
         readsQuery.setString(1, shipmentAddressInput);
@@ -99,6 +97,7 @@ public class ShipmentDAO {
         return 0;
     }
     
+    //Fetch - Finds the shipment record that matches the shipment ID
     public Shipment fetchShipmentByID(int shipmentID) throws SQLException {
         PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE SHIPMENTID=?");
         readsQuery.setInt(1, shipmentID);
@@ -121,7 +120,7 @@ public class ShipmentDAO {
         
     }
     
-    //get all shipments made by a specific customer
+    //Fetch - gets all shipments made by a specific customer
     public ArrayList<Shipment> fetchShipmentFromACustomer(int customerID) throws SQLException {
         
         PreparedStatement readsQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=?");
@@ -148,6 +147,7 @@ public class ShipmentDAO {
         
     }
     
+    //Fetch - finds the shipment that matches the customer id, shipment id and shipment date
     public ArrayList<Shipment> fetchShipmentByFilter(int customerID, int shipmentIDAsInput, String shipmentDate) throws SQLException {
         
         PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=? AND SHIPMENTID=? AND SHIPMENTDATE=?");
@@ -175,6 +175,7 @@ public class ShipmentDAO {
         return shipmentRecords;
     }
     
+    //Fetch - finds the shipment that matches the customer ID and shipment ID
     public Shipment fetchShipmentByFilter(int customerID, int shipmentIDAsInput) throws SQLException {
         
         PreparedStatement readQuery = connect.prepareStatement("SELECT * FROM shipment WHERE USERID=? AND SHIPMENTID=?");
@@ -202,7 +203,7 @@ public class ShipmentDAO {
         
     }
     
-    //update shipment details
+    //Update - update shipment details
     public void updateShipmentAddressAndMethod(int shipmentID, String shipmentAddress, String shipmentMethod) throws SQLException {
         
         PreparedStatement updateQuery = connect.prepareStatement("UPDATE shipment SET SHIPMENTADDRESS=? , SHIPMENTMETHOD=? WHERE SHIPMENTID=?");
@@ -216,7 +217,7 @@ public class ShipmentDAO {
         
     }
     
-    //delete
+    //Delete - delete shipment record
     public void deleteShipment(int shipmentID) throws SQLException {
             
             String deleteQuery = "DELETE FROM shipment WHERE SHIPMENTID=" + shipmentID;
@@ -225,6 +226,7 @@ public class ShipmentDAO {
             System.out.println("Shipment record is successfully deleted");
     }
     
+   //Update - update the shipment status to cancelled (method is called when user deletes their account)
    public void updateShipmentStatus(int userID) throws SQLException {
         PreparedStatement updateQuery = connect.prepareStatement("UPDATE shipment SET SHIPMENTSTATUS=? WHERE SHIPMENTSTATUS<>'Delivered' AND USERID=?");
         updateQuery.setString(1, "Cancelled");

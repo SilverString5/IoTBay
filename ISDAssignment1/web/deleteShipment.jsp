@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         
-        <title>JSP Page</title>
+        <title>Delete Shipment</title>
     </head>
     <body>
         

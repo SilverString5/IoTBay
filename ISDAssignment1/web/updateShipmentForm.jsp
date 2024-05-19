@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600">
         
-        <title>Order</title>
+        <title>Update Shipment</title>
         
     </head>
     
